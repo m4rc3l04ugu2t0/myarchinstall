@@ -1,0 +1,27 @@
+# Configurações de timezone
+[timezone]
+region = "America"
+city = "Sao_Paulo"
+
+# Setting up the location
+[location]
+language = "pt_BRen_US.UTF-8"
+keymap = "br-abnt2"
+
+# Configurações gerais do sistema
+[system]
+hostname = "arch"
+root_password = "arch"
+username = "arch"
+username_password = "arch"
+
+[packages]
+essentials = ["base-devel", "networkmanager", "sudo", "git", "vim", "curl", "wget", ]
+
+[zran]
+enabled = true
+size = "1G"
+
+[drives]
+graphic = ["xf86-video-amdgpu", "mesa"]
+
