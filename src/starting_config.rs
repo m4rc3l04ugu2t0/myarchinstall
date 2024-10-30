@@ -5,6 +5,10 @@ use toml::from_str;
 
 use crate::{
     config_timezone::set_timezone::set_timezone,
+    configure_location::{
+        set_keymaps::{self, set_keymaps},
+        set_language::set_language,
+    },
     functions::{
         relative_path::relative_path,
         state::{load_state, save_state},
@@ -46,6 +50,14 @@ impl HandlingConfiguration {
         save_state(&self.state)?;
         Ok(self)
     }
+
+    fn config_location(self) -> Result<Self, ConfigureError> {
+        set_language(&self.config.location.language)?;
+        save_state(&self.state)?;
+        set_keymaps(&self.config.location.keymap)?;
+        save_state(&self.state)?;
+        Ok(self)
+    }
 }
 
 pub fn configure() -> Result<(), ConfigureError> {
@@ -53,13 +65,15 @@ pub fn configure() -> Result<(), ConfigureError> {
 
     let config = config().map_err(|e| ConfigureError::Setup(e.to_string()))?;
 
-    HandlingConfiguration::new(state, config).config_timezone()?;
+    HandlingConfiguration::new(state, config)
+        .config_timezone()?
+        .config_location()?;
 
     Ok(())
 }
 
 fn config() -> Result<Config, ConfigureError> {
-    let file_name = "setup.toml";
+    let file_name = "src/configs/setup.toml";
     let path = relative_path(&file_name)?;
 
     if path.exists() {

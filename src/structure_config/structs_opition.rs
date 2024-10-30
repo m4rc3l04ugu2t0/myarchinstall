@@ -8,7 +8,7 @@ pub struct Timezone {
 
 #[derive(Deserialize, Debug)]
 pub struct Location {
-    pub language: String,
+    pub language: Vec<String>,
     pub keymap: String,
 }
 
