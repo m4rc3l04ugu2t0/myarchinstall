@@ -24,14 +24,3 @@ pub struct System {
 pub struct Packages {
     pub essentials: Vec<String>,
 }
-
-#[derive(Deserialize, Debug)]
-pub struct Zran {
-    pub enabled: bool,
-    pub size: String,
-}
-
-#[derive(Deserialize, Debug)]
-pub struct Drives {
-    pub graphic: Vec<String>,
-}

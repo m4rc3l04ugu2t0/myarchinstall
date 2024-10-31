@@ -18,21 +18,22 @@ pub enum ConfigureError {
     Hostname(String),
     Bootloader(String),
 }
+
 impl fmt::Display for ConfigureError {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match self {
-            Self::ConfigTimezone(err) => write!(f, "Error to config timezone: {}", err),
-            Self::CurrentDir(err) => write!(f, "Error to current dir: {}", err),
-            Self::ReadFile(err) => write!(f, "Error to read file: {}", err),
-            Self::FromStr(err) => write!(f, "Error toml: {}", err),
-            Self::Setup(err) => write!(f, "Error to setup: {}", err),
-            Self::ConfigureSystem(err) => write!(f, "Error to configure system: {}", err),
-            Self::SaveState(err) => write!(f, "Error to save state: {}", err),
-            Self::Timezone(err) => write!(f, "Error to save state: {}", err),
-            Self::RunCommand(err) => write!(f, "Error to run command: {}", err),
-            Self::LocaleGen(err) => write!(f, "Error to locale-gen: {}", err),
-            Self::Hostname(err) => write!(f, "Error to hostname: {}", err),
-            Self::Bootloader(err) => write!(f, "Error to bootloader: {}", err),
+            Self::ConfigTimezone(err) => write!(f, "Failed to configure timezone: {}", err),
+            Self::CurrentDir(err) => write!(f, "Failed to access the current directory: {}", err),
+            Self::ReadFile(err) => write!(f, "Failed to read file: {}", err),
+            Self::FromStr(err) => write!(f, "TOML deserialization error: {}", err),
+            Self::Setup(err) => write!(f, "Setup error: {}", err),
+            Self::ConfigureSystem(err) => write!(f, "System configuration error: {}", err),
+            Self::SaveState(err) => write!(f, "Failed to save state: {}", err),
+            Self::Timezone(err) => write!(f, "Timezone error: {}", err),
+            Self::RunCommand(err) => write!(f, "Command execution error: {}", err),
+            Self::LocaleGen(err) => write!(f, "Locale generation error: {}", err),
+            Self::Hostname(err) => write!(f, "Hostname configuration error: {}", err),
+            Self::Bootloader(err) => write!(f, "Bootloader configuration error: {}", err),
         }
     }
 }

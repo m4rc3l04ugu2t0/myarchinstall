@@ -3,14 +3,6 @@ use std::process::Command;
 use crate::{functions::run_commands::run_command, ConfigureError};
 
 pub fn set_hostname(hostname: &str) -> Result<(), ConfigureError> {
-    run_hostname(&hostname)?;
-
-    println!("Hosname successfully configured!");
-
-    Ok(())
-}
-
-fn run_hostname(hostname: &str) -> Result<(), ConfigureError> {
     run_command(
         Command::new("sh")
             .arg("-c")
@@ -29,6 +21,8 @@ fn run_hostname(hostname: &str) -> Result<(), ConfigureError> {
     for command in commands {
         run_command(Command::new("sh").arg("-c").arg(command))?;
     }
+
+    println!("Hosname successfully configured!");
 
     Ok(())
 }

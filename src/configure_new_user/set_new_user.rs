@@ -7,7 +7,6 @@ use crate::{
 
 pub fn set_new_user(username: &str, password: &str) -> Result<(), ConfigureError> {
     println!("Create user.");
-
     run_command(
         Command::new("useradd")
             .arg("-m")
@@ -17,10 +16,8 @@ pub fn set_new_user(username: &str, password: &str) -> Result<(), ConfigureError
             .arg("wheel,video,audio,kvm")
             .arg("-s")
             .arg("/bin/bash")
-            .arg(&username),
+            .arg(username),
     )?;
-    println!("!");
-    println!("Enter password {}", username);
     run_passwd_command(password, username)?;
     println!("User successefully configured!");
     Ok(())

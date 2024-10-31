@@ -14,7 +14,7 @@ use crate::{
         state::{load_state, save_state},
     },
     install_packages::install_essentials::install_assentials,
-    structure_config::structs_opition::{Drives, Location, Packages, System, Timezone, Zran},
+    structure_config::structs_opition::{Location, Packages, System, Timezone},
     ConfigureError,
 };
 
@@ -24,8 +24,6 @@ pub struct Config {
     location: Location,
     system: System,
     packages: Packages,
-    zran: Zran,
-    drives: Drives,
 }
 
 #[derive(Serialize, Deserialize, Debug, PartialEq)]
@@ -73,10 +71,10 @@ impl HandlingConfiguration {
             match step() {
                 Ok(_) => {
                     state.incremente_state();
-                    save_state(&state)?;
+                    save_state(state)?;
                 }
                 Err(err) => {
-                    save_state(&state)?;
+                    save_state(state)?;
                     return Err(err);
                 }
             }
@@ -97,7 +95,7 @@ pub fn configure() -> Result<(), ConfigureError> {
 
 fn config() -> Result<Config, ConfigureError> {
     let file_name = "src/configs/setup.toml";
-    let path = relative_path(&file_name)?;
+    let path = relative_path(file_name)?;
 
     if path.exists() {
         let config_content = read_to_string(&path)?;

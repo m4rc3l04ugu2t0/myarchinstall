@@ -6,19 +6,19 @@ use std::{
 
 use crate::{functions::run_commands::run_command, ConfigureError};
 
-pub fn set_language(language: &Vec<String>) -> Result<(), ConfigureError> {
+pub fn set_language(language: &[String]) -> Result<(), ConfigureError> {
     println!("Configurando linguagem do sistema...");
 
-    edit_locale_gen(&language)?;
+    edit_locale_gen(language)?;
     run_command(&mut Command::new("locale-gen"))?;
 
-    configure_locale_conf(&language)?;
+    configure_locale_conf(language)?;
 
     println!("Language successfully configured");
     Ok(())
 }
 
-fn edit_locale_gen(language: &Vec<String>) -> Result<(), ConfigureError> {
+fn edit_locale_gen(language: &[String]) -> Result<(), ConfigureError> {
     let locale_gen_path = "/etc/locale.gen";
     let file = OpenOptions::new()
         .read(true)
@@ -56,7 +56,7 @@ fn edit_locale_gen(language: &Vec<String>) -> Result<(), ConfigureError> {
     Ok(())
 }
 
-fn configure_locale_conf(language: &Vec<String>) -> Result<(), ConfigureError> {
+fn configure_locale_conf(language: &[String]) -> Result<(), ConfigureError> {
     let locale_conf_path = "/etc/locale.conf";
     let content = format!("LANG={}\n", language[0]);
 
