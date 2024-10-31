@@ -2,10 +2,7 @@ use std::process::Command;
 
 use chrono_tz::Tz;
 
-use crate::{
-    functions::{run_commands::run_command, state::save_state},
-    ConfigureError,
-};
+use crate::{functions::run_commands::run_command, ConfigureError};
 
 pub fn set_timezone(timezone: &str) -> Result<(), ConfigureError> {
     println!("Starting to configure the timezone system.");
@@ -26,7 +23,7 @@ pub fn set_timezone(timezone: &str) -> Result<(), ConfigureError> {
     )?;
 
     println!("The timezone was configured successfully.");
-    Ok(())
+    Err(ConfigureError::ConfigTimezone("mm".to_string()))
 }
 
 fn valid_timezone(timezone: &str) -> bool {
