@@ -1,4 +1,4 @@
-use std::{fs::read_to_string, process::exit};
+use std::{fs::read_to_string, iter::Enumerate, ops::Range, process::exit};
 
 use serde::{Deserialize, Serialize};
 use toml::from_str;
@@ -32,14 +32,19 @@ pub struct State {
     pub step: u8,
 }
 
+impl State {
+    fn incremente_state(&mut self) {
+        self.step += 1;
+    }
+}
+
 pub struct HandlingConfiguration {
-    state: State,
     config: Config,
 }
 
 impl HandlingConfiguration {
-    fn new(state: State, config: Config) -> Self {
-        Self { state, config }
+    fn new(config: Config) -> Self {
+        Self { config }
     }
 
     fn config_timezone(self) -> Result<Self, ConfigureError> {
@@ -47,27 +52,30 @@ impl HandlingConfiguration {
             "{}/{}",
             self.config.timezone.region, self.config.timezone.city
         ))?;
-        save_state(&self.state)?;
         Ok(self)
     }
 
     fn config_location(self) -> Result<Self, ConfigureError> {
         set_language(&self.config.location.language)?;
-        save_state(&self.state)?;
         set_keymaps(&self.config.location.keymap)?;
-        save_state(&self.state)?;
         Ok(self)
     }
 }
 
 pub fn configure() -> Result<(), ConfigureError> {
-    let state = load_state()?;
+    let mut state = load_state()?;
 
     let config = config().map_err(|e| ConfigureError::Setup(e.to_string()))?;
 
-    HandlingConfiguration::new(state, config)
+    if let Err(err) = HandlingConfiguration::new(config)
         .config_timezone()?
-        .config_location()?;
+        .config_location()
+    {
+        return Err(err);
+    } else {
+        state.incremente_state();
+        save_state(&state)?;
+    }
 
     Ok(())
 }

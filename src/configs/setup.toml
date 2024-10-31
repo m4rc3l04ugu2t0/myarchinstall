@@ -5,7 +5,7 @@ city = "Sao_Paulo"
 
 # Setting up the location
 [location]
-language = ["en_US.UTF-8"]
+language = ["en_US.UTF-8 UTF-8"]
 keymap = "br-abnt2"
 
 # Configurações gerais do sistema

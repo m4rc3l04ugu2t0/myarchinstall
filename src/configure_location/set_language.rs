@@ -53,7 +53,7 @@ fn edit_locale_gen(language: &Vec<String>) -> Result<(), ConfigureError> {
         writeln!(file, "{}", line)?;
     }
 
-    Ok(())
+    Err(ConfigureError::LocaleGen("kkd".to_string()))
 }
 
 fn configure_locale_conf(language: &Vec<String>) -> Result<(), ConfigureError> {
