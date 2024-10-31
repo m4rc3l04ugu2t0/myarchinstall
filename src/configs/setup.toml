@@ -16,7 +16,20 @@ username = "arch"
 username_password = "arch"
 
 [packages]
-essentials = ["base-devel", "networkmanager", "sudo", "git", "vim", "curl", "wget", ]
+essentials = [
+    "neofetch"
+]
+# essentials = [
+#         "dosfstools",
+#         "os-prober",
+#         "mtools",
+#         "network-manager-applet",
+#         "networkmanager",
+#         "wpa_supplicant",
+#         "wireless_tools",
+#         "dialog",
+#         "sudo",
+#     ]
 
 [zran]
 enabled = true

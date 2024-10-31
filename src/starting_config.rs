@@ -13,6 +13,7 @@ use crate::{
         relative_path::relative_path,
         state::{load_state, save_state},
     },
+    install_packages::install_essentials::install_assentials,
     structure_config::structs_opition::{Drives, Location, Packages, System, Timezone, Zran},
     ConfigureError,
 };
@@ -65,6 +66,7 @@ impl HandlingConfiguration {
                     &self.config.system.username_password,
                 )
             }),
+            Box::new(|| install_assentials(&self.config.packages.essentials)),
         ];
 
         for step in steps.iter().skip(state.step.into()) {

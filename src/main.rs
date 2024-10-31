@@ -5,6 +5,7 @@ mod configure_new_user;
 mod configure_root;
 mod errors;
 mod functions;
+mod install_packages;
 mod starting_config;
 mod structure_config;
 

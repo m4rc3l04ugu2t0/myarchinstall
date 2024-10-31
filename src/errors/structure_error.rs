@@ -16,6 +16,7 @@ pub enum ConfigureError {
     RunCommand(String),
     LocaleGen(String),
     Hostname(String),
+    Bootloader(String),
 }
 impl fmt::Display for ConfigureError {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
@@ -31,6 +32,7 @@ impl fmt::Display for ConfigureError {
             Self::RunCommand(err) => write!(f, "Error to run command: {}", err),
             Self::LocaleGen(err) => write!(f, "Error to locale-gen: {}", err),
             Self::Hostname(err) => write!(f, "Error to hostname: {}", err),
+            Self::Bootloader(err) => write!(f, "Error to bootloader: {}", err),
         }
     }
 }

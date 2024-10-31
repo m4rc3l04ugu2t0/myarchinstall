@@ -18,7 +18,7 @@ fn run_hostname(hostname: &str) -> Result<(), ConfigureError> {
     )?;
 
     let commands = [
-        r#"echo "127.0.0.1    localhost" >> /etc/hosts"#.to_string(),
+        r#"echo "127.0.0.1    localhost" > /etc/hosts"#.to_string(),
         r#"echo "::1          localhost" >> /etc/hosts"#.to_string(),
         format!(
             r#"echo "127.0.1.1    {}.localdomain {}" >> /etc/hosts"#,
