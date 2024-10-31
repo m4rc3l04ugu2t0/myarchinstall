@@ -23,7 +23,7 @@ pub fn set_timezone(timezone: &str) -> Result<(), ConfigureError> {
     )?;
 
     println!("The timezone was configured successfully.");
-    Err(ConfigureError::ConfigTimezone("mm".to_string()))
+    Ok(())
 }
 
 fn valid_timezone(timezone: &str) -> bool {
