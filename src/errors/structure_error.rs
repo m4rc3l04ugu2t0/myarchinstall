@@ -15,6 +15,7 @@ pub enum ConfigureError {
     Timezone(String),
     RunCommand(String),
     LocaleGen(String),
+    Hostname(String),
 }
 impl fmt::Display for ConfigureError {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
@@ -29,6 +30,7 @@ impl fmt::Display for ConfigureError {
             Self::Timezone(err) => write!(f, "Error to save state: {}", err),
             Self::RunCommand(err) => write!(f, "Error to run command: {}", err),
             Self::LocaleGen(err) => write!(f, "Error to locale-gen: {}", err),
+            Self::Hostname(err) => write!(f, "Error to hostname: {}", err),
         }
     }
 }

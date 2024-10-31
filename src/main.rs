@@ -1,5 +1,8 @@
 mod config_timezone;
+mod configure_hostname;
 mod configure_location;
+mod configure_new_user;
+mod configure_root;
 mod errors;
 mod functions;
 mod starting_config;

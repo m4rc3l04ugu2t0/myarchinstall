@@ -5,10 +5,10 @@ use toml::from_str;
 
 use crate::{
     config_timezone::set_timezone::set_timezone,
-    configure_location::{
-        set_keymaps::{self, set_keymaps},
-        set_language::set_language,
-    },
+    configure_hostname::set_hostname::set_hostname,
+    configure_location::{set_keymaps::set_keymaps, set_language::set_language},
+    configure_new_user::set_new_user::set_new_user,
+    configure_root::set_root::set_root,
     functions::{
         relative_path::relative_path,
         state::{load_state, save_state},
@@ -47,18 +47,40 @@ impl HandlingConfiguration {
         Self { config }
     }
 
-    fn config_timezone(self) -> Result<Self, ConfigureError> {
-        set_timezone(&format!(
-            "{}/{}",
-            self.config.timezone.region, self.config.timezone.city
-        ))?;
-        Ok(self)
-    }
+    fn steps(&self, state: &mut State) -> Result<(), ConfigureError> {
+        let steps: Vec<Box<dyn Fn() -> Result<(), ConfigureError>>> = vec![
+            Box::new(|| {
+                set_timezone(&format!(
+                    "{}/{}",
+                    self.config.timezone.region, self.config.timezone.city
+                ))
+            }),
+            Box::new(|| set_language(&self.config.location.language)),
+            Box::new(|| set_keymaps(&self.config.location.keymap)),
+            Box::new(|| set_hostname(&self.config.system.hostname)),
+            Box::new(|| set_root(&self.config.system.root_password)),
+            Box::new(|| {
+                set_new_user(
+                    &self.config.system.username,
+                    &self.config.system.username_password,
+                )
+            }),
+        ];
 
-    fn config_location(self) -> Result<Self, ConfigureError> {
-        set_language(&self.config.location.language)?;
-        set_keymaps(&self.config.location.keymap)?;
-        Ok(self)
+        for step in steps.iter().skip(state.step.into()) {
+            match step() {
+                Ok(_) => {
+                    state.incremente_state();
+                    save_state(&state)?;
+                }
+                Err(err) => {
+                    save_state(&state)?;
+                    return Err(err);
+                }
+            }
+        }
+
+        Ok(())
     }
 }
 
@@ -66,16 +88,7 @@ pub fn configure() -> Result<(), ConfigureError> {
     let mut state = load_state()?;
 
     let config = config().map_err(|e| ConfigureError::Setup(e.to_string()))?;
-
-    if let Err(err) = HandlingConfiguration::new(config)
-        .config_timezone()?
-        .config_location()
-    {
-        return Err(err);
-    } else {
-        state.incremente_state();
-        save_state(&state)?;
-    }
+    HandlingConfiguration::new(config).steps(&mut state)?;
 
     Ok(())
 }

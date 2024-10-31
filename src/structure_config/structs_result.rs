@@ -1,3 +1,0 @@
-enum ResultStatus {
-    Ok(),
-}
