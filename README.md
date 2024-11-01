@@ -1,6 +1,7 @@
 # MyArchInstall: v1
 
 Automatize a instalação do Arch Linux com facilidade. Este script em Rust foi criado para agilizar o processo de configuração que faço sempre que mudo de sistema (algo frequente, nem pergunte!). A ferramenta cobre as configurações iniciais essenciais que realizo antes do primeiro boot no sistema já instalado (sem interface gráfica e com configurações básicas).
+Para uma instalação completa do Arch Linux, confira meu guia no site [NextLevelCodeBlog](https://nextlevelcodeblog.netlify.app/posts/ArchLinuxInstallGuide) ou assista ao vídeo em meu canal no YouTube [NextLevelCode](https://www.youtube.com/@NextLevelCode014).
 
 ![Ilustração](src/assets/01.jpeg)
 
