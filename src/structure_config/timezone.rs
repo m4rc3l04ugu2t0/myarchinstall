@@ -34,7 +34,7 @@ impl<R, C> TimezoneBuilder<R, C> {
         region: &str,
         city: &str,
     ) -> Result<TimezoneBuilder<RegioValid, CityValid>> {
-        if !format!("{}/{}", region, city).parse::<Tz>().is_ok() {
+        if format!("{}/{}", region, city).parse::<Tz>().is_err() {
             return Err(Error::ConfigTimezone(
                 "Invalid Timezone! Make sure it's correct.",
             ));

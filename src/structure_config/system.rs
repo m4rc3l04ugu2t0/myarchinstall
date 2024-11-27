@@ -33,7 +33,7 @@ pub struct UserPasswordNotValid;
 pub struct System {
     pub hostname: String,
     pub root_password: String,
-    pub user: String,
+    pub username: String,
     pub user_password: String,
 }
 
@@ -41,7 +41,7 @@ pub struct System {
 pub struct SystemBuilder<H, R, U, P> {
     pub hostname: H,
     pub root_password: R,
-    pub user: U,
+    pub username: U,
     pub user_password: P,
 }
 
@@ -51,7 +51,7 @@ impl<H, R, U, P> SystemBuilder<H, R, U, P> {
         Ok(SystemBuilder {
             hostname: HostnameValid(hostname.into()),
             root_password: self.root_password,
-            user: self.user,
+            username: self.username,
             user_password: self.user_password,
         })
     }
@@ -61,7 +61,7 @@ impl<H, R, U, P> SystemBuilder<H, R, U, P> {
         Ok(SystemBuilder {
             hostname: self.hostname,
             root_password: RootPasswordValid(password.into()),
-            user: self.user,
+            username: self.username,
             user_password: self.user_password,
         })
     }
@@ -75,7 +75,7 @@ impl<H, R, U, P> SystemBuilder<H, R, U, P> {
         Ok(SystemBuilder {
             hostname: self.hostname,
             root_password: self.root_password,
-            user: UserValid(user.into()),
+            username: UserValid(user.into()),
             user_password: UserPasswordValid(password.into()),
         })
     }
@@ -92,7 +92,7 @@ impl SystemBuilder<HostnameValid, RootPasswordValid, UserValid, UserPasswordVali
         Ok(System {
             hostname: self.hostname.0,
             root_password: self.root_password.0,
-            user: self.user.0,
+            username: self.username.0,
             user_password: self.user_password.0,
         })
     }

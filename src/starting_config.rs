@@ -31,7 +31,7 @@ impl fmt::Display for Config {
         writeln!(f, "Language: {:#?}", self.location.language)?;
         writeln!(f, "Keymap: {}", self.location.keymap)?;
         writeln!(f, "Hostname: {}", self.system.hostname)?;
-        writeln!(f, "User: {}", self.system.user)?;
+        writeln!(f, "User: {}", self.system.username)?;
         writeln!(f, "Essentials: {:#?}", self.packages.essentials)?;
         Ok(())
     }
@@ -94,7 +94,7 @@ impl ConfigBuilder {
         self.system = SystemBuilder::new()
             .setup_hostname(&self.system.hostname)?
             .setup_root(&self.system.root_password)?
-            .setup_user(&self.system.user, &self.system.user_password)?
+            .setup_user(&self.system.username, &self.system.user_password)?
             .build()?;
 
         self.save_state(state)?;
