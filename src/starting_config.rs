@@ -12,7 +12,7 @@ use crate::structure_config::packages::{Packages, PackagesBuilder};
 use crate::structure_config::system::{System, SystemBuilder};
 use crate::structure_config::timezone::{Timezone, TimezoneBuilder};
 
-#[derive(Deserialize)]
+#[derive(Deserialize, Debug)]
 pub struct Config {
     timezone: Timezone,
     location: Location,
@@ -128,7 +128,10 @@ pub fn configure() -> Result<()> {
     config.setup_system(&mut state)?;
     config.setup_packages(&mut state)?;
 
-    config.build()?; // Build the final configuration
+    let final_config = config.build()?;
+
+    println!("Configuration completed successfully!");
+    println!("{:#?}", final_config);
 
     Ok(())
 }
