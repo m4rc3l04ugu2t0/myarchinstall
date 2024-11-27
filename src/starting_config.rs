@@ -40,45 +40,65 @@ pub struct ConfigBuilder {
 }
 
 impl ConfigBuilder {
-    fn setup_timezone(self) -> Result<ConfigBuilder> {
-        let timezone = TimezoneBuilder::new()
-            .valid_timezone(self.timezone.region, self.timezone.city)?
+    fn setup_timezone(&mut self, state: &mut State) -> Result<()> {
+        if state.step >= 1 {
+            return Ok(()); // Skip if already completed
+        }
+
+        self.timezone = TimezoneBuilder::new()
+            .valid_timezone(self.timezone.region.clone(), self.timezone.city.clone())?
             .build()?;
 
-        Ok(ConfigBuilder { timezone, ..self })
+        self.save_state(state)?; // Increment state after success
+        Ok(())
     }
 
-    fn setup_location(self) -> Result<ConfigBuilder> {
-        let location = LocationBuilder::new()
+    fn setup_location(&mut self, state: &mut State) -> Result<()> {
+        if state.step >= 2 {
+            return Ok(()); // Skip if already completed
+        }
+
+        self.location = LocationBuilder::new()
             .valid_language(&self.location.language)?
             .valid_keymap(&self.location.keymap)?
             .build()?;
 
-        Ok(ConfigBuilder { location, ..self })
+        self.save_state(state)?;
+        Ok(())
     }
 
-    fn setup_system(self) -> Result<ConfigBuilder> {
-        let system = SystemBuilder::new()
+    fn setup_system(&mut self, state: &mut State) -> Result<()> {
+        if state.step >= 3 {
+            return Ok(()); // Skip if already completed
+        }
+
+        self.system = SystemBuilder::new()
             .setup_hostname(&self.system.hostname)?
             .setup_root(&self.system.root_password)?
             .setup_user(&self.system.user, &self.system.user_password)?
             .build()?;
 
-        Ok(ConfigBuilder { system, ..self })
+        self.save_state(state)?;
+        Ok(())
     }
 
-    fn setup_packages(self) -> Result<ConfigBuilder> {
-        let packages = PackagesBuilder::new()
+    fn setup_packages(&mut self, state: &mut State) -> Result<()> {
+        if state.step >= 4 {
+            return Ok(()); // Skip if already completed
+        }
+
+        self.packages = PackagesBuilder::new()
             .essentials_valid(&self.packages.essentials)?
             .build()?;
 
-        Ok(ConfigBuilder { packages, ..self })
+        self.save_state(state)?;
+        Ok(())
     }
 
-    fn save_state(self, state: &mut State) -> Result<Self> {
+    fn save_state(&self, state: &mut State) -> Result<()> {
         state.incremente_state();
-        state::save_state(state)?;
-        Ok(self)
+        state::save_state(state)?; // Save the updated state
+        Ok(())
     }
 }
 
@@ -100,20 +120,15 @@ impl ConfigBuilder {
 }
 
 pub fn configure() -> Result<()> {
-    let mut state = load_state()?;
+    let mut state = load_state()?; // Load saved state
+    let mut config = ConfigBuilder::new(); // Create a mutable instance
 
-    let config = config()?;
+    config.setup_timezone(&mut state)?; // Sequentially call setup methods
+    config.setup_location(&mut state)?;
+    config.setup_system(&mut state)?;
+    config.setup_packages(&mut state)?;
 
-    ConfigBuilder::new()
-        .setup_timezone()?
-        .save_state(&mut state)?
-        .setup_location()?
-        .save_state(&mut state)?
-        .setup_system()?
-        .save_state(&mut state)?
-        .setup_packages()?
-        .save_state(&mut state)?
-        .build()?;
+    config.build()?; // Build the final configuration
 
     Ok(())
 }
