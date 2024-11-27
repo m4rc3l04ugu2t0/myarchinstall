@@ -36,10 +36,11 @@ impl<R, C> TimezoneBuilder<R, C> {
     ) -> Result<TimezoneBuilder<RegioValid, CityValid>> {
         let region = region.into();
         let city = city.into();
-        format!("{}/{}", region, city)
-            .as_str()
-            .parse::<Tz>()
-            .map_err(|_| Error::ConfigTimezone("Invalid Timezone! Make sure it's correct."))?;
+        if format!("{}/{}", region, city).parse::<Tz>().is_ok() {
+            return Err(Error::ConfigTimezone(
+                "Invalid Timezone! Make sure it's correct.",
+            ));
+        }
 
         println!("Starting to configure the timezone system.");
 
