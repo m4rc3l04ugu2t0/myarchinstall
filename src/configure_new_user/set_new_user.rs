@@ -1,11 +1,9 @@
 use std::process::Command;
 
-use crate::{
-    functions::{run_commands::run_command, run_password_command::run_passwd_command},
-    ConfigureError,
-};
+use crate::functions::{run_commands::run_command, run_password_command::run_passwd_command};
+use crate::prelude::*;
 
-pub fn set_new_user(username: &str, password: &str) -> Result<(), ConfigureError> {
+pub fn set_new_user(username: &str, password: &str) -> Result<()> {
     println!("Create user.");
     run_command(
         Command::new("useradd")

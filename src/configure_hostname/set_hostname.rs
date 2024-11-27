@@ -1,8 +1,9 @@
 use std::process::Command;
 
-use crate::{functions::run_commands::run_command, ConfigureError};
+use crate::functions::run_commands::run_command;
+use crate::prelude::*;
 
-pub fn set_hostname(hostname: &str) -> Result<(), ConfigureError> {
+pub fn set_hostname(hostname: &str) -> Result<()> {
     run_command(
         Command::new("sh")
             .arg("-c")

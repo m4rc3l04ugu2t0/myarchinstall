@@ -2,10 +2,12 @@ use std::process::Command;
 
 use crate::{
     functions::run_commands::run_command,
-    install_packages::configure_bootloader::configure_bootloader, ConfigureError,
+    install_packages::configure_bootloader::configure_bootloader,
 };
 
-pub fn install_assentials(packages: &Vec<String>) -> Result<(), ConfigureError> {
+use crate::prelude::*;
+
+pub fn install_assentials(packages: &[String]) -> Result<()> {
     run_command(
         Command::new("pacman")
             .arg("-S")

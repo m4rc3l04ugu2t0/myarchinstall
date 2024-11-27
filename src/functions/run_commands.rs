@@ -3,25 +3,19 @@ use std::{
     process::{Command, Stdio},
 };
 
-use crate::ConfigureError;
+use crate::prelude::*;
 
-pub fn run_command(command: &mut Command) -> Result<(), ConfigureError> {
+pub fn run_command(command: &mut Command) -> Result<()> {
     let mut child = command
         .stdout(Stdio::piped())
         .stderr(Stdio::piped())
-        .spawn()
-        .map_err(|e| ConfigureError::RunCommand(e.to_string()))?;
+        .spawn()?;
 
     if let Some(stdout) = child.stdout.take() {
         let reader = BufReader::new(stdout);
 
         for line in reader.lines() {
-            match line {
-                Ok(line) => println!("{}", line),
-                Err(err) => {
-                    return Err(ConfigureError::RunCommand(err.to_string()));
-                }
-            }
+            println!("{}", line?);
         }
     }
 
@@ -29,19 +23,14 @@ pub fn run_command(command: &mut Command) -> Result<(), ConfigureError> {
         let reader = BufReader::new(stderr);
 
         for line in reader.lines() {
-            match line {
-                Ok(line) => eprint!("{}", line),
-                Err(err) => return Err(ConfigureError::RunCommand(err.to_string())),
-            }
+            eprint!("{}", line?);
         }
     }
 
-    let status = child
-        .wait()
-        .map_err(|err| ConfigureError::RunCommand(err.to_string()))?;
+    let status = child.wait()?;
 
     if !status.success() {
-        return Err(ConfigureError::RunCommand(status.to_string()));
+        return Err(Error::Static("Command failed"));
     }
 
     Ok(())

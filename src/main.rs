@@ -1,17 +1,9 @@
-mod config_timezone;
-mod configure_hostname;
-mod configure_location;
-mod configure_new_user;
-mod configure_root;
-mod errors;
-mod functions;
-mod install_packages;
-mod starting_config;
-mod structure_config;
+#![allow(unused)]
+use crate::prelude::*;
+use myarchinstall::starting_config::configure;
 
-use starting_config::configure;
-
-pub use self::errors::structure_error::{ConfigureError, Result};
+mod error;
+mod prelude;
 
 fn main() {
     if let Err(err) = configure() {
