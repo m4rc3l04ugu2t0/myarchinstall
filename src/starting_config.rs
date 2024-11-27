@@ -122,8 +122,8 @@ impl ConfigBuilder {
 }
 
 impl ConfigBuilder {
-    pub fn new() -> Self {
-        Self::default()
+    pub fn new(config: ConfigBuilder) -> Self {
+        Self { ..config }
     }
 }
 
@@ -140,7 +140,7 @@ impl ConfigBuilder {
 
 pub fn configure() -> Result<()> {
     let mut state = load_state()?; // Load saved state
-    let mut config = ConfigBuilder::new(); // Create a mutable instance
+    let mut config = ConfigBuilder::new(config()?); // Create a mutable instance
 
     config.setup_timezone(&mut state)?; // Sequentially call setup methods
     config.setup_location(&mut state)?;
