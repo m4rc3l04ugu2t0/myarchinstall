@@ -31,12 +31,10 @@ pub struct TimezoneBuilder<R, C> {
 impl<R, C> TimezoneBuilder<R, C> {
     pub fn valid_timezone(
         self,
-        region: impl Into<String>,
-        city: impl Into<String>,
+        region: &str,
+        city: &str,
     ) -> Result<TimezoneBuilder<RegioValid, CityValid>> {
-        let region = region.into();
-        let city = city.into();
-        if format!("{}/{}", region, city).parse::<Tz>().is_ok() {
+        if !format!("{}/{}", region, city).parse::<Tz>().is_ok() {
             return Err(Error::ConfigTimezone(
                 "Invalid Timezone! Make sure it's correct.",
             ));
@@ -53,8 +51,8 @@ impl<R, C> TimezoneBuilder<R, C> {
 
         println!("The timezone was configured successfully.");
         Ok(TimezoneBuilder {
-            region: RegioValid(region),
-            city: CityValid(city),
+            region: RegioValid(region.to_owned()),
+            city: CityValid(city.to_owned()),
         })
     }
 }

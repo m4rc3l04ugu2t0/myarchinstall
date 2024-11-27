@@ -62,8 +62,10 @@ impl ConfigBuilder {
             return Ok(()); // Skip if already completed
         }
 
+        println!("{}", &self.timezone.region);
+
         self.timezone = TimezoneBuilder::new()
-            .valid_timezone(self.timezone.region.clone(), self.timezone.city.clone())?
+            .valid_timezone(&self.timezone.region, &self.timezone.city)?
             .build()?;
 
         self.save_state(state)?; // Increment state after success
