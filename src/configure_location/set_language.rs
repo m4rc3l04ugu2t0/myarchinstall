@@ -27,21 +27,13 @@ fn edit_locale_gen(language: &[String]) -> Result<()> {
         .map_err(|e| Error::LocaleGen(format!("Failure to open {}: {}", locale_gen_path, e)))?;
     let reader = BufReader::new(file);
     let mut lines = Vec::new();
-    let mut language_valid = false;
 
     for line in reader.lines() {
         let mut line = line.map_err(|e| Error::LocaleGen(format!("Failed to read line: {}", e)))?;
         if line.trim() == format!("#{}", language[0].trim()) {
-            language_valid = true;
             line = language[0].to_string();
         }
         lines.push(line);
-    }
-
-    if !language_valid {
-        return Err(Error::Static(
-            "Language not found in /etc/locale.gen! Make sure it's correct.",
-        ));
     }
 
     let mut file = OpenOptions::new()
