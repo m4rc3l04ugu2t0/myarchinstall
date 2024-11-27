@@ -1,4 +1,5 @@
 #![allow(unused)]
+use std::fmt;
 use std::fs::read_to_string;
 
 use serde::{Deserialize, Serialize};
@@ -18,6 +19,22 @@ pub struct Config {
     location: Location,
     system: System,
     packages: Packages,
+}
+
+impl fmt::Display for Config {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        writeln!(
+            f,
+            "Timezone: {}/{}",
+            self.timezone.region, self.timezone.city
+        )?;
+        writeln!(f, "Language: {:#?}", self.location.language)?;
+        writeln!(f, "Keymap: {}", self.location.keymap)?;
+        writeln!(f, "Hostname: {}", self.system.hostname)?;
+        writeln!(f, "User: {}", self.system.user)?;
+        writeln!(f, "Essentials: {:#?}", self.packages.essentials)?;
+        Ok(())
+    }
 }
 
 #[derive(Serialize, Deserialize, Debug, PartialEq)]
@@ -130,8 +147,7 @@ pub fn configure() -> Result<()> {
 
     let final_config = config.build()?;
 
-    println!("Configuration completed successfully!");
-    println!("{:#?}", final_config);
+    println!("Configuration completed successfully:\n{}", final_config);
 
     Ok(())
 }
