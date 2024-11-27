@@ -62,7 +62,7 @@ impl ConfigBuilder {
             return Ok(()); // Skip if already completed
         }
 
-        println!("{}", &self.timezone.region);
+        println!("ah no: {}", &self.timezone.region);
 
         self.timezone = TimezoneBuilder::new()
             .valid_timezone(&self.timezone.region, &self.timezone.city)?
