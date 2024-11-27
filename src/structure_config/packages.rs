@@ -4,6 +4,7 @@ use crate::{
     },
     prelude::*,
 };
+use log::info;
 use serde::Deserialize;
 
 #[derive(Debug, Default)]
@@ -28,7 +29,9 @@ impl<E> PackagesBuilder<E> {
         essentials: &[String],
     ) -> Result<PackagesBuilder<EssentialValid>> {
         install_assentials(essentials)?;
+        info!("Installing bootloader...");
         configure_bootloader()?;
+        info!("Bootloader installed successfully");
         Ok(PackagesBuilder {
             essentials: EssentialValid(essentials),
         })

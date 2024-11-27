@@ -2,6 +2,7 @@
 use std::fmt;
 use std::fs::read_to_string;
 
+use log::info;
 use serde::{Deserialize, Serialize};
 use toml::from_str;
 
@@ -142,13 +143,23 @@ pub fn configure() -> Result<()> {
     let mut state = load_state()?; // Load saved state
     let mut config = ConfigBuilder::new(config()?); // Create a mutable instance
 
-    config.setup_timezone(&mut state)?; // Sequentially call setup methods
+    info!("Configuring timezone...");
+    config.setup_timezone(&mut state)?;
+    info!("Timezone configured successfully");
+
+    info!("Configuring location...");
     config.setup_location(&mut state)?;
+    info!("Location configured successfully");
+
+    info!("Configuring system...");
     config.setup_system(&mut state)?;
+    info!("System configured successfully");
+
+    info!("Installing packages...");
     config.setup_packages(&mut state)?;
+    info!("Packages installed successfully");
 
     let final_config = config.build()?;
-
     println!("Configuration completed successfully:\n{}", final_config);
 
     Ok(())

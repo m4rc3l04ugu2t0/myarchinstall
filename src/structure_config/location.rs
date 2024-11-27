@@ -4,6 +4,7 @@ use crate::{
     configure_location::set_language::set_language, functions::run_commands::run_command,
     prelude::*,
 };
+use log::info;
 use serde::Deserialize;
 
 #[derive(Default, Debug)]
@@ -32,7 +33,9 @@ pub struct LocationBuilder<L, K> {
 
 impl<L, K> LocationBuilder<L, K> {
     pub fn valid_language(self, language: &[String]) -> Result<LocationBuilder<LanguageValid, K>> {
+        info!("Configuring language...");
         set_language(language)?;
+        info!("Language configured successfully");
 
         Ok(LocationBuilder {
             language: LanguageValid(language),
@@ -41,13 +44,13 @@ impl<L, K> LocationBuilder<L, K> {
     }
 
     pub fn valid_keymap(self, keymap: &str) -> Result<LocationBuilder<L, KeyMapValid>> {
+        info!("Configuring keymap...");
         run_command(
             Command::new("sh")
                 .arg("-c")
                 .arg(format!("echo KEYMAP={} >> /etc/vconsole.conf", keymap)),
         )?;
-
-        println!("Keymaps successfully configured!");
+        info!("Keymap configured successfully");
 
         Ok(LocationBuilder {
             language: self.language,

@@ -3,9 +3,12 @@ use std::{
     process::{Command, Stdio},
 };
 
+use log::info;
+
 use crate::prelude::*;
 
 pub fn run_passwd_command(password: &str, user_name: &str) -> Result<()> {
+    info!("Executing 'passwd' command for user: {}", user_name);
     let user_check = Command::new("id").arg(user_name).output()?;
 
     if !user_check.status.success() {

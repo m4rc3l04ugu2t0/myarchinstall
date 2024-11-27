@@ -35,12 +35,8 @@ impl<R, C> TimezoneBuilder<R, C> {
         city: &str,
     ) -> Result<TimezoneBuilder<RegioValid, CityValid>> {
         if format!("{}/{}", region, city).parse::<Tz>().is_err() {
-            return Err(Error::ConfigTimezone(
-                "Invalid Timezone! Make sure it's correct.",
-            ));
+            return Err(Error::Static("Invalid Timezone! Make sure it's correct."));
         }
-
-        println!("Starting to configure the timezone system.");
 
         run_command(
             Command::new("ln")
@@ -49,7 +45,6 @@ impl<R, C> TimezoneBuilder<R, C> {
                 .arg("/etc/localtime"),
         )?;
 
-        println!("The timezone was configured successfully.");
         Ok(TimezoneBuilder {
             region: RegioValid(region.to_owned()),
             city: CityValid(city.to_owned()),

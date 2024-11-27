@@ -14,11 +14,6 @@ pub fn install_assentials(packages: &[String]) -> Result<()> {
             .args(packages)
             .arg("--noconfirm"),
     )?;
-
-    println!("Successfully.");
-
-    println!("Configuring grub.");
-
     configure_bootloader()?;
 
     run_command(
@@ -36,12 +31,9 @@ pub fn install_assentials(packages: &[String]) -> Result<()> {
         "--recheck",
     ]))?;
 
-    println!("Generating grub configuration file.");
-
     run_command(Command::new("grub-mkconfig").args(["-o", "/boot/grub/grub.cfg"]))?;
 
     run_command(Command::new("cat").arg("/boot/grub/grub.cfg"))?;
 
-    println!("Grub configured successfully!");
     Ok(())
 }

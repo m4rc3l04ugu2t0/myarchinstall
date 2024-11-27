@@ -23,7 +23,5 @@ pub fn set_hostname(hostname: &str) -> Result<()> {
         run_command(Command::new("sh").arg("-c").arg(command))?;
     }
 
-    println!("Hosname successfully configured!");
-
     Ok(())
 }

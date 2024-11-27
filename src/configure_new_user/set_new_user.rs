@@ -4,7 +4,6 @@ use crate::functions::{run_commands::run_command, run_password_command::run_pass
 use crate::prelude::*;
 
 pub fn set_new_user(username: &str, password: &str) -> Result<()> {
-    println!("Create user.");
     run_command(
         Command::new("useradd")
             .arg("-m")
@@ -17,6 +16,5 @@ pub fn set_new_user(username: &str, password: &str) -> Result<()> {
             .arg(username),
     )?;
     run_passwd_command(password, username)?;
-    println!("User successefully configured!");
     Ok(())
 }

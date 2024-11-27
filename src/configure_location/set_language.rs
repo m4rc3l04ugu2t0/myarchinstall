@@ -8,14 +8,11 @@ use std::{
 use crate::functions::run_commands::run_command;
 
 pub fn set_language(language: &[String]) -> Result<()> {
-    println!("Configurando linguagem do sistema...");
-
     edit_locale_gen(language)?;
     run_command(&mut Command::new("locale-gen"))?;
 
     configure_locale_conf(language)?;
 
-    println!("Language successfully configured");
     Ok(())
 }
 

@@ -1,3 +1,4 @@
+pub mod configuration_log;
 pub mod configure_hostname;
 pub mod configure_location;
 pub mod configure_new_user;

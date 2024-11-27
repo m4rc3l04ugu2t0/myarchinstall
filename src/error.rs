@@ -1,7 +1,5 @@
 #[derive(thiserror::Error, Debug)]
 pub enum Error {
-    #[error("Failed to configure timezone: {0}")]
-    ConfigTimezone(&'static str),
     #[error("Failed to access the current directory: {0}")]
     CurrentDir(String),
     #[error("Failed to read file: {0}")]
@@ -26,4 +24,6 @@ pub enum Error {
     Bootloader(String),
     #[error("Error: {0}")]
     Static(&'static str),
+    #[error("Logger error: {0}")]
+    Logger(#[from] log::SetLoggerError),
 }

@@ -1,3 +1,4 @@
+use log::info;
 use serde::Deserialize;
 
 use crate::configure_hostname::set_hostname::set_hostname;
@@ -47,7 +48,9 @@ pub struct SystemBuilder<H, R, U, P> {
 
 impl<H, R, U, P> SystemBuilder<H, R, U, P> {
     pub fn setup_hostname(self, hostname: &str) -> Result<SystemBuilder<HostnameValid, R, U, P>> {
+        info!("Configuring hostname...");
         set_hostname(hostname)?;
+        info!("Hostname configured successfully");
         Ok(SystemBuilder {
             hostname: HostnameValid(hostname.into()),
             root_password: self.root_password,
@@ -57,7 +60,9 @@ impl<H, R, U, P> SystemBuilder<H, R, U, P> {
     }
 
     pub fn setup_root(self, password: &str) -> Result<SystemBuilder<H, RootPasswordValid, U, P>> {
+        info!("Configuring root password...");
         set_root(password)?;
+        info!("Root password configured successfully");
         Ok(SystemBuilder {
             hostname: self.hostname,
             root_password: RootPasswordValid(password.into()),
@@ -71,7 +76,9 @@ impl<H, R, U, P> SystemBuilder<H, R, U, P> {
         user: &str,
         password: &str,
     ) -> Result<SystemBuilder<H, R, UserValid, UserPasswordValid>> {
+        info!("Configuring new user...");
         set_new_user(user, password)?;
+        info!("New user configured successfully");
         Ok(SystemBuilder {
             hostname: self.hostname,
             root_password: self.root_password,
