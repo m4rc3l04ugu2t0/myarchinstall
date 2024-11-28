@@ -63,8 +63,6 @@ impl ConfigBuilder {
             return Ok(()); // Skip if already completed
         }
 
-        println!("ah no: {}", &self.timezone.region);
-
         self.timezone = TimezoneBuilder::new()
             .valid_timezone(&self.timezone.region, &self.timezone.city)?
             .build()?;
@@ -160,7 +158,7 @@ pub fn configure() -> Result<()> {
     info!("Packages installed successfully");
 
     let final_config = config.build()?;
-    println!("Configuration completed successfully:\n{}", final_config);
+    info!("Configuration completed successfully:\n{}", final_config);
 
     Ok(())
 }

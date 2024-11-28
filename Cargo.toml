@@ -4,7 +4,8 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-chrono-tz = "0.10.0"
+chrono = { version = "0.4.38"}
+chrono-tz = { version = "0.10.0"}
 dotenv = "0.15.0"
 log = "0.4.22"
 serde = { version = "1.0.214", features = [ "derive" ] }
