@@ -15,6 +15,7 @@ pub fn run_command(command: &mut Command) -> Result<()> {
     let mut log_file = OpenOptions::new()
         .truncate(true)
         .create(true)
+        .append(true)
         .open(log_file_path)?;
 
     let command_str = format!("{:#?}", command);
@@ -34,11 +35,13 @@ pub fn run_command(command: &mut Command) -> Result<()> {
     let mut stdout_file = OpenOptions::new()
         .truncate(true)
         .create(true)
+        .append(true)
         .open(stdout_path)?;
 
     let mut stderr_file = OpenOptions::new()
         .truncate(true)
         .create(true)
+        .append(true)
         .open(stderr_path)?;
 
     if let Some(stdout) = child.stdout.take() {
