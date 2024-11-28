@@ -8,8 +8,10 @@ use chrono::Local;
 
 use crate::prelude::*;
 
+use super::relative_path::relative_path;
+
 pub fn run_command(command: &mut Command) -> Result<()> {
-    let log_file_path = "commands.log";
+    let log_file_path = relative_path("commands.log")?;
     let mut log_file = OpenOptions::new()
         .truncate(true)
         .create(true)
@@ -26,8 +28,8 @@ pub fn run_command(command: &mut Command) -> Result<()> {
         .spawn()?;
 
     // Files to save stdout and stderr
-    let stdout_path = "stdout.log";
-    let stderr_path = "stderr.log";
+    let stdout_path = relative_path("stdout.log")?;
+    let stderr_path = relative_path("stderr.log")?;
 
     let mut stdout_file = OpenOptions::new()
         .truncate(true)
