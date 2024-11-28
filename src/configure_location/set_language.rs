@@ -61,15 +61,8 @@ fn configure_locale_conf(language: &[String]) -> Result<()> {
     let mut file = OpenOptions::new()
         .write(true)
         .truncate(true)
-        .open(locale_conf_path)
-        .map_err(|e| {
-            Error::LocaleGen(format!(
-                "Failure to open {} from reading: {}",
-                locale_conf_path, e
-            ))
-        })?;
-    file.write_all(content.as_bytes()).map_err(|e| {
-        Error::LocaleGen(format!("Failure to write in {}: {}", locale_conf_path, e))
-    })?;
+        .create(true)
+        .open(locale_conf_path)?;
+    file.write_all(content.as_bytes())?;
     Ok(())
 }
