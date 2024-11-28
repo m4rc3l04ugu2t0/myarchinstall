@@ -53,7 +53,10 @@ fn edit_locale_gen(language: &[String]) -> Result<()> {
 
 fn configure_locale_conf(language: &[String]) -> Result<()> {
     let locale_conf_path = "/etc/locale.conf";
-    let content = format!("LANG={}\n", language[0]);
+    let content = format!(
+        "LANG={}\n",
+        language[0].strip_suffix(" UTF-8").unwrap_or(&language[0])
+    );
 
     let mut file = OpenOptions::new()
         .write(true)
