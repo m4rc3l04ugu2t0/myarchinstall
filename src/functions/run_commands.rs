@@ -13,7 +13,6 @@ use super::relative_path::relative_path;
 pub fn run_command(command: &mut Command) -> Result<()> {
     let log_file_path = relative_path("src/functions/commands.log")?;
     let mut log_file = OpenOptions::new()
-        .truncate(true)
         .create(true)
         .append(true)
         .open(log_file_path)?;
@@ -33,13 +32,11 @@ pub fn run_command(command: &mut Command) -> Result<()> {
     let stderr_path = relative_path("src/functions/stderr.log")?;
 
     let mut stdout_file = OpenOptions::new()
-        .truncate(true)
         .create(true)
         .append(true)
         .open(stdout_path)?;
 
     let mut stderr_file = OpenOptions::new()
-        .truncate(true)
         .create(true)
         .append(true)
         .open(stderr_path)?;
