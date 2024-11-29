@@ -1,4 +1,3 @@
-#![allow(unused)]
 use std::fmt;
 use std::fs::read_to_string;
 
@@ -15,7 +14,7 @@ use crate::structure_config::system::{System, SystemBuilder};
 use crate::structure_config::timezone::{Timezone, TimezoneBuilder};
 
 #[derive(Deserialize, Debug)]
-pub struct Config {
+struct Config {
     timezone: Timezone,
     location: Location,
     system: System,
@@ -49,8 +48,8 @@ impl State {
     }
 }
 
-#[derive(Deserialize, Default, Debug)]
-pub struct ConfigBuilder {
+#[derive(Deserialize)]
+struct ConfigBuilder {
     timezone: Timezone,
     location: Location,
     system: System,

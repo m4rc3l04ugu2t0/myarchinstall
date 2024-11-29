@@ -1,4 +1,3 @@
-#![allow(unused)]
 use myarchinstall::{configuration_log::initialize_logger, starting_config::configure};
 use prelude::*;
 
