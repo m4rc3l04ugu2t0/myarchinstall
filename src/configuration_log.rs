@@ -13,7 +13,7 @@ pub fn initialize_logger() -> Result<()> {
         WriteLogger::new(
             LevelFilter::Debug,
             Config::default(),
-            File::create("configuration.log")?,
+            File::create("src/logs/configuration.log")?,
         ),
     ])?;
     Ok(())
