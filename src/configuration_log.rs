@@ -1,4 +1,4 @@
-use crate::prelude::Result;
+use crate::{functions::relative_path::relative_path, prelude::Result};
 use simplelog::*;
 use std::fs::File;
 
@@ -13,7 +13,7 @@ pub fn initialize_logger() -> Result<()> {
         WriteLogger::new(
             LevelFilter::Debug,
             Config::default(),
-            File::create("src/logs/configuration.log")?,
+            File::create(relative_path("src/logs/configuration.log")?)?,
         ),
     ])?;
     Ok(())
