@@ -10,17 +10,12 @@ pub enum Error {
     SaveState(#[from] serde_json::Error),
     #[error("Failed to configure timezone: {0}")]
     Timezone(#[from] chrono_tz::ParseError),
-    // #[error("Error: {0}")]
-    // Static(&'static str),
     #[error("Logger error: {0}")]
     Logger(#[from] log::SetLoggerError),
-    #[allow(dead_code)]
     #[error("Failed to get path: {0}")]
     GetPath(PathBuf),
-    #[allow(dead_code)]
     #[error("User does not exist: {0}")]
     UserNotFound(String),
-    #[allow(dead_code)]
     #[error("Failed to execute command: {0}")]
     CommandExecution(String),
 }
