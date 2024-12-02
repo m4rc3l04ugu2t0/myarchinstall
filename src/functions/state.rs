@@ -36,7 +36,9 @@ pub fn load_state() -> Result<State> {
 pub fn save_state(state: &State) -> Result<()> {
     let state_file = relative_path("src/configs/state.json")?;
 
-    let state_dir = Path::new(&state_file).parent().expect("Error dictory");
+    let state_dir = Path::new(&state_file)
+        .parent()
+        .expect("Failed to get parent directory of state file");
 
     if !state_dir.exists() {
         create_dir_all(state_dir)?;

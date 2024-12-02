@@ -13,7 +13,7 @@ pub enum Error {
     #[error("Failed to save state: {0}")]
     SaveState(#[from] serde_json::Error),
     #[error("Failed to configure timezone: {0}")]
-    Timezone(String),
+    Timezone(#[from] chrono_tz::ParseError),
     #[error("Command executation error: {0}")]
     RunCommand(std::io::Error),
     #[error("Locale generation error: {0}")]

@@ -1,6 +1,4 @@
 use myarchinstall::{configuration_log::initialize_logger, starting_config::configure};
-use prelude::*;
-
 mod error;
 mod prelude;
 
