@@ -1,21 +1,118 @@
-use std::path::PathBuf;
+use std::{backtrace::Backtrace, fmt, path::PathBuf};
 
-#[derive(thiserror::Error, Debug)]
+#[derive(Debug)]
 pub enum Error {
-    #[error("Failed to read file: {0}")]
-    ReadFile(#[from] std::io::Error),
-    #[error("TOML deserialization error: {0}")]
-    FromStr(#[from] toml::de::Error),
-    #[error("Failed to save state: {0}")]
-    SaveState(#[from] serde_json::Error),
-    #[error("Failed to configure timezone: {0}")]
-    Timezone(#[from] chrono_tz::ParseError),
-    #[error("Logger error: {0}")]
-    Logger(#[from] log::SetLoggerError),
-    #[error("Failed to get path: {0}")]
-    GetPath(PathBuf),
-    #[error("User does not exist: {0}")]
-    UserNotFound(String),
-    #[error("Failed to execute command: {0}")]
-    CommandExecution(String),
+    ReadFile {
+        source: std::io::Error,
+        context: String,
+        backtrace: Backtrace,
+    },
+    OpenFile {
+        source: std::io::Error,
+        context: String,
+        backtrace: Backtrace,
+    },
+    WriteFile {
+        source: std::io::Error,
+        context: String,
+        backtrace: Backtrace,
+    },
+    CreateDirOrFile {
+        source: std::io::Error,
+        context: String,
+        backtrace: Backtrace,
+    },
+    FromStr {
+        source: toml::de::Error,
+        context: String,
+        backtrace: Backtrace,
+    },
+    SaveState {
+        source: serde_json::Error,
+        context: String,
+        backtrace: Backtrace,
+    },
+    Timezone {
+        source: chrono_tz::ParseError,
+        context: String,
+        backtrace: Backtrace,
+    },
+    Logger {
+        source: log::SetLoggerError,
+        context: String,
+        backtrace: Backtrace,
+    },
+    GetPath {
+        source: PathBuf,
+        context: String,
+        backtrace: Backtrace,
+    },
+    UserNotFound {
+        source: String,
+        context: String,
+        backtrace: Backtrace,
+    },
+    CommandExecution {
+        source: String,
+        context: String,
+        backtrace: Backtrace,
+    },
+}
+
+impl fmt::Display for Error {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match self {
+            Self::CreateDirOrFile {
+                source, context, ..
+            } => {
+                write!(
+                    f,
+                    "Failed to create directory or file : {}: {}",
+                    context, source
+                )
+            }
+            Self::ReadFile {
+                source, context, ..
+            } => write!(f, "Failed to read file : {}: {}", context, source),
+            Self::OpenFile {
+                source, context, ..
+            } => write!(f, "Failed to open file : {}: {}", context, source),
+            Self::WriteFile {
+                source, context, ..
+            } => {
+                write!(f, "Failed to write file : {}: {}", context, source)
+            }
+            Self::FromStr {
+                source, context, ..
+            } => write!(f, "Failed to parse string : {}: {}", context, source),
+            Self::SaveState {
+                source, context, ..
+            } => write!(f, "Failed to save state : {}: {}", context, source),
+            Self::Timezone {
+                source, context, ..
+            } => {
+                write!(f, "Failed to parse timezone : {}: {}", context, source)
+            }
+            Self::Logger {
+                source, context, ..
+            } => {
+                write!(f, "Failed to initialize logger : {}: {}", context, source)
+            }
+            Self::GetPath {
+                source, context, ..
+            } => {
+                write!(f, "Failed to get path : {}: {:?}", context, source)
+            }
+            Self::UserNotFound {
+                source, context, ..
+            } => {
+                write!(f, "User not found : {}: {}", context, source)
+            }
+            Self::CommandExecution {
+                source, context, ..
+            } => {
+                write!(f, "Failed to execute command : {}: {}", context, source)
+            }
+        }
+    }
 }

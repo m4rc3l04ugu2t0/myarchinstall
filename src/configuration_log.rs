@@ -1,6 +1,9 @@
-use crate::{functions::relative_path::relative_path, prelude::Result};
+use crate::{
+    functions::relative_path::relative_path,
+    prelude::{Error, Result},
+};
 use simplelog::*;
-use std::fs::File;
+use std::{backtrace::Backtrace, fs::File};
 
 pub fn initialize_logger() -> Result<()> {
     CombinedLogger::init(vec![
@@ -13,8 +16,19 @@ pub fn initialize_logger() -> Result<()> {
         WriteLogger::new(
             LevelFilter::Debug,
             Config::default(),
-            File::create(relative_path("src/logs/configuration.log")?)?,
+            File::create(relative_path("src/logs/configuration.log")?).map_err(|e| {
+                Error::CreateDirOrFile {
+                    source: e.into(),
+                    context: "Failed to create log file".to_string(),
+                    backtrace: Backtrace::capture(),
+                }
+            })?,
         ),
-    ])?;
+    ])
+    .map_err(|e| Error::Logger {
+        source: e,
+        context: "Failed to initialize logger".to_string(),
+        backtrace: Backtrace::capture(),
+    })?;
     Ok(())
 }

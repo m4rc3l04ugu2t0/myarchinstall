@@ -1,4 +1,5 @@
 use std::{
+    backtrace::Backtrace,
     fs::{create_dir_all, OpenOptions},
     io::BufReader,
     path::Path,
@@ -24,7 +25,11 @@ pub fn load_state() -> Result<State> {
             }
             Err(e) => {
                 info!("Failed to load state from {:?}: {:?}", state_file, e);
-                Err(Error::ReadFile(e.into()))
+                Err(Error::SaveState {
+                    source: e,
+                    context: "Failed to load state".to_string(),
+                    backtrace: Backtrace::capture(),
+                })
             }
         }
     } else {
@@ -41,16 +46,29 @@ pub fn save_state(state: &State) -> Result<()> {
         .expect("Failed to get parent directory of state file");
 
     if !state_dir.exists() {
-        create_dir_all(state_dir)?;
+        create_dir_all(state_dir).map_err(|e| Error::CreateDirOrFile {
+            source: e,
+            context: "Failed to create state directory".to_string(),
+            backtrace: Backtrace::capture(),
+        })?;
     }
 
     let file = OpenOptions::new()
         .write(true)
         .truncate(true)
         .create(true)
-        .open(state_file)?;
+        .open(state_file)
+        .map_err(|e| Error::OpenFile {
+            source: e,
+            context: "Failed to open state file".to_string(),
+            backtrace: Backtrace::capture(),
+        })?;
 
-    to_writer(file, state)?;
+    to_writer(file, state).map_err(|e| Error::WriteFile {
+        source: e.into(),
+        context: "Failed to save state".to_string(),
+        backtrace: Backtrace::capture(),
+    })?;
 
     Ok(())
 }

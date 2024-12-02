@@ -1,3 +1,4 @@
+use std::backtrace::Backtrace;
 use std::fmt;
 use std::fs::read_to_string;
 
@@ -167,11 +168,23 @@ fn config() -> Result<ConfigBuilder> {
     let path = relative_path(path_file)?;
 
     if path.exists() {
-        let config_content = read_to_string(&path)?;
-        let config = from_str(&config_content)?;
+        let config_content = read_to_string(&path).map_err(|e| Error::ReadFile {
+            source: e,
+            context: "Failed to read file".to_string(),
+            backtrace: Backtrace::capture(),
+        })?;
+        let config = from_str(&config_content).map_err(|e| Error::FromStr {
+            source: e,
+            context: "Failed to read file".to_string(),
+            backtrace: Backtrace::capture(),
+        })?;
 
         Ok(config)
     } else {
-        Err(Error::GetPath(path))
+        Err(Error::GetPath {
+            source: path,
+            context: "Failed to get path".to_string(),
+            backtrace: Backtrace::capture(),
+        })
     }
 }

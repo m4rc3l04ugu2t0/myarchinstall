@@ -1,6 +1,9 @@
-use std::process::Command;
+use std::{backtrace::Backtrace, process::Command};
 
-use crate::{functions::run_commands::run_command, prelude::Result};
+use crate::{
+    functions::run_commands::run_command,
+    prelude::{Error, Result},
+};
 use chrono_tz::Tz;
 use serde::Deserialize;
 
@@ -34,7 +37,13 @@ impl<R, C> TimezoneBuilder<R, C> {
         region: &str,
         city: &str,
     ) -> Result<TimezoneBuilder<RegioValid, CityValid>> {
-        format!("{}/{}", region, city).parse::<Tz>()?;
+        format!("{}/{}", region, city)
+            .parse::<Tz>()
+            .map_err(|e| Error::Timezone {
+                source: e,
+                context: format!("Invalid timezone: /usr/share/zoneinfo/{}/{}", region, city),
+                backtrace: Backtrace::capture(),
+            })?;
 
         run_command(
             Command::new("ln")
