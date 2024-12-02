@@ -1,27 +1,53 @@
 use std::{
-    io::{BufRead, BufReader},
+    fs::OpenOptions,
+    io::{BufRead, BufReader, Write},
     process::{Command, Stdio},
 };
 
-use crate::ConfigureError;
+use chrono::Local;
 
-pub fn run_command(command: &mut Command) -> Result<(), ConfigureError> {
+use crate::prelude::{Error, Result};
+
+use super::relative_path::relative_path;
+
+pub fn run_command(command: &mut Command) -> Result<()> {
+    let log_file_path = relative_path("src/log/commands.log")?;
+    let mut log_file = OpenOptions::new()
+        .create(true)
+        .append(true)
+        .open(log_file_path)?;
+
+    let command_str = format!("{:#?}", command);
+    let timestamp = Local::now().format("%Y-%m-%d %H:%M:%S").to_string();
+
+    writeln!(log_file, "[{}] {}", timestamp, command_str)?;
+
     let mut child = command
         .stdout(Stdio::piped())
         .stderr(Stdio::piped())
-        .spawn()
-        .map_err(|e| ConfigureError::RunCommand(e.to_string()))?;
+        .spawn()?;
+
+    // Files to save stdout and stderr
+    let stdout_path = relative_path("src/logs/stdout.log")?;
+    let stderr_path = relative_path("src/logs/stderr.log")?;
+
+    let mut stdout_file = OpenOptions::new()
+        .create(true)
+        .append(true)
+        .open(stdout_path)?;
+
+    let mut stderr_file = OpenOptions::new()
+        .create(true)
+        .append(true)
+        .open(stderr_path)?;
 
     if let Some(stdout) = child.stdout.take() {
         let reader = BufReader::new(stdout);
 
         for line in reader.lines() {
-            match line {
-                Ok(line) => println!("{}", line),
-                Err(err) => {
-                    return Err(ConfigureError::RunCommand(err.to_string()));
-                }
-            }
+            let line = line?;
+            println!("{}", line);
+            writeln!(stdout_file, "{}", line)?;
         }
     }
 
@@ -29,19 +55,28 @@ pub fn run_command(command: &mut Command) -> Result<(), ConfigureError> {
         let reader = BufReader::new(stderr);
 
         for line in reader.lines() {
-            match line {
-                Ok(line) => eprint!("{}", line),
-                Err(err) => return Err(ConfigureError::RunCommand(err.to_string())),
-            }
+            let line = line?;
+            eprint!("{}", line);
+            writeln!(stderr_file, "{}", line)?;
         }
     }
 
-    let status = child
-        .wait()
-        .map_err(|err| ConfigureError::RunCommand(err.to_string()))?;
+    let status = child.wait()?;
+
+    // Log the result of the command
+    let result = if status.success() {
+        "Success"
+    } else {
+        "Failed"
+    };
+
+    writeln!(log_file, "[{}] Command completed: {}", timestamp, result)?;
 
     if !status.success() {
-        return Err(ConfigureError::RunCommand(status.to_string()));
+        return Err(Error::CommandExecution(format!(
+            "Command failed: {}",
+            command_str
+        )));
     }
 
     Ok(())

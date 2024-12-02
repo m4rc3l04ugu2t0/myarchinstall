@@ -1,12 +1,11 @@
+use crate::prelude::Result;
 use std::{
     env::current_dir,
     path::{Path, PathBuf},
 };
 
-use crate::ConfigureError;
-
-pub fn relative_path(file_name: &str) -> Result<PathBuf, ConfigureError> {
-    let current_dir = current_dir().map_err(|e| ConfigureError::CurrentDir(e.to_string()))?;
+pub fn relative_path(file_name: &str) -> Result<PathBuf> {
+    let current_dir = current_dir()?;
     let file_path = current_dir.join(Path::new(file_name));
 
     Ok(file_path)

@@ -13,7 +13,7 @@ keymap = "br-abnt2"
 hostname = "arch"
 root_password = "arch"
 username = "arch"
-username_password = "arch"
+user_password = "arch"
 
 [packages]
 essentials = [
@@ -27,4 +27,3 @@ essentials = [
         "dialog",
         "sudo",
     ]
-

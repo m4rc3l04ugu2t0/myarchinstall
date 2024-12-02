@@ -1,37 +1,29 @@
+use crate::prelude::Result;
 use std::{
     fs::OpenOptions,
     io::{BufRead, BufReader, Write},
     process::Command,
 };
 
-use crate::{functions::run_commands::run_command, ConfigureError};
+use crate::functions::run_commands::run_command;
 
-pub fn set_language(language: &[String]) -> Result<(), ConfigureError> {
-    println!("Configurando linguagem do sistema...");
-
+pub fn set_language(language: &[String]) -> Result<()> {
     edit_locale_gen(language)?;
     run_command(&mut Command::new("locale-gen"))?;
 
     configure_locale_conf(language)?;
 
-    println!("Language successfully configured");
     Ok(())
 }
 
-fn edit_locale_gen(language: &[String]) -> Result<(), ConfigureError> {
+fn edit_locale_gen(language: &[String]) -> Result<()> {
     let locale_gen_path = "/etc/locale.gen";
-    let file = OpenOptions::new()
-        .read(true)
-        .open(locale_gen_path)
-        .map_err(|e| {
-            ConfigureError::LocaleGen(format!("Failure to open {}: {}", locale_gen_path, e))
-        })?;
+    let file = OpenOptions::new().read(true).open(locale_gen_path)?;
     let reader = BufReader::new(file);
     let mut lines = Vec::new();
 
     for line in reader.lines() {
-        let mut line =
-            line.map_err(|e| ConfigureError::LocaleGen(format!("Failed to read line: {}", e)))?;
+        let mut line = line?;
         if line.trim() == format!("#{}", language[0].trim()) {
             line = language[0].to_string();
         }
@@ -41,13 +33,7 @@ fn edit_locale_gen(language: &[String]) -> Result<(), ConfigureError> {
     let mut file = OpenOptions::new()
         .write(true)
         .truncate(true)
-        .open(locale_gen_path)
-        .map_err(|e| {
-            ConfigureError::LocaleGen(format!(
-                "Failure to open {} for reading: {}",
-                locale_gen_path, e
-            ))
-        })?;
+        .open(locale_gen_path)?;
 
     for line in lines {
         writeln!(file, "{}", line)?;
@@ -56,22 +42,18 @@ fn edit_locale_gen(language: &[String]) -> Result<(), ConfigureError> {
     Ok(())
 }
 
-fn configure_locale_conf(language: &[String]) -> Result<(), ConfigureError> {
+fn configure_locale_conf(language: &[String]) -> Result<()> {
     let locale_conf_path = "/etc/locale.conf";
-    let content = format!("LANG={}\n", language[0]);
+    let content = format!(
+        "LANG={}\n",
+        language[0].strip_suffix(" UTF-8").unwrap_or(&language[0])
+    );
 
     let mut file = OpenOptions::new()
         .write(true)
         .truncate(true)
-        .open(locale_conf_path)
-        .map_err(|e| {
-            ConfigureError::LocaleGen(format!(
-                "Failure to open {} from reading: {}",
-                locale_conf_path, e
-            ))
-        })?;
-    file.write_all(content.as_bytes()).map_err(|e| {
-        ConfigureError::LocaleGen(format!("Failure to write in {}: {}", locale_conf_path, e))
-    })?;
+        .create(true)
+        .open(locale_conf_path)?;
+    file.write_all(content.as_bytes())?;
     Ok(())
 }

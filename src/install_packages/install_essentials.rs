@@ -2,21 +2,18 @@ use std::process::Command;
 
 use crate::{
     functions::run_commands::run_command,
-    install_packages::configure_bootloader::configure_bootloader, ConfigureError,
+    install_packages::configure_bootloader::configure_bootloader,
 };
 
-pub fn install_assentials(packages: &Vec<String>) -> Result<(), ConfigureError> {
+use crate::prelude::Result;
+
+pub fn install_assentials(packages: &[String]) -> Result<()> {
     run_command(
         Command::new("pacman")
             .arg("-S")
             .args(packages)
             .arg("--noconfirm"),
     )?;
-
-    println!("Successfully.");
-
-    println!("Configuring grub.");
-
     configure_bootloader()?;
 
     run_command(
@@ -34,12 +31,9 @@ pub fn install_assentials(packages: &Vec<String>) -> Result<(), ConfigureError> 
         "--recheck",
     ]))?;
 
-    println!("Generating grub configuration file.");
-
     run_command(Command::new("grub-mkconfig").args(["-o", "/boot/grub/grub.cfg"]))?;
 
     run_command(Command::new("cat").arg("/boot/grub/grub.cfg"))?;
 
-    println!("Grub configured successfully!");
     Ok(())
 }
