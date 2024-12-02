@@ -6,7 +6,7 @@ use std::{
 
 use chrono::Local;
 
-use crate::prelude::*;
+use crate::prelude::{Error, Result};
 
 use super::relative_path::relative_path;
 
@@ -73,7 +73,10 @@ pub fn run_command(command: &mut Command) -> Result<()> {
     writeln!(log_file, "[{}] Command completed: {}", timestamp, result)?;
 
     if !status.success() {
-        return Err(Error::Static("Command failed"));
+        return Err(Error::CommandExecution(format!(
+            "Command failed: {}",
+            command_str
+        )));
     }
 
     Ok(())

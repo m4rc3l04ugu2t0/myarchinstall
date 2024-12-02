@@ -7,7 +7,7 @@ use toml::from_str;
 
 use crate::functions::relative_path::relative_path;
 use crate::functions::state::{self, load_state};
-use crate::prelude::*;
+use crate::prelude::{Error, Result};
 use crate::structure_config::location::{Location, LocationBuilder};
 use crate::structure_config::packages::{Packages, PackagesBuilder};
 use crate::structure_config::system::{System, SystemBuilder};
@@ -172,6 +172,6 @@ fn config() -> Result<ConfigBuilder> {
 
         Ok(config)
     } else {
-        Err(Error::Setup("Failure to file config.toml".to_string()))
+        Err(Error::GetPath(path))
     }
 }

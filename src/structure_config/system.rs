@@ -4,7 +4,7 @@ use serde::Deserialize;
 use crate::configure_hostname::set_hostname::set_hostname;
 use crate::configure_new_user::set_new_user::set_new_user;
 use crate::configure_root::set_root::set_root;
-use crate::prelude::*;
+use crate::prelude::Result;
 
 #[derive(Default, Debug)]
 pub struct HostnameValid(String);

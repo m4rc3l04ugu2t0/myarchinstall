@@ -1,29 +1,26 @@
+use std::path::PathBuf;
+
 #[derive(thiserror::Error, Debug)]
 pub enum Error {
-    #[error("Failed to access the current directory: {0}")]
-    CurrentDir(String),
     #[error("Failed to read file: {0}")]
     ReadFile(#[from] std::io::Error),
     #[error("TOML deserialization error: {0}")]
     FromStr(#[from] toml::de::Error),
-    #[error("Setup error: {0}")]
-    Setup(String),
-    #[error("System configuration error: {0}")]
-    ConfigureSystem(String),
     #[error("Failed to save state: {0}")]
     SaveState(#[from] serde_json::Error),
     #[error("Failed to configure timezone: {0}")]
     Timezone(#[from] chrono_tz::ParseError),
-    #[error("Command executation error: {0}")]
-    RunCommand(std::io::Error),
-    #[error("Locale generation error: {0}")]
-    LocaleGen(String),
-    #[error("Hostname configiration error: {0}")]
-    Hostname(String),
-    #[error("Bootloader configuration error: {0}")]
-    Bootloader(String),
-    #[error("Error: {0}")]
-    Static(&'static str),
+    // #[error("Error: {0}")]
+    // Static(&'static str),
     #[error("Logger error: {0}")]
     Logger(#[from] log::SetLoggerError),
+    #[allow(dead_code)]
+    #[error("Failed to get path: {0}")]
+    GetPath(PathBuf),
+    #[allow(dead_code)]
+    #[error("User does not exist: {0}")]
+    UserNotFound(String),
+    #[allow(dead_code)]
+    #[error("Failed to execute command: {0}")]
+    CommandExecution(String),
 }

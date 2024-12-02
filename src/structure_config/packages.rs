@@ -2,7 +2,7 @@ use crate::{
     install_packages::{
         configure_bootloader::configure_bootloader, install_essentials::install_assentials,
     },
-    prelude::*,
+    prelude::Result,
 };
 use log::info;
 use serde::Deserialize;

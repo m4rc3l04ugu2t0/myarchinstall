@@ -1,6 +1,6 @@
 use std::process::Command;
 
-use crate::{functions::run_commands::run_command, prelude::*};
+use crate::{functions::run_commands::run_command, prelude::Result};
 use chrono_tz::Tz;
 use serde::Deserialize;
 

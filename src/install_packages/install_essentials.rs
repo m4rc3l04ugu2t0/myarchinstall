@@ -5,7 +5,7 @@ use crate::{
     install_packages::configure_bootloader::configure_bootloader,
 };
 
-use crate::prelude::*;
+use crate::prelude::Result;
 
 pub fn install_assentials(packages: &[String]) -> Result<()> {
     run_command(

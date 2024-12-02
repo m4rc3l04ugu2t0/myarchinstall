@@ -1,4 +1,4 @@
-use crate::prelude::*;
+use crate::prelude::Result;
 use simplelog::*;
 use std::fs::File;
 

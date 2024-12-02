@@ -1,6 +1,5 @@
 use myarchinstall::{configuration_log::initialize_logger, starting_config::configure};
 mod error;
-mod prelude;
 
 fn main() {
     if let Err(err) = initialize_logger() {

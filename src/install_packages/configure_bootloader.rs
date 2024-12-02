@@ -3,7 +3,7 @@ use std::{
     io::{BufRead, BufReader, Write},
 };
 
-use crate::prelude::*;
+use crate::prelude::Result;
 
 pub fn configure_bootloader() -> Result<()> {
     let path = "/etc/mkinitcpio.conf";

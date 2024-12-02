@@ -1,7 +1,7 @@
 use std::process::Command;
 
 use crate::functions::run_commands::run_command;
-use crate::prelude::*;
+use crate::prelude::Result;
 
 pub fn set_hostname(hostname: &str) -> Result<()> {
     run_command(

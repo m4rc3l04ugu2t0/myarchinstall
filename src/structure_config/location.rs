@@ -2,7 +2,7 @@ use std::process::Command;
 
 use crate::{
     configure_location::set_language::set_language, functions::run_commands::run_command,
-    prelude::*,
+    prelude::Result,
 };
 use log::info;
 use serde::Deserialize;

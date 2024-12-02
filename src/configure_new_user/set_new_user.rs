@@ -1,7 +1,7 @@
 use std::process::Command;
 
 use crate::functions::{run_commands::run_command, run_password_command::run_passwd_command};
-use crate::prelude::*;
+use crate::prelude::Result;
 
 pub fn set_new_user(username: &str, password: &str) -> Result<()> {
     run_command(
