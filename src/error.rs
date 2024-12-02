@@ -63,12 +63,14 @@ impl fmt::Display for Error {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match self {
             Self::CreateDirOrFile {
-                source, context, ..
+                source,
+                context,
+                backtrace,
             } => {
                 write!(
                     f,
-                    "Failed to create directory or file : {}: {}",
-                    context, source
+                    "Failed to create directory or file : {}: {} \nBacktrace: {}",
+                    context, source, backtrace
                 )
             }
             Self::ReadFile {
@@ -94,9 +96,15 @@ impl fmt::Display for Error {
                 write!(f, "Failed to parse timezone : {}: {}", context, source)
             }
             Self::Logger {
-                source, context, ..
+                source,
+                context,
+                backtrace,
             } => {
-                write!(f, "Failed to initialize logger : {}: {}", context, source)
+                write!(
+                    f,
+                    "Failed to initialize logger : {}: {} \nBacktrace: {}",
+                    context, source, backtrace
+                )
             }
             Self::GetPath {
                 source, context, ..
