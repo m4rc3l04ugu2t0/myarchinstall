@@ -74,26 +74,62 @@ impl fmt::Display for Error {
                 )
             }
             Self::ReadFile {
-                source, context, ..
-            } => write!(f, "Failed to read file : {}: {}", context, source),
+                source,
+                context,
+                backtrace,
+            } => write!(
+                f,
+                "Failed to read file : {}: {}: \nBacktrace: {}",
+                context, source, backtrace
+            ),
             Self::OpenFile {
-                source, context, ..
-            } => write!(f, "Failed to open file : {}: {}", context, source),
+                source,
+                context,
+                backtrace,
+            } => write!(
+                f,
+                "Failed to open file : {}: {}: \nBacktrace: {}",
+                context, source, backtrace
+            ),
             Self::WriteFile {
-                source, context, ..
+                source,
+                context,
+                backtrace,
             } => {
-                write!(f, "Failed to write file : {}: {}", context, source)
+                write!(
+                    f,
+                    "Failed to write file : {}: {}: \nBacktrace: {}",
+                    context, source, backtrace
+                )
             }
             Self::FromStr {
-                source, context, ..
-            } => write!(f, "Failed to parse string : {}: {}", context, source),
+                source,
+                context,
+                backtrace,
+            } => write!(
+                f,
+                "Failed to parse string : {}: {}: \nBacktrace: {}",
+                context, source, backtrace
+            ),
             Self::SaveState {
-                source, context, ..
-            } => write!(f, "Failed to save state : {}: {}", context, source),
+                source,
+                context,
+                backtrace,
+            } => write!(
+                f,
+                "Failed to save state : {}: {}: \nBacktrace: {}",
+                context, source, backtrace
+            ),
             Self::Timezone {
-                source, context, ..
+                source,
+                context,
+                backtrace,
             } => {
-                write!(f, "Failed to parse timezone : {}: {}", context, source)
+                write!(
+                    f,
+                    "Failed to parse timezone : {}: {}: \nBacktrace: {}",
+                    context, source, backtrace
+                )
             }
             Self::Logger {
                 source,
@@ -107,19 +143,37 @@ impl fmt::Display for Error {
                 )
             }
             Self::GetPath {
-                source, context, ..
+                source,
+                context,
+                backtrace,
             } => {
-                write!(f, "Failed to get path : {}: {:?}", context, source)
+                write!(
+                    f,
+                    "Failed to get path : {}: {:?}: \nBacktrace: {}",
+                    context, source, backtrace
+                )
             }
             Self::UserNotFound {
-                source, context, ..
+                source,
+                context,
+                backtrace,
             } => {
-                write!(f, "User not found : {}: {}", context, source)
+                write!(
+                    f,
+                    "User not found : {}: {}: \nBacktrace: {}",
+                    context, source, backtrace
+                )
             }
             Self::CommandExecution {
-                source, context, ..
+                source,
+                context,
+                backtrace,
             } => {
-                write!(f, "Failed to execute command : {}: {}", context, source)
+                write!(
+                    f,
+                    "Failed to execute command : {}: {}: \nBacktrace: {}",
+                    context, source, backtrace
+                )
             }
         }
     }
