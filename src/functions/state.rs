@@ -1,5 +1,4 @@
 use std::{
-    backtrace::Backtrace,
     fs::{create_dir_all, OpenOptions},
     io::BufReader,
     path::Path,
@@ -8,8 +7,11 @@ use std::{
 use log::info;
 use serde_json::{from_reader, to_writer};
 
-use crate::prelude::{Error, Result};
 use crate::starting_config::State;
+use crate::{
+    error::Trace,
+    prelude::{Error, Result},
+};
 
 use super::relative_path::relative_path;
 
@@ -28,7 +30,11 @@ pub fn load_state() -> Result<State> {
                 Err(Error::SaveState {
                     source: e,
                     context: "Failed to load state".to_string(),
-                    backtrace: Backtrace::capture(),
+                    backtrace: Trace {
+                        filename: file!(),
+                        function: "fn load_state() -> Result<State>",
+                        description: "from_reader(reader)".to_string(),
+                    },
                 })
             }
         }
@@ -49,7 +55,11 @@ pub fn save_state(state: &State) -> Result<()> {
         create_dir_all(state_dir).map_err(|e| Error::CreateDirOrFile {
             source: e,
             context: "Failed to create state directory".to_string(),
-            backtrace: Backtrace::capture(),
+            backtrace: Trace {
+                filename: file!(),
+                function: "fn save_state(state: &State)",
+                description: "create_dir_all(state_dir)".to_string(),
+            },
         })?;
     }
 
@@ -61,13 +71,23 @@ pub fn save_state(state: &State) -> Result<()> {
         .map_err(|e| Error::OpenFile {
             source: e,
             context: "Failed to open state file".to_string(),
-            backtrace: Backtrace::capture(),
+            backtrace: Trace {
+                filename: file!(),
+                function: "fn save_state(state: &State)",
+                description:
+                    "OpenOptions::new().write(true).truncate(true).create(true).open(state_file)"
+                        .to_string(),
+            },
         })?;
 
     to_writer(file, state).map_err(|e| Error::WriteFile {
         source: e.into(),
         context: "Failed to save state".to_string(),
-        backtrace: Backtrace::capture(),
+        backtrace: Trace {
+            filename: file!(),
+            function: "fn save_state(state: &State)",
+            description: "to_writer(file, state)".to_string(),
+        },
     })?;
 
     Ok(())

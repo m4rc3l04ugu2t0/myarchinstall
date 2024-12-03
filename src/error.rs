@@ -1,61 +1,78 @@
-use std::{backtrace::Backtrace, fmt, path::PathBuf};
+use std::{fmt, path::PathBuf};
+
+#[derive(Debug)]
+pub struct Trace {
+    pub filename: &'static str,
+    pub function: &'static str,
+    pub description: String,
+}
+
+impl fmt::Display for Trace {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        write!(
+            f,
+            "File: {}, Function: {}, Description: {}",
+            self.filename, self.function, self.description
+        )
+    }
+}
 
 #[derive(Debug)]
 pub enum Error {
     ReadFile {
         source: std::io::Error,
         context: String,
-        backtrace: Backtrace,
+        backtrace: Trace,
     },
     OpenFile {
         source: std::io::Error,
         context: String,
-        backtrace: Backtrace,
+        backtrace: Trace,
     },
     WriteFile {
         source: std::io::Error,
         context: String,
-        backtrace: Backtrace,
+        backtrace: Trace,
     },
     CreateDirOrFile {
         source: std::io::Error,
         context: String,
-        backtrace: Backtrace,
+        backtrace: Trace,
     },
     FromStr {
         source: toml::de::Error,
         context: String,
-        backtrace: Backtrace,
+        backtrace: Trace,
     },
     SaveState {
         source: serde_json::Error,
         context: String,
-        backtrace: Backtrace,
+        backtrace: Trace,
     },
     Timezone {
         source: chrono_tz::ParseError,
         context: String,
-        backtrace: Backtrace,
+        backtrace: Trace,
     },
     Logger {
         source: log::SetLoggerError,
         context: String,
-        backtrace: Backtrace,
+        backtrace: Trace,
     },
     GetPath {
         source: PathBuf,
         context: String,
-        backtrace: Backtrace,
+        backtrace: Trace,
     },
     UserNotFound {
         source: String,
         context: String,
-        backtrace: Backtrace,
+        backtrace: Trace,
     },
     CommandExecution {
         source: String,
         context: String,
-        backtrace: Backtrace,
+        backtrace: Trace,
     },
 }
 
@@ -69,7 +86,7 @@ impl fmt::Display for Error {
             } => {
                 write!(
                     f,
-                    "Failed to create directory or file : {}: {} \nBacktrace: {}",
+                    "Failed to create directory or file : {}: {} \nTrace: {}",
                     context, source, backtrace
                 )
             }
@@ -79,7 +96,7 @@ impl fmt::Display for Error {
                 backtrace,
             } => write!(
                 f,
-                "Failed to read file : {}: {}: \nBacktrace: {}",
+                "Failed to read file : {}: {}: \nTrace: {}",
                 context, source, backtrace
             ),
             Self::OpenFile {
@@ -88,7 +105,7 @@ impl fmt::Display for Error {
                 backtrace,
             } => write!(
                 f,
-                "Failed to open file : {}: {}: \nBacktrace: {}",
+                "Failed to open file : {}: {}: \nTrace: {}",
                 context, source, backtrace
             ),
             Self::WriteFile {
@@ -98,7 +115,7 @@ impl fmt::Display for Error {
             } => {
                 write!(
                     f,
-                    "Failed to write file : {}: {}: \nBacktrace: {}",
+                    "Failed to write file : {}: {}: \nTrace: {}",
                     context, source, backtrace
                 )
             }
@@ -108,7 +125,7 @@ impl fmt::Display for Error {
                 backtrace,
             } => write!(
                 f,
-                "Failed to parse string : {}: {}: \nBacktrace: {}",
+                "Failed to parse string : {}: {}: \nTrace: {}",
                 context, source, backtrace
             ),
             Self::SaveState {
@@ -117,7 +134,7 @@ impl fmt::Display for Error {
                 backtrace,
             } => write!(
                 f,
-                "Failed to save state : {}: {}: \nBacktrace: {}",
+                "Failed to save state : {}: {}: \nTrace: {}",
                 context, source, backtrace
             ),
             Self::Timezone {
@@ -127,7 +144,7 @@ impl fmt::Display for Error {
             } => {
                 write!(
                     f,
-                    "Failed to parse timezone : {}: {}: \nBacktrace: {}",
+                    "Failed to parse timezone : {}: {}: \nTrace: {}",
                     context, source, backtrace
                 )
             }
@@ -138,7 +155,7 @@ impl fmt::Display for Error {
             } => {
                 write!(
                     f,
-                    "Failed to initialize logger : {}: {} \nBacktrace: {}",
+                    "Failed to initialize logger : {}: {} \nTrace: {}",
                     context, source, backtrace
                 )
             }
@@ -149,7 +166,7 @@ impl fmt::Display for Error {
             } => {
                 write!(
                     f,
-                    "Failed to get path : {}: {:?}: \nBacktrace: {}",
+                    "Failed to get path : {}: {:?}: \nTrace: {}",
                     context, source, backtrace
                 )
             }
@@ -160,7 +177,7 @@ impl fmt::Display for Error {
             } => {
                 write!(
                     f,
-                    "User not found : {}: {}: \nBacktrace: {}",
+                    "User not found : {}: {}: \nTrace: {}",
                     context, source, backtrace
                 )
             }
@@ -171,7 +188,7 @@ impl fmt::Display for Error {
             } => {
                 write!(
                     f,
-                    "Failed to execute command : {}: {}: \nBacktrace: {}",
+                    "Failed to execute command : {}: {}: \nTrace: {}",
                     context, source, backtrace
                 )
             }

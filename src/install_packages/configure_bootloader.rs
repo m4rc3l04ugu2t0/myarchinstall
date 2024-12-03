@@ -1,10 +1,12 @@
 use std::{
-    backtrace::Backtrace,
     fs::OpenOptions,
     io::{BufRead, BufReader, Write},
 };
 
-use crate::prelude::{Error, Result};
+use crate::{
+    error::Trace,
+    prelude::{Error, Result},
+};
 
 pub fn configure_bootloader() -> Result<()> {
     let path = "/etc/mkinitcpio.conf";
@@ -14,7 +16,16 @@ pub fn configure_bootloader() -> Result<()> {
         .map_err(|e| Error::OpenFile {
             source: e.into(),
             context: "Failed to open /etc/mkinitcpio.conf".to_string(),
-            backtrace: Backtrace::capture(),
+            backtrace: Trace {
+                filename: file!(),
+                function: "fn configure_bootloader() -> Result<()>",
+                description: format!(
+                    "OpenOptions::new()
+                            .read(true)
+                            .open({})",
+                    path
+                ),
+            },
         })?;
 
     let reader = BufReader::new(file);
@@ -24,7 +35,11 @@ pub fn configure_bootloader() -> Result<()> {
         let mut line = line.map_err(|e| Error::ReadFile {
             source: e.into(),
             context: "Failed to read line from /etc/mkinitcpio.conf".to_string(),
-            backtrace: Backtrace::capture(),
+            backtrace: Trace {
+                filename: file!(),
+                function: "fn configure_bootloader() -> Result<()>",
+                description: format!("BufReader::new({}).lines()", path),
+            },
         })?;
         if line.trim() == "MODULES=()".to_owned().trim() {
             line = "MODULES=(btrfs)".to_owned();
@@ -39,14 +54,25 @@ pub fn configure_bootloader() -> Result<()> {
         .map_err(|e| Error::OpenFile {
             source: e.into(),
             context: "Failed to open /etc/mkinitcpio.conf".to_string(),
-            backtrace: Backtrace::capture(),
+            backtrace: Trace {
+                filename: file!(),
+                function: "fn configure_bootloader() -> Result<()>",
+                description: format!(
+                    "OpenOptions::new().write(true).truncate(true).open({})",
+                    path
+                ),
+            },
         })?;
 
     for line in lines {
         writeln!(file, "{}", line).map_err(|e| Error::WriteFile {
             source: e.into(),
             context: "Failed to write to /etc/mkinitcpio.conf".to_string(),
-            backtrace: Backtrace::capture(),
+            backtrace: Trace {
+                filename: file!(),
+                function: "fn configure_bootloader() -> Result<()>",
+                description: format!("writeln!(file, \"{}\");", line),
+            },
         })?;
     }
 

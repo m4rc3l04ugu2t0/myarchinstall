@@ -1,4 +1,3 @@
-use std::backtrace::Backtrace;
 use std::fmt;
 use std::fs::read_to_string;
 
@@ -6,6 +5,7 @@ use log::info;
 use serde::{Deserialize, Serialize};
 use toml::from_str;
 
+use crate::error::Trace;
 use crate::functions::relative_path::relative_path;
 use crate::functions::state::{self, load_state};
 use crate::prelude::{Error, Result};
@@ -171,12 +171,20 @@ fn config() -> Result<ConfigBuilder> {
         let config_content = read_to_string(&path).map_err(|e| Error::ReadFile {
             source: e,
             context: "Failed to read file".to_string(),
-            backtrace: Backtrace::capture(),
+            backtrace: Trace {
+                filename: file!(),
+                function: "fn config() -> Result<ConfigBuilder>",
+                description: format!("Verify file {}. read_to_string(&path)", path_file),
+            },
         })?;
         let config = from_str(&config_content).map_err(|e| Error::FromStr {
             source: e,
             context: "Failed to read file".to_string(),
-            backtrace: Backtrace::capture(),
+            backtrace: Trace {
+                filename: file!(),
+                function: "fn config() -> Result<ConfigBuilder>",
+                description: format!("Verify file {}. from_str(&config_content)", path_file),
+            },
         })?;
 
         Ok(config)
@@ -184,7 +192,11 @@ fn config() -> Result<ConfigBuilder> {
         Err(Error::GetPath {
             source: path,
             context: "Failed to get path".to_string(),
-            backtrace: Backtrace::capture(),
+            backtrace: Trace {
+                filename: file!(),
+                function: "fn config() -> Result<ConfigBuilder>",
+                description: format!("Verify file {}. else error path.exists() ", path_file),
+            },
         })
     }
 }

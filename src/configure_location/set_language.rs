@@ -1,6 +1,8 @@
-use crate::prelude::{Error, Result};
+use crate::{
+    error::Trace,
+    prelude::{Error, Result},
+};
 use std::{
-    backtrace::Backtrace,
     fs::OpenOptions,
     io::{BufRead, BufReader, Write},
     process::Command,
@@ -25,7 +27,11 @@ fn edit_locale_gen(language: &[String]) -> Result<()> {
         .map_err(|e| Error::OpenFile {
             source: e,
             context: format!("Failed to open file {}", locale_gen_path),
-            backtrace: Backtrace::capture(),
+            backtrace: Trace {
+                filename: file!(),
+                function: "fn edit_locale_gen(language: &[String]) -> Result<()>",
+                description: "OpenOptions::new().read(true).open(locale_gen_path)".to_string(),
+            },
         })?;
     let reader = BufReader::new(file);
     let mut lines = Vec::new();
@@ -34,7 +40,11 @@ fn edit_locale_gen(language: &[String]) -> Result<()> {
         let mut line = line.map_err(|e| Error::ReadFile {
             source: e,
             context: format!("Failed to read line from {}", locale_gen_path),
-            backtrace: Backtrace::capture(),
+            backtrace: Trace {
+                filename: file!(),
+                function: "fn edit_locale_gen(language: &[String]) -> Result<()>",
+                description: "reader.lines()".to_string(),
+            },
         })?;
         if line.trim() == format!("#{}", language[0].trim()) {
             line = language[0].to_string();
@@ -49,14 +59,23 @@ fn edit_locale_gen(language: &[String]) -> Result<()> {
         .map_err(|e| Error::OpenFile {
             source: e,
             context: format!("Failed to open file {}", locale_gen_path),
-            backtrace: Backtrace::capture(),
+            backtrace: Trace {
+                filename: file!(),
+                function: "fn edit_locale_gen(language: &[String]) -> Result<()>",
+                description: "OpenOptions::new().write(true).truncate(true).open(locale_gen_path)"
+                    .to_string(),
+            },
         })?;
 
     for line in lines {
         writeln!(file, "{}", line).map_err(|e| Error::WriteFile {
             source: e,
             context: format!("Failed to write to file {}", locale_gen_path),
-            backtrace: Backtrace::capture(),
+            backtrace: Trace {
+                filename: file!(),
+                function: "fn edit_locale_gen(language: &[String]) -> Result<()>",
+                description: "writeln!(file, \"{}\", line)".to_string(),
+            },
         })?;
     }
 
@@ -78,13 +97,22 @@ fn configure_locale_conf(language: &[String]) -> Result<()> {
         .map_err(|e| Error::OpenFile {
             source: e,
             context: format!("Failed to open file {}", locale_conf_path),
-            backtrace: Backtrace::capture(),
+            backtrace: Trace {
+                filename: file!(),
+                function: "fn configure_locale_conf(language: &[String]) -> Result<()>",
+                description: "OpenOptions::new().write(true).truncate(true).create(true).open(locale_conf_path)"
+                    .to_string(),
+            },
         })?;
     file.write_all(content.as_bytes())
         .map_err(|e| Error::WriteFile {
             source: e,
             context: format!("Failed to write to file {}", locale_conf_path),
-            backtrace: Backtrace::capture(),
+            backtrace: Trace {
+                filename: file!(),
+                function: "fn configure_locale_conf(language: &[String]) -> Result<()>",
+                description: "file.write_all(content.as_bytes())".to_string(),
+            },
         })?;
     Ok(())
 }

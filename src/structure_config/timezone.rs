@@ -1,6 +1,7 @@
-use std::{backtrace::Backtrace, process::Command};
+use std::process::Command;
 
 use crate::{
+    error::Trace,
     functions::run_commands::run_command,
     prelude::{Error, Result},
 };
@@ -42,7 +43,11 @@ impl<R, C> TimezoneBuilder<R, C> {
             .map_err(|e| Error::Timezone {
                 source: e,
                 context: format!("Invalid timezone: /usr/share/zoneinfo/{}/{}", region, city),
-                backtrace: Backtrace::capture(),
+                backtrace: Trace {
+                    filename: file!(),
+                    function: "fn valid_timezone()",
+                    description: "format!('{}/{}', region, city).parse::<Tz>();".to_string(),
+                },
             })?;
 
         run_command(
