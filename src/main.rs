@@ -1,6 +1,9 @@
-use myarchinstall::{configuration_log::initialize_logger, starting_config::configure};
+use myarchinstall::{
+    functions::configuration_log::initialize_logger, structure_config::starting_config::configure,
+};
 
 fn main() {
+    dotenv::dotenv().ok();
     if let Err(err) = initialize_logger() {
         return eprintln!("Failed to initialize the logger: {}", err);
     }

@@ -1,7 +1,4 @@
-use std::process::Command;
-
-use crate::{functions::run_commands::run_command, prelude::Result};
-use chrono_tz::Tz;
+use crate::{configure_timezone::set_timezone::set_timezone, prelude::Result};
 use serde::Deserialize;
 
 #[derive(Default, Debug)]
@@ -34,15 +31,7 @@ impl<R, C> TimezoneBuilder<R, C> {
         region: &str,
         city: &str,
     ) -> Result<TimezoneBuilder<RegioValid, CityValid>> {
-        format!("{}/{}", region, city).parse::<Tz>()?;
-
-        run_command(
-            Command::new("ln")
-                .arg("-sf")
-                .arg(format!("/usr/share/zoneinfo/{}/{}", region, city))
-                .arg("/etc/localtime"),
-        )?;
-
+        set_timezone(region, city)?;
         Ok(TimezoneBuilder {
             region: RegioValid(region.to_owned()),
             city: CityValid(city.to_owned()),

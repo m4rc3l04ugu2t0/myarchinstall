@@ -3,6 +3,7 @@ use std::fs::read_to_string;
 
 use log::info;
 use serde::{Deserialize, Serialize};
+use std::env::var;
 use toml::from_str;
 
 use crate::functions::relative_path::relative_path;
@@ -163,8 +164,7 @@ pub fn configure() -> Result<()> {
 }
 
 fn config() -> Result<ConfigBuilder> {
-    let path_file = "src/configs/setup.toml";
-    let path = relative_path(path_file)?;
+    let path = relative_path(&var("CONFIG_PATH").unwrap_or("src/configs/setup.toml".into()))?;
 
     if path.exists() {
         let config_content = read_to_string(&path)?;
