@@ -1,4 +1,5 @@
 use crate::{functions::relative_path::relative_path, prelude::Result};
+use log::info;
 use simplelog::*;
 use std::fs::File;
 
@@ -16,5 +17,7 @@ pub fn initialize_logger() -> Result<()> {
             File::create(relative_path("src/logs/configuration.log")?)?,
         ),
     ])?;
+    info!("Logger initialized successfully \nSee logs in src/logs/configuration.log");
+
     Ok(())
 }

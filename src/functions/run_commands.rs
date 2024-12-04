@@ -11,7 +11,7 @@ use crate::prelude::{Error, Result};
 use super::relative_path::relative_path;
 
 pub fn run_command(command: &mut Command) -> Result<()> {
-    let log_file_path = relative_path("src/log/commands.log")?;
+    let log_file_path = relative_path("src/logs/commands.log")?;
     let mut log_file = OpenOptions::new()
         .create(true)
         .append(true)
