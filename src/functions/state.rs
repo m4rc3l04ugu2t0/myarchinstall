@@ -7,8 +7,10 @@ use std::{
 use log::info;
 use serde_json::{from_reader, to_writer};
 
-use crate::prelude::{Error, Result};
-use crate::starting_config::State;
+use crate::{
+    prelude::{Error, Result},
+    structure_config::starting_config::State,
+};
 
 use super::relative_path::relative_path;
 
@@ -36,13 +38,16 @@ pub fn load_state() -> Result<State> {
 pub fn save_state(state: &State) -> Result<()> {
     let state_file = relative_path("src/configs/state.json")?;
 
-    let state_dir = Path::new(&state_file)
-        .parent()
-        .expect("Failed to get parent directory of state file");
+    let state_dir = Path::new(&state_file).parent();
 
-    if !state_dir.exists() {
-        create_dir_all(state_dir)?;
+    if let Some(parent) = state_dir {
+        create_dir_all(parent)?;
+    } else {
+        return Err(Error::GetPath(state_file));
     }
+    // if !state_dir.exists() {
+    //     create_dir_all(state_dir)?;
+    // }
 
     let file = OpenOptions::new()
         .write(true)
