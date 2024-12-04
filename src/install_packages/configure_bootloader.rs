@@ -14,7 +14,7 @@ pub fn configure_bootloader() -> Result<()> {
         .read(true)
         .open(path)
         .map_err(|e| Error::OpenFile {
-            source: e.into(),
+            source: e,
             context: "Failed to open /etc/mkinitcpio.conf".to_string(),
             backtrace: Trace {
                 filename: file!(),
@@ -33,7 +33,7 @@ pub fn configure_bootloader() -> Result<()> {
 
     for line in reader.lines() {
         let mut line = line.map_err(|e| Error::ReadFile {
-            source: e.into(),
+            source: e,
             context: "Failed to read line from /etc/mkinitcpio.conf".to_string(),
             backtrace: Trace {
                 filename: file!(),
@@ -52,7 +52,7 @@ pub fn configure_bootloader() -> Result<()> {
         .truncate(true)
         .open(path)
         .map_err(|e| Error::OpenFile {
-            source: e.into(),
+            source: e,
             context: "Failed to open /etc/mkinitcpio.conf".to_string(),
             backtrace: Trace {
                 filename: file!(),
@@ -66,7 +66,7 @@ pub fn configure_bootloader() -> Result<()> {
 
     for line in lines {
         writeln!(file, "{}", line).map_err(|e| Error::WriteFile {
-            source: e.into(),
+            source: e,
             context: "Failed to write to /etc/mkinitcpio.conf".to_string(),
             backtrace: Trace {
                 filename: file!(),

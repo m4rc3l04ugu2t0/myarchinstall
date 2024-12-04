@@ -189,7 +189,7 @@ fn config() -> Result<ConfigBuilder> {
 
         Ok(config)
     } else {
-        Err(Error::GetPath {
+        Err(Box::new(Error::GetPath {
             source: path,
             context: "Failed to get path".to_string(),
             backtrace: Trace {
@@ -197,6 +197,6 @@ fn config() -> Result<ConfigBuilder> {
                 function: "fn config() -> Result<ConfigBuilder>",
                 description: format!("Verify file {}. else error path.exists() ", path_file),
             },
-        })
+        }))
     }
 }

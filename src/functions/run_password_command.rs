@@ -27,7 +27,7 @@ pub fn run_passwd_command(password: &str, user_name: &str) -> Result<()> {
             })?;
 
     if !user_check.status.success() {
-        return Err(Error::CommandExecution {
+        return Err(Box::new(Error::CommandExecution {
             source: "id command failed".to_string(),
             context: "Failed to check user".to_string(),
             backtrace: Trace {
@@ -35,7 +35,7 @@ pub fn run_passwd_command(password: &str, user_name: &str) -> Result<()> {
                 function: "fn run_passwd_command(password: &str, user_name: &str)",
                 description: "!user_check.status.success()".to_string(),
             },
-        });
+        }));
     }
 
     let mut child = Command::new("passwd")
@@ -82,7 +82,7 @@ pub fn run_passwd_command(password: &str, user_name: &str) -> Result<()> {
     if output.status.success() {
         Ok(())
     } else {
-        Err(Error::CommandExecution {
+        Err(Box::new(Error::CommandExecution {
             source: "run_passwd_command".to_string(),
             context: "Failed to run 'passwd' command".to_string(),
             backtrace: Trace {
@@ -90,6 +90,6 @@ pub fn run_passwd_command(password: &str, user_name: &str) -> Result<()> {
                 function: "fn run_passwd_command(password: &str, user_name: &str)",
                 description: "output.status.success()".to_string(),
             },
-        })
+        }))
     }
 }

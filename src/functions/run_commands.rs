@@ -20,7 +20,7 @@ pub fn run_command(command: &mut Command) -> Result<()> {
         .append(true)
         .open(log_file_path)
         .map_err(|e| Error::OpenFile {
-            source: e.into(),
+            source: e,
             context: "Failed to open log file".to_string(),
             backtrace: Trace {
                 filename: file!(),
@@ -175,7 +175,7 @@ pub fn run_command(command: &mut Command) -> Result<()> {
     })?;
 
     if !status.success() {
-        return Err(Error::CommandExecution {
+        return Err(Box::new(Error::CommandExecution {
             source: status.to_string(),
             context: format!("Failed to run command: {}", command_str),
             backtrace: Trace {
@@ -183,7 +183,7 @@ pub fn run_command(command: &mut Command) -> Result<()> {
                 function: "fn run_command(command: &mut Command)",
                 description: "status.success()".to_string(),
             },
-        });
+        }));
     }
 
     Ok(())

@@ -27,7 +27,7 @@ pub fn load_state() -> Result<State> {
             }
             Err(e) => {
                 info!("Failed to load state from {:?}: {:?}", state_file, e);
-                Err(Error::SaveState {
+                Err(Box::new(Error::SaveState {
                     source: e,
                     context: "Failed to load state".to_string(),
                     backtrace: Trace {
@@ -35,7 +35,7 @@ pub fn load_state() -> Result<State> {
                         function: "fn load_state() -> Result<State>",
                         description: "from_reader(reader)".to_string(),
                     },
-                })
+                }))
             }
         }
     } else {

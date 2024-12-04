@@ -19,14 +19,13 @@ pub fn initialize_logger() -> Result<()> {
             Config::default(),
             File::create(relative_path("src/logs/configuration.log")?).map_err(|e| {
                 Error::CreateDirOrFile {
-                    source: e.into(),
+                    source: e,
                     context: "Failed to create log file".to_string(),
                     backtrace: Trace {
                         filename: file!(),
                         function: "fn initialize_logger() -> Result<()>",
-                        description: format!(
-                            "File::create(relative_path('src/logs/configuration.log')?)"
-                        ),
+                        description: "File::create(relative_path('src/logs/configuration.log')?)"
+                            .to_string(),
                     },
                 }
             })?,
@@ -38,7 +37,7 @@ pub fn initialize_logger() -> Result<()> {
         backtrace: Trace {
             filename: file!(),
             function: "fn initialize_logger() -> Result<()>",
-            description: format!("CombinedLogger::init(vec![...])"),
+            description: "CombinedLogger::init(vec![...])".to_string(),
         },
     })?;
     Ok(())
