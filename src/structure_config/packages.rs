@@ -1,17 +1,13 @@
+use std::marker::PhantomData;
+
 use crate::{
     install_packages::{
         configure_bootloader::configure_bootloader, install_essentials::install_assentials,
     },
-    prelude::Result,
+    prelude::{Result, Safety, Unsafety},
 };
 use log::info;
 use serde::Deserialize;
-
-#[derive(Debug, Default)]
-pub struct EssentialValid<'a>(&'a [String]);
-
-#[derive(Debug, Default)]
-pub struct EssentialNotValid;
 
 #[derive(Deserialize, Default, Debug)]
 pub struct Packages {
@@ -20,34 +16,33 @@ pub struct Packages {
 
 #[derive(Deserialize, Default, Debug)]
 pub struct PackagesBuilder<E> {
-    pub essentials: E,
+    pub essentials: Vec<String>,
+    data: PhantomData<E>,
 }
 
 impl<E> PackagesBuilder<E> {
-    pub fn essentials_valid(
-        self,
-        essentials: &[String],
-    ) -> Result<PackagesBuilder<EssentialValid>> {
+    pub fn essentials_valid(self, essentials: &[String]) -> Result<PackagesBuilder<Safety>> {
         install_assentials(essentials)?;
         info!("Installing bootloader...");
         configure_bootloader()?;
         info!("Bootloader installed successfully");
         Ok(PackagesBuilder {
-            essentials: EssentialValid(essentials),
+            essentials: essentials.to_vec(),
+            data: PhantomData,
         })
     }
 }
 
-impl PackagesBuilder<EssentialNotValid> {
+impl PackagesBuilder<Unsafety> {
     pub fn new() -> Self {
         Self::default()
     }
 }
 
-impl PackagesBuilder<EssentialValid<'_>> {
+impl PackagesBuilder<Safety> {
     pub fn build(self) -> Result<Packages> {
         Ok(Packages {
-            essentials: self.essentials.0.to_vec(),
+            essentials: self.essentials,
         })
     }
 }

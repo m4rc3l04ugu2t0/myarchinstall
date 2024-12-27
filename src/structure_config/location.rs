@@ -1,23 +1,12 @@
-use std::process::Command;
+use std::{marker::PhantomData, process::Command};
 
 use crate::{
-    configure_location::set_language::set_language, functions::run_commands::run_command,
-    prelude::Result,
+    configure_location::set_language::set_language,
+    functions::run_commands::run_command,
+    prelude::{Result, Safety, Unsafety},
 };
 use log::info;
 use serde::Deserialize;
-
-#[derive(Default, Debug)]
-pub struct LanguageValid<'a>(&'a [String]);
-
-#[derive(Default, Debug)]
-pub struct LanguageNotValid;
-
-#[derive(Default, Debug)]
-pub struct KeyMapValid<'a>(&'a str);
-
-#[derive(Default, Debug)]
-pub struct KeyMapNotValid;
 
 #[derive(Deserialize, Default, Debug)]
 pub struct Location {
@@ -26,24 +15,26 @@ pub struct Location {
 }
 
 #[derive(Deserialize, Default, Debug)]
-pub struct LocationBuilder<L, K> {
-    pub language: L,
-    pub keymap: K,
+pub struct LocationBuilder<P> {
+    pub language: Vec<String>,
+    pub keymap: String,
+    data: PhantomData<P>,
 }
 
-impl<L, K> LocationBuilder<L, K> {
-    pub fn valid_language(self, language: &[String]) -> Result<LocationBuilder<LanguageValid, K>> {
+impl<P> LocationBuilder<P> {
+    pub fn valid_language(self, language: &[String]) -> Result<LocationBuilder<Safety>> {
         info!("Configuring language...");
         set_language(language)?;
         info!("Language configured successfully");
 
         Ok(LocationBuilder {
-            language: LanguageValid(language),
+            language: language.to_vec(),
             keymap: self.keymap,
+            data: PhantomData,
         })
     }
 
-    pub fn valid_keymap(self, keymap: &str) -> Result<LocationBuilder<L, KeyMapValid>> {
+    pub fn valid_keymap(self, keymap: &str) -> Result<LocationBuilder<Safety>> {
         info!("Configuring keymap...");
         run_command(
             Command::new("sh")
@@ -54,22 +45,23 @@ impl<L, K> LocationBuilder<L, K> {
 
         Ok(LocationBuilder {
             language: self.language,
-            keymap: KeyMapValid(keymap),
+            keymap: keymap.to_string(),
+            data: PhantomData,
         })
     }
 }
 
-impl LocationBuilder<LanguageNotValid, KeyMapNotValid> {
+impl LocationBuilder<Unsafety> {
     pub fn new() -> Self {
         Self::default()
     }
 }
 
-impl LocationBuilder<LanguageValid<'_>, KeyMapValid<'_>> {
+impl LocationBuilder<Safety> {
     pub fn build(self) -> Result<Location> {
         Ok(Location {
-            language: self.language.0.to_owned(),
-            keymap: self.keymap.0.to_owned(),
+            language: self.language,
+            keymap: self.keymap,
         })
     }
 }
