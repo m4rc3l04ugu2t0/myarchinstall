@@ -4,7 +4,7 @@ use crate::{
     install_packages::{
         configure_bootloader::configure_bootloader, install_essentials::install_assentials,
     },
-    prelude::{Result, Safety, Unsafety},
+    prelude::{Result, Safety, Unsafety, W},
 };
 use log::info;
 use serde::Deserialize;
@@ -15,34 +15,46 @@ pub struct Packages {
 }
 
 #[derive(Deserialize, Default, Debug)]
-pub struct PackagesBuilder<E> {
-    pub essentials: Vec<String>,
-    data: PhantomData<E>,
+pub struct PackagesBuilder<D, E> {
+    pub essentials: W<E>,
+    data: PhantomData<D>,
 }
 
-impl<E> PackagesBuilder<E> {
-    pub fn essentials_valid(self, essentials: &[String]) -> Result<PackagesBuilder<Safety>> {
+impl<D, E> PackagesBuilder<D, E> {
+    pub fn essentials_valid(
+        self,
+        essentials: &[String],
+    ) -> Result<PackagesBuilder<Unsafety, Vec<String>>> {
         install_assentials(essentials)?;
         info!("Installing bootloader...");
         configure_bootloader()?;
         info!("Bootloader installed successfully");
         Ok(PackagesBuilder {
-            essentials: essentials.to_vec(),
+            essentials: W(essentials.to_vec()),
             data: PhantomData,
         })
     }
 }
 
-impl PackagesBuilder<Unsafety> {
+impl PackagesBuilder<Unsafety, String> {
     pub fn new() -> Self {
         Self::default()
     }
 }
 
-impl PackagesBuilder<Safety> {
+impl<E> PackagesBuilder<Unsafety, E> {
+    pub fn seal(self) -> Result<PackagesBuilder<Safety, E>> {
+        Ok(PackagesBuilder {
+            essentials: self.essentials,
+            data: PhantomData,
+        })
+    }
+}
+
+impl PackagesBuilder<Safety, Vec<String>> {
     pub fn build(self) -> Result<Packages> {
         Ok(Packages {
-            essentials: self.essentials,
+            essentials: self.essentials.0,
         })
     }
 }

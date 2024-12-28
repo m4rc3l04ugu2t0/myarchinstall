@@ -65,6 +65,7 @@ impl ConfigBuilder {
 
         self.timezone = TimezoneBuilder::new()
             .valid_timezone(&self.timezone.region, &self.timezone.city)?
+            .seal()?
             .build()?;
 
         self.save_state(state)?;
@@ -79,6 +80,7 @@ impl ConfigBuilder {
         self.location = LocationBuilder::new()
             .valid_language(&self.location.language)?
             .valid_keymap(&self.location.keymap)?
+            .seal()?
             .build()?;
 
         self.save_state(state)?;
@@ -94,7 +96,7 @@ impl ConfigBuilder {
             .setup_hostname(&self.system.hostname)?
             .setup_root(&self.system.root_password)?
             .setup_user(&self.system.username, &self.system.user_password)?
-            .sealed()?
+            .seal()?
             .build()?;
 
         self.save_state(state)?;
@@ -108,6 +110,7 @@ impl ConfigBuilder {
 
         self.packages = PackagesBuilder::new()
             .essentials_valid(&self.packages.essentials)?
+            .seal()?
             .build()?;
 
         self.save_state(state)?;

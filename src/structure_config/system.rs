@@ -26,7 +26,7 @@ pub struct SystemBuilder<T, H, R, U, P> {
 }
 
 impl<H, R, U, P> SystemBuilder<Unsafety, H, R, U, P> {
-    pub fn sealed(self) -> Result<SystemBuilder<Safety, H, R, U, P>> {
+    pub fn seal(self) -> Result<SystemBuilder<Safety, H, R, U, P>> {
         Ok(SystemBuilder {
             hostname: self.hostname,
             root_password: self.root_password,
@@ -85,7 +85,7 @@ impl<T, H, R, U, P> SystemBuilder<T, H, R, U, P> {
     }
 }
 
-impl SystemBuilder<Unsafety, String, String, String, String> {
+impl SystemBuilder<Unsafety, Unsafety, Unsafety, Unsafety, Unsafety> {
     pub fn new() -> Self {
         Self::default()
     }
