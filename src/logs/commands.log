@@ -1,0 +1,333 @@
+[2024-12-28 10:19:45] Command {
+    program: "ln",
+    args: [
+        "ln",
+        "-sf",
+        "/home/NextLevelCode/dev/myarchinstall/tests/America/Sao_Paulo",
+        "/home/NextLevelCode/dev/myarchinstall/tests/localtime",
+    ],
+    create_pidfd: false,
+}
+[2024-12-28 10:19:45] Command completed: Success
+[2024-12-28 10:29:09] Command {
+    program: "ln",
+    args: [
+        "ln",
+        "-sf",
+        "/home/NextLevelCode/dev/myarchinstall/tests/America/Sao_Paulo",
+        "/home/NextLevelCode/dev/myarchinstall/tests/localtime",
+    ],
+    create_pidfd: false,
+}
+[2024-12-28 10:29:09] Command completed: Success
+[2024-12-28 10:29:33] Command {
+    program: "ln",
+    args: [
+        "ln",
+        "-sf",
+        "/home/NextLevelCode/dev/myarchinstall/tests/America/Sao_Paulo",
+        "/home/NextLevelCode/dev/myarchinstall/tests/localtime",
+    ],
+    create_pidfd: false,
+}
+[2024-12-28 10:29:33] Command completed: Success
+[2024-12-28 10:30:07] Command {
+    program: "ln",
+    args: [
+        "ln",
+        "-sf",
+        "/home/NextLevelCode/dev/myarchinstall/tests/America/Fortaleza",
+        "/home/NextLevelCode/dev/myarchinstall/tests/localtime",
+    ],
+    create_pidfd: false,
+}
+[2024-12-28 10:30:07] Command completed: Success
+[2024-12-28 10:30:27] Command {
+    program: "ln",
+    args: [
+        "ln",
+        "-sf",
+        "/home/NextLevelCode/dev/myarchinstall/tests/America/Fortalza",
+        "/home/NextLevelCode/dev/myarchinstall/tests/localtime",
+    ],
+    create_pidfd: false,
+}
+[2024-12-28 10:30:27] Command completed: Success
+[2024-12-28 10:31:26] Command {
+    program: "ln",
+    args: [
+        "ln",
+        "-sf",
+        "/home/NextLevelCode/dev/myarchinstall/tests/America/Fortaleza",
+        "/home/NextLevelCode/dev/myarchinstall/tests/localtime",
+    ],
+    create_pidfd: false,
+}
+[2024-12-28 10:31:26] Command completed: Success
+[2024-12-28 10:35:37] Command {
+    program: "ln",
+    args: [
+        "ln",
+        "-sf",
+        "/home/NextLevelCode/dev/myarchinstall/tests/America/Fortaleza",
+        "/tmp/.tmpgHEyAR/timezone",
+    ],
+    create_pidfd: false,
+}
+[2024-12-28 10:35:37] Command completed: Success
+[2024-12-28 10:36:17] Command {
+    program: "ln",
+    args: [
+        "ln",
+        "-sf",
+        "/home/NextLevelCode/dev/myarchinstall/tests/America/Fortaleza",
+        "/tmp/.tmp5s5JnW/timezone",
+    ],
+    create_pidfd: false,
+}
+[2024-12-28 10:36:17] Command completed: Success
+[2024-12-28 10:36:30] Command {
+    program: "ln",
+    args: [
+        "ln",
+        "-sf",
+        "/home/NextLevelCode/dev/myarchinstall/tests/America/Fortaleza",
+        "/tmp/.tmpQ9inqp/timezone",
+    ],
+    create_pidfd: false,
+}
+[2024-12-28 10:36:30] Command completed: Success
+[2024-12-28 10:38:16] Command {
+    program: "ln",
+    args: [
+        "ln",
+        "-sf",
+        "/home/NextLevelCode/dev/myarchinstall/tests/America/Fortaleza",
+        "/tmp/.tmpZyzenW/timezone",
+    ],
+    create_pidfd: false,
+}
+[2024-12-28 10:38:16] Command completed: Success
+[2024-12-28 10:39:28] Command {
+    program: "ln",
+    args: [
+        "ln",
+        "-sf",
+        "/home/NextLevelCode/dev/myarchinstall/tests/America/Fortaleza",
+        "/tmp/.tmpoeOo9D/timezone",
+    ],
+    create_pidfd: false,
+}
+[2024-12-28 10:39:28] Command completed: Success
+[2024-12-28 10:40:44] Command {
+    program: "ln",
+    args: [
+        "ln",
+        "-sf",
+        "/home/NextLevelCode/dev/myarchinstall/src/America/Fortaleza",
+        "/tmp/.tmpWkKmil/timezone",
+    ],
+    create_pidfd: false,
+}
+[2024-12-28 10:40:44] Command completed: Success
+[2024-12-28 10:42:01] Command {
+    program: "ln",
+    args: [
+        "ln",
+        "-sf",
+        "/home/NextLevelCode/dev/myarchinstall/src/America/Fortaleza",
+        "/tmp/.tmpUlVeL1/timezone",
+    ],
+    create_pidfd: false,
+}
+[2024-12-28 10:42:01] Command completed: Success
+[2024-12-28 10:42:25] Command {
+    program: "ln",
+    args: [
+        "ln",
+        "-sf",
+        "/home/NextLevelCode/dev/myarchinstall/src/America/Fortaleza",
+        "/tmp/.tmpE9TnOk/timezone",
+    ],
+    create_pidfd: false,
+}
+[2024-12-28 10:42:25] Command completed: Success
+[2024-12-28 10:43:22] Command {
+    program: "ln",
+    args: [
+        "ln",
+        "-sf",
+        "/home/NextLevelCode/dev/myarchinstall/src/America/Fortaleza",
+        "/tmp/.tmp5d7Gfi/timezone",
+    ],
+    create_pidfd: false,
+}
+[2024-12-28 10:43:22] Command completed: Success
+[2024-12-28 10:43:35] Command {
+    program: "ln",
+    args: [
+        "ln",
+        "-sf",
+        "/home/NextLevelCode/dev/myarchinstall/src/America/Fortaleza",
+        "/tmp/.tmpyOINgM/timezone",
+    ],
+    create_pidfd: false,
+}
+[2024-12-28 10:43:35] Command completed: Success
+[2024-12-28 10:44:15] Command {
+    program: "ln",
+    args: [
+        "ln",
+        "-sf",
+        "/home/NextLevelCode/dev/myarchinstall/src/America/Fortaleza",
+        "/tmp/.tmpDGyVQt/timezone",
+    ],
+    create_pidfd: false,
+}
+[2024-12-28 10:44:15] Command completed: Success
+[2024-12-28 10:44:15] Command {
+    program: "ln",
+    args: [
+        "ln",
+        "-sf",
+        "/home/NextLevelCode/dev/myarchinstall/src/America/Fortaleza",
+        "/tmp/.tmp0tBDKv/timezone",
+    ],
+    create_pidfd: false,
+}
+[2024-12-28 10:44:15] Command completed: Success
+[2024-12-28 10:44:31] Command {
+    program: "ln",
+    args: [
+        "ln",
+        "-sf",
+        "/home/NextLevelCode/dev/myarchinstall/src/America/Fortaleza",
+        "/tmp/.tmp71731C/timezone",
+    ],
+    create_pidfd: false,
+}
+[2024-12-28 10:44:31] Command completed: Success
+[2024-12-28 10:44:41] Command {
+    program: "ln",
+    args: [
+        "ln",
+        "-sf",
+        "/home/NextLevelCode/dev/myarchinstall/src/America/Fortaleza",
+        "/tmp/.tmpiCeOne/timezone",
+    ],
+    create_pidfd: false,
+}
+[2024-12-28 10:44:41] Command completed: Success
+[2024-12-28 10:44:41] Command {
+    program: "ln",
+    args: [
+        "ln",
+        "-sf",
+        "/home/NextLevelCode/dev/myarchinstall/src/America/Fortaleza",
+        "/tmp/.tmptHnTkp/timezone",
+    ],
+    create_pidfd: false,
+}
+[2024-12-28 10:44:41] Command completed: Success
+[2024-12-28 10:44:57] Command {
+    program: "ln",
+    args: [
+        "ln",
+        "-sf",
+        "/home/NextLevelCode/dev/myarchinstall/src/America/Fortaleza",
+        "/tmp/.tmpL5ncGa/timezone",
+    ],
+    create_pidfd: false,
+}
+[2024-12-28 10:44:57] Command completed: Success
+[2024-12-28 11:13:02] Command {
+    program: "sh",
+    args: [
+        "sh",
+        "-c",
+        "echo test > /tmp/.tmp3D3FPY/hostsname",
+    ],
+    create_pidfd: false,
+}
+[2024-12-28 11:13:02] Command completed: Success
+[2024-12-28 11:13:02] Command {
+    program: "sh",
+    args: [
+        "sh",
+        "-c",
+        "echo \"127.0.0.1    localhost\" > \"/tmp/.tmp3D3FPY/hosts\"",
+    ],
+    create_pidfd: false,
+}
+[2024-12-28 11:13:02] Command completed: Success
+[2024-12-28 11:13:02] Command {
+    program: "sh",
+    args: [
+        "sh",
+        "-c",
+        "echo \"::1          localhost\" >> \"/tmp/.tmp3D3FPY/hosts\"",
+    ],
+    create_pidfd: false,
+}
+[2024-12-28 11:13:02] Command completed: Success
+[2024-12-28 11:13:02] Command {
+    program: "sh",
+    args: [
+        "sh",
+        "-c",
+        "echo \"127.0.1.1    test.localdomain test\" >> \"/tmp/.tmp3D3FPY/hosts\"",
+    ],
+    create_pidfd: false,
+}
+[2024-12-28 11:13:02] Command completed: Success
+[[2024-12-28 13:38:57] 2024-12-28 13:38:57Command {
+    program: "sh",
+    args: [
+        "sh",
+        "-c",
+        "echo test > /tmp/.tmpfYtBNT/hostsname",
+    ],
+    create_pidfd: false,
+}] 
+Command {
+    program: "ln",
+    args: [
+        "ln",
+        "-sf",
+        "/home/NextLevelCode/dev/myarchinstall/src/America/Fortaleza",
+        "/tmp/.tmp5eRXIR/timezone",
+    ],
+    create_pidfd: false,
+}
+[2024-12-28 13:38:57] Command completed: Success
+[2024-12-28 13:38:57] Command completed: Success
+[2024-12-28 13:38:57] Command {
+    program: "sh",
+    args: [
+        "sh",
+        "-c",
+        "echo \"127.0.0.1    localhost\" > \"/tmp/.tmpfYtBNT/hosts\"",
+    ],
+    create_pidfd: false,
+}
+[2024-12-28 13:38:57] Command completed: Success
+[2024-12-28 13:38:57] Command {
+    program: "sh",
+    args: [
+        "sh",
+        "-c",
+        "echo \"::1          localhost\" >> \"/tmp/.tmpfYtBNT/hosts\"",
+    ],
+    create_pidfd: false,
+}
+[2024-12-28 13:38:57] Command completed: Success
+[2024-12-28 13:38:57] Command {
+    program: "sh",
+    args: [
+        "sh",
+        "-c",
+        "echo \"127.0.1.1    test.localdomain test\" >> \"/tmp/.tmpfYtBNT/hosts\"",
+    ],
+    create_pidfd: false,
+}
+[2024-12-28 13:38:57] Command completed: Success

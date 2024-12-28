@@ -1,12 +1,7 @@
-use std::process::Command;
-
-use crate::{
-    error::Trace,
-    functions::run_commands::run_command,
-    prelude::{Error, Result},
-};
-use chrono_tz::Tz;
+use log::info;
 use serde::Deserialize;
+
+use crate::{configure_timezone::set_timezone::set_timezone, prelude::Result};
 
 #[derive(Default, Debug)]
 pub struct RegioValid(String);
@@ -38,25 +33,9 @@ impl<R, C> TimezoneBuilder<R, C> {
         region: &str,
         city: &str,
     ) -> Result<TimezoneBuilder<RegioValid, CityValid>> {
-        format!("{}/{}", region, city)
-            .parse::<Tz>()
-            .map_err(|e| Error::Timezone {
-                source: e,
-                context: format!("Invalid timezone: /usr/share/zoneinfo/{}/{}", region, city),
-                backtrace: Trace {
-                    filename: file!(),
-                    function: "fn valid_timezone()",
-                    description: "format!('{}/{}', region, city).parse::<Tz>();".to_string(),
-                },
-            })?;
-
-        run_command(
-            Command::new("ln")
-                .arg("-sf")
-                .arg(format!("/usr/share/zoneinfo/{}/{}", region, city))
-                .arg("/etc/localtime"),
-        )?;
-
+        info!("Configuring timezone...");
+        set_timezone(region, city)?;
+        info!("Timezone configured successfully");
         Ok(TimezoneBuilder {
             region: RegioValid(region.to_owned()),
             city: CityValid(city.to_owned()),

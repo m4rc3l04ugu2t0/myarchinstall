@@ -1,5 +1,5 @@
-use std::fmt;
 use std::fs::read_to_string;
+use std::{env, fmt};
 
 use log::info;
 use serde::{Deserialize, Serialize};
@@ -76,10 +76,13 @@ impl ConfigBuilder {
             return Ok(()); // Skip if already completed
         }
 
+        info!("Configuring location...");
         self.location = LocationBuilder::new()
             .valid_language(&self.location.language)?
             .valid_keymap(&self.location.keymap)?
             .build()?;
+
+        info!("Location configured successfully");
 
         self.save_state(state)?;
         Ok(())
@@ -90,12 +93,14 @@ impl ConfigBuilder {
             return Ok(()); // Skip if already completed
         }
 
+        info!("Configuring system...");
         self.system = SystemBuilder::new()
             .setup_hostname(&self.system.hostname)?
             .setup_root(&self.system.root_password)?
             .setup_user(&self.system.username, &self.system.user_password)?
             .build()?;
 
+        info!("System configured successfully");
         self.save_state(state)?;
         Ok(())
     }
@@ -105,10 +110,12 @@ impl ConfigBuilder {
             return Ok(()); // Skip if already completed
         }
 
+        info!("Installing packages...");
         self.packages = PackagesBuilder::new()
             .essentials_valid(&self.packages.essentials)?
             .build()?;
 
+        info!("Packages installed successfully");
         self.save_state(state)?;
         Ok(())
     }
@@ -140,22 +147,47 @@ impl ConfigBuilder {
 pub fn configure() -> Result<()> {
     let mut state = load_state()?; // Load saved state
     let mut config = ConfigBuilder::new(config()?); // Create a mutable instance
+    let args: Vec<String> = env::args().collect();
 
-    info!("Configuring timezone...");
+    if args.len() > 1 {
+        match args[1].as_str() {
+            "configure_timezone" => {
+                config.setup_timezone(&mut state)?;
+                return Ok(());
+            }
+            "setup_location" => {
+                config.setup_location(&mut state)?;
+                return Ok(());
+            }
+            "setup_system" => {
+                config.setup_system(&mut state)?;
+                return Ok(());
+            }
+            "setup_packages" => {
+                config.setup_packages(&mut state)?;
+                return Ok(());
+            }
+            _ => {
+                return Err(Box::new(Error::Argument {
+                    source: "Invalid arg!",
+                    context: "Check arguments",
+                    backtrace: Trace {
+                        filename: file!(),
+                        function: "fn configure() -> Result<()>",
+                        description: "match args[1].as_str()".to_string(),
+                    },
+                }));
+            }
+        }
+    }
+
     config.setup_timezone(&mut state)?;
-    info!("Timezone configured successfully");
 
-    info!("Configuring location...");
     config.setup_location(&mut state)?;
-    info!("Location configured successfully");
 
-    info!("Configuring system...");
     config.setup_system(&mut state)?;
-    info!("System configured successfully");
 
-    info!("Installing packages...");
     config.setup_packages(&mut state)?;
-    info!("Packages installed successfully");
 
     let final_config = config.build()?;
     info!("Configuration completed successfully:\n{}", final_config);

@@ -3,6 +3,7 @@ pub mod configure_hostname;
 pub mod configure_location;
 pub mod configure_new_user;
 pub mod configure_root;
+pub mod configure_timezone;
 pub mod error;
 pub mod functions;
 pub mod install_packages;

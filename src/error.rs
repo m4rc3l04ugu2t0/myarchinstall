@@ -74,6 +74,16 @@ pub enum Error {
         context: String,
         backtrace: Trace,
     },
+    Argument {
+        source: &'static str,
+        context: &'static str,
+        backtrace: Trace,
+    },
+    NoLanguage {
+        source: &'static str,
+        context: &'static str,
+        backtrace: Trace,
+    },
 }
 
 impl fmt::Display for Error {
@@ -189,6 +199,28 @@ impl fmt::Display for Error {
                 write!(
                     f,
                     "Failed to execute command : {}: {}: \nTrace: {}",
+                    context, source, backtrace
+                )
+            }
+            Self::Argument {
+                source,
+                context,
+                backtrace,
+            } => {
+                write!(
+                    f,
+                    "Invalid argument: {}: {}: \nTrace: {}",
+                    context, source, backtrace
+                )
+            }
+            Self::NoLanguage {
+                source,
+                context,
+                backtrace,
+            } => {
+                write!(
+                    f,
+                    "Language not found: {}: {}: \nTrace: {}",
                     context, source, backtrace
                 )
             }
