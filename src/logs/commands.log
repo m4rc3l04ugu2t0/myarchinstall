@@ -638,3 +638,225 @@
     create_pidfd: false,
 }
 [2024-12-28 09:30:24] Command completed: Success
+[2024-12-28 13:44:30] Command {
+    program: "sh",
+    args: [
+        "sh",
+        "-c",
+        "echo test > /tmp/.tmpVrhpzL/hostsname",
+    ],
+    create_pidfd: false,
+}
+[2024-12-28 13:44:30] Command completed: Success
+[2024-12-28 13:44:30] Command {
+    program: "sh",
+    args: [
+        "sh",
+        "-c",
+        "echo \"127.0.0.1    localhost\" > \"/tmp/.tmpVrhpzL/hosts\"",
+    ],
+    create_pidfd: false,
+}
+[2024-12-28 13:44:30] Command completed: Success
+[2024-12-28 13:44:30] Command {
+    program: "sh",
+    args: [
+        "sh",
+        "-c",
+        "echo \"::1          localhost\" >> \"/tmp/.tmpVrhpzL/hosts\"",
+    ],
+    create_pidfd: false,
+}
+[2024-12-28 13:44:30] Command completed: Success
+[2024-12-28 13:44:30] Command {
+    program: "sh",
+    args: [
+        "sh",
+        "-c",
+        "echo \"127.0.1.1    test.localdomain test\" >> \"/tmp/.tmpVrhpzL/hosts\"",
+    ],
+    create_pidfd: false,
+}
+[2024-12-28 13:44:30] Command completed: Success
+[2024-12-28 13:50:12] Command {
+    program: "sh",
+    args: [
+        "sh",
+        "-c",
+        "echo test > /tmp/.tmpbLIKdU/hostsname",
+    ],
+    create_pidfd: false,
+}
+[2024-12-28 13:50:12] Command completed: Success
+[2024-12-28 13:50:12] Command {
+    program: "sh",
+    args: [
+        "sh",
+        "-c",
+        "echo \"127.0.0.1    localhost\" > \"/tmp/.tmpbLIKdU/hosts\"",
+    ],
+    create_pidfd: false,
+}
+[2024-12-28 13:50:12] Command completed: Success
+[2024-12-28 13:50:12] Command {
+    program: "sh",
+    args: [
+        "sh",
+        "-c",
+        "echo \"::1          localhost\" >> \"/tmp/.tmpbLIKdU/hosts\"",
+    ],
+    create_pidfd: false,
+}
+[2024-12-28 13:50:12] Command completed: Success
+[2024-12-28 13:50:12] Command {
+    program: "sh",
+    args: [
+        "sh",
+        "-c",
+        "echo \"127.0.1.1    test.localdomain test\" >> \"/tmp/.tmpbLIKdU/hosts\"",
+    ],
+    create_pidfd: false,
+}
+[2024-12-28 13:50:12] Command completed: Success
+[2024-12-28 13:52:05] Command {
+    program: "sh",
+    args: [
+        "sh",
+        "-c",
+        "echo test > /tmp/.tmplDdVPt/hostsname",
+    ],
+    create_pidfd: false,
+}
+[2024-12-28 13:52:05] Command completed: Success
+[2024-12-28 13:52:05] Command {
+    program: "sh",
+    args: [
+        "sh",
+        "-c",
+        "echo \"127.0.0.1    localhost\" > \"/tmp/.tmplDdVPt/hosts\"",
+    ],
+    create_pidfd: false,
+}
+[2024-12-28 13:52:05] Command completed: Success
+[2024-12-28 13:52:05] Command {
+    program: "sh",
+    args: [
+        "sh",
+        "-c",
+        "echo \"::1          localhost\" >> \"/tmp/.tmplDdVPt/hosts\"",
+    ],
+    create_pidfd: false,
+}
+[2024-12-28 13:52:05] Command completed: Success
+[2024-12-28 13:52:05] Command {
+    program: "sh",
+    args: [
+        "sh",
+        "-c",
+        "echo \"127.0.1.1    test.localdomain test\" >> \"/tmp/.tmplDdVPt/hosts\"",
+    ],
+    create_pidfd: false,
+}
+[2024-12-28 13:52:05] Command completed: Success
+[2024-12-28 14:03:33] Command {
+    program: "locale-gen",
+    args: [
+        "locale-gen",
+    ],
+    create_pidfd: false,
+}
+[2024-12-28 14:03:33] Command completed: Failed
+[2024-12-28 14:06:25] Command {
+    program: "locale-gen",
+    args: [
+        "locale-gen",
+    ],
+    create_pidfd: false,
+}
+[2024-12-28 14:06:25] Command completed: Failed
+[2024-12-28 14:11:00] Command {
+    program: "locale-gen",
+    args: [
+        "locale-gen",
+    ],
+    create_pidfd: false,
+}
+[2024-12-28 14:11:00] Command completed: Failed
+[2024-12-28 14:14:18] Command {
+    program: "sh",
+    args: [
+        "sh",
+        "-c",
+        "echo KEYMAP=br-abnt2 >> \"/tmp/.tmpy5df8j/vconsole.conf\"",
+    ],
+    create_pidfd: false,
+}
+[2024-12-28 14:14:18] Command completed: Success
+[2024-12-28 14:49:24] Command {
+    program: "sh",
+    args: [
+        "sh",
+        "-c",
+        "echo KEYMAP=br-abnt2 >> \"/tmp/.tmpaswxuL/vconsole.conf\"",
+    ],
+    create_pidfd: false,
+}
+[2024-12-28 14:49:24] Command completed: Success
+[2024-12-28 14:56:10] Command {
+    program: "sh",
+    args: [
+        "sh",
+        "-c",
+        "echo KEYMAP=br-abnt2 >> \"/tmp/.tmpFnK42W/vconsole.conf\"",
+    ],
+    create_pidfd: false,
+}
+[2024-12-28 14:56:10] Command completed: Success
+[2024-12-28 14:56:23] Command {
+    program: "sh",
+    args: [
+        "sh",
+        "-c",
+        "echo KEYMAP=br-abnt2 >> \"/tmp/.tmpFva4RA/vconsole.conf\"",
+    ],
+    create_pidfd: false,
+}
+[2024-12-28 14:56:23] Command completed: Success
+[2024-12-28 14:57:07] Command {
+    program: "sh",
+    args: [
+        "sh",
+        "-c",
+        "echo KEYMAP=br-abnt2 >> \"/tmp/.tmpGvsMXc/vconsole.conf\"",
+    ],
+    create_pidfd: false,
+}
+[2024-12-28 14:57:07] Command completed: Success
+[2024-12-28 14:57:43] Command {
+    program: "sh",
+    args: [
+        "sh",
+        "-c",
+        "echo KEYMAP=br-abnt2 >> \"/tmp/.tmpEauECH/vconsole.conf\"",
+    ],
+    create_pidfd: false,
+}
+[2024-12-28 14:57:43] Command completed: Success
+[2024-12-28 15:00:19] Command {
+    program: "mkdir",
+    args: [
+        "mkdir",
+        "src/testee",
+    ],
+    create_pidfd: false,
+}
+[2024-12-28 15:00:19] Command completed: Success
+[2024-12-28 15:01:27] Command {
+    program: "ls",
+    args: [
+        "ls",
+        "-la",
+    ],
+    create_pidfd: false,
+}
+[2024-12-28 15:01:27] Command completed: Success

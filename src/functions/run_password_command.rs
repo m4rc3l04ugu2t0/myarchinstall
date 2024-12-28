@@ -37,3 +37,10 @@ pub fn run_passwd_command(password: &str, user_name: &str) -> Result<()> {
         ))
     }
 }
+
+// run as root
+// #[test]
+// fn test_run_password() {
+//     assert!(run_passwd_command("1234", "usererror").is_err());
+//     assert!(run_passwd_command("1234", "arch").is_ok());
+// }

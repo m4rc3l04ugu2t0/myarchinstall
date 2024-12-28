@@ -81,3 +81,8 @@ pub fn run_command(command: &mut Command) -> Result<()> {
 
     Ok(())
 }
+
+#[test]
+fn test_run_command() {
+    assert!(run_command(Command::new("ls").arg("-la")).is_ok());
+}

@@ -76,13 +76,13 @@ impl ConfigBuilder {
         if state.step >= 2 {
             return Ok(());
         }
-
+        info!("Configuring location...");
         self.location = LocationBuilder::new()
             .valid_language(&self.location.language)?
             .valid_keymap(&self.location.keymap)?
             .seal()?
             .build()?;
-
+        info!("Location configured successfully");
         self.save_state(state)?;
         Ok(())
     }
@@ -91,13 +91,15 @@ impl ConfigBuilder {
         if state.step >= 3 {
             return Ok(());
         }
-
+        info!("Configuring system...");
         self.system = SystemBuilder::new()
             .setup_hostname(&self.system.hostname)?
             .setup_root(&self.system.root_password)?
             .setup_user(&self.system.username, &self.system.user_password)?
             .seal()?
             .build()?;
+
+        info!("System configured successfully");
 
         self.save_state(state)?;
         Ok(())
@@ -107,12 +109,13 @@ impl ConfigBuilder {
         if state.step >= 4 {
             return Ok(());
         }
-
+        info!("Installing packages...");
         self.packages = PackagesBuilder::new()
             .essentials_valid(&self.packages.essentials)?
             .seal()?
             .build()?;
 
+        info!("Packages installed successfully");
         self.save_state(state)?;
         Ok(())
     }
@@ -149,30 +152,31 @@ pub fn configure() -> Result<()> {
     if args.len() > 1 {
         match args[1].as_str() {
             "configure_timezone" => {
-                info!("Configuring timezone...");
                 config.setup_timezone(&mut state)?;
-                info!("Timezone configured successfully");
                 return Ok(());
             }
-            _ => {}
+            "setup_location" => {
+                config.setup_location(&mut state)?;
+                return Ok(());
+            }
+            "setup_system" => {
+                config.setup_system(&mut state)?;
+                return Ok(());
+            }
+            "setup_packages" => {
+                config.setup_packages(&mut state)?;
+                return Ok(());
+            }
+            _ => {
+                return Err(Error::Generic(format!("Invalid argument: {}", args[1])));
+            }
         }
     }
 
-    info!("Configuring timezone...");
     config.setup_timezone(&mut state)?;
-    info!("Timezone configured successfully");
-
-    info!("Configuring location...");
     config.setup_location(&mut state)?;
-    info!("Location configured successfully");
-
-    info!("Configuring system...");
     config.setup_system(&mut state)?;
-    info!("System configured successfully");
-
-    info!("Installing packages...");
     config.setup_packages(&mut state)?;
-    info!("Packages installed successfully");
 
     let final_config = config.build()?;
     info!("Configuration completed successfully:\n{}", final_config);

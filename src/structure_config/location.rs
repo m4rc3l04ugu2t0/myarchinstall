@@ -1,8 +1,8 @@
-use std::{marker::PhantomData, process::Command};
+use std::marker::PhantomData;
 
 use crate::{
+    configure_keymaps::set_keymaps::set_keymaps,
     configure_location::set_language::set_language,
-    functions::run_commands::run_command,
     prelude::{Result, Safety, Unsafety, W},
 };
 use log::info;
@@ -39,11 +39,7 @@ impl<P, L, K> LocationBuilder<P, L, K> {
 
     pub fn valid_keymap(self, keymap: &str) -> Result<LocationBuilder<Unsafety, L, String>> {
         info!("Configuring keymap...");
-        run_command(
-            Command::new("sh")
-                .arg("-c")
-                .arg(format!("echo KEYMAP={} >> /etc/vconsole.conf", keymap)),
-        )?;
+        set_keymaps(keymap)?;
         info!("Keymap configured successfully");
 
         Ok(LocationBuilder {

@@ -1,4 +1,5 @@
 pub mod configure_hostname;
+pub mod configure_keymaps;
 pub mod configure_location;
 pub mod configure_new_user;
 pub mod configure_root;

@@ -1,0 +1,9 @@
+17:14:18 [INFO] Logger initialized successfully 
+See logs in src/logs/configuration.log
+17:14:18 [INFO] State loaded successfully from "/home/NextLevelCode/dev/myarchinstall/src/configs/state.json"
+17:14:18 [INFO] Configuring location...
+17:14:18 [INFO] Configuring language...
+17:14:18 [INFO] Language configured successfully
+17:14:18 [INFO] Configuring keymap...
+17:14:18 [INFO] Keymap configured successfully
+17:14:18 [INFO] Location configured successfully

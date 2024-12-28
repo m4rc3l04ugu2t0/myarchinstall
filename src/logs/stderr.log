@@ -1,3 +1,9 @@
 sh: line 1: tests/hostname: Permission denied
 sh: -c: line 1: syntax error near unexpected token `newline'
 sh: -c: line 1: `echo ks > '
+rm: cannot remove '/usr/lib/locale/locale-archive': Permission denied
+cannot open locale archive "/usr/lib/locale/locale-archive": Permission denied
+rm: cannot remove '/usr/lib/locale/locale-archive': Permission denied
+cannot open locale archive "/usr/lib/locale/locale-archive": Permission denied
+rm: cannot remove '/usr/lib/locale/locale-archive': Permission denied
+cannot open locale archive "/usr/lib/locale/locale-archive": Permission denied
