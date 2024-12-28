@@ -1,0 +1,3 @@
+sh: line 1: tests/hostname: Permission denied
+sh: -c: line 1: syntax error near unexpected token `newline'
+sh: -c: line 1: `echo ks > '

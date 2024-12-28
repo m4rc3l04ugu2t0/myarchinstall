@@ -1,5 +1,5 @@
-use std::fmt;
 use std::fs::read_to_string;
+use std::{env, fmt};
 
 use log::info;
 use serde::{Deserialize, Serialize};
@@ -144,6 +144,19 @@ impl ConfigBuilder {
 pub fn configure() -> Result<()> {
     let mut state = load_state()?;
     let mut config = ConfigBuilder::new(config()?);
+    let args: Vec<String> = env::args().collect();
+
+    if args.len() > 1 {
+        match args[1].as_str() {
+            "configure_timezone" => {
+                info!("Configuring timezone...");
+                config.setup_timezone(&mut state)?;
+                info!("Timezone configured successfully");
+                return Ok(());
+            }
+            _ => {}
+        }
+    }
 
     info!("Configuring timezone...");
     config.setup_timezone(&mut state)?;

@@ -1,0 +1,640 @@
+[2024-12-28 08:27:06] Command {
+    program: "sh",
+    args: [
+        "sh",
+        "-c",
+        "echo ks > tests/hostname",
+    ],
+    create_pidfd: false,
+}
+[2024-12-28 08:27:06] Command completed: Failed
+[2024-12-28 08:28:39] Command {
+    program: "sh",
+    args: [
+        "sh",
+        "-c",
+        "echo ks > tests/hostname",
+    ],
+    create_pidfd: false,
+}
+[2024-12-28 08:28:39] Command completed: Success
+[2024-12-28 08:28:39] Command {
+    program: "sh",
+    args: [
+        "sh",
+        "-c",
+        "echo \"127.0.0.1    localhost\" > tests/hosts",
+    ],
+    create_pidfd: false,
+}
+[2024-12-28 08:28:39] Command completed: Success
+[2024-12-28 08:28:39] Command {
+    program: "sh",
+    args: [
+        "sh",
+        "-c",
+        "echo \"::1          localhost\" >> tests/hosts",
+    ],
+    create_pidfd: false,
+}
+[2024-12-28 08:28:39] Command completed: Success
+[2024-12-28 08:28:39] Command {
+    program: "sh",
+    args: [
+        "sh",
+        "-c",
+        "echo \"127.0.1.1    ks.localdomain ks\" >> tests/hosts",
+    ],
+    create_pidfd: false,
+}
+[2024-12-28 08:28:39] Command completed: Success
+[2024-12-28 08:30:08] Command {
+    program: "sh",
+    args: [
+        "sh",
+        "-c",
+        "echo ks > tests/hostname",
+    ],
+    create_pidfd: false,
+}
+[2024-12-28 08:30:08] Command completed: Success
+[2024-12-28 08:30:08] Command {
+    program: "sh",
+    args: [
+        "sh",
+        "-c",
+        "echo \"127.0.0.1    localhost\" > tests/hosts",
+    ],
+    create_pidfd: false,
+}
+[2024-12-28 08:30:08] Command completed: Success
+[2024-12-28 08:30:08] Command {
+    program: "sh",
+    args: [
+        "sh",
+        "-c",
+        "echo \"::1          localhost\" >> tests/hosts",
+    ],
+    create_pidfd: false,
+}
+[2024-12-28 08:30:08] Command completed: Success
+[2024-12-28 08:30:08] Command {
+    program: "sh",
+    args: [
+        "sh",
+        "-c",
+        "echo \"127.0.1.1    ks.localdomain ks\" >> tests/hosts",
+    ],
+    create_pidfd: false,
+}
+[2024-12-28 08:30:08] Command completed: Success
+[2024-12-28 08:54:43] Command {
+    program: "sh",
+    args: [
+        "sh",
+        "-c",
+        "echo ks > ",
+    ],
+    create_pidfd: false,
+}
+[2024-12-28 08:54:43] Command completed: Failed
+[2024-12-28 08:56:16] Command {
+    program: "sh",
+    args: [
+        "sh",
+        "-c",
+        "echo ks > /tmp/.tmp4QmBc7/hosts",
+    ],
+    create_pidfd: false,
+}
+[2024-12-28 08:56:16] Command completed: Success
+[2024-12-28 08:56:27] Command {
+    program: "sh",
+    args: [
+        "sh",
+        "-c",
+        "echo ks > /tmp/.tmp3437VA/hosts",
+    ],
+    create_pidfd: false,
+}
+[2024-12-28 08:56:27] Command completed: Success
+[2024-12-28 08:57:57] Command {
+    program: "sh",
+    args: [
+        "sh",
+        "-c",
+        "echo ks > /tmp/.tmp17Hrec/hosts",
+    ],
+    create_pidfd: false,
+}
+[2024-12-28 08:57:57] Command completed: Success
+[2024-12-28 08:58:48] Command {
+    program: "sh",
+    args: [
+        "sh",
+        "-c",
+        "echo ks > /tmp/.tmpYkdThf/hosts",
+    ],
+    create_pidfd: false,
+}
+[2024-12-28 08:58:48] Command completed: Success
+[2024-12-28 08:59:02] Command {
+    program: "sh",
+    args: [
+        "sh",
+        "-c",
+        "echo ks > /tmp/.tmpKEz56d/hosts",
+    ],
+    create_pidfd: false,
+}
+[2024-12-28 08:59:02] Command completed: Success
+[2024-12-28 09:10:21] Command {
+    program: "sh",
+    args: [
+        "sh",
+        "-c",
+        "echo ks > /tmp/.tmpUb5xqW/hosts",
+    ],
+    create_pidfd: false,
+}
+[2024-12-28 09:10:21] Command completed: Success
+[2024-12-28 09:11:52] Command {
+    program: "sh",
+    args: [
+        "sh",
+        "-c",
+        "echo ks > /tmp/.tmpCkr0ue/hosts",
+    ],
+    create_pidfd: false,
+}
+[2024-12-28 09:11:52] Command completed: Success
+[2024-12-28 09:11:52] Command {
+    program: "sh",
+    args: [
+        "sh",
+        "-c",
+        "echo \"127.0.0.1    localhost\" > {:?}",
+    ],
+    create_pidfd: false,
+}
+[2024-12-28 09:11:52] Command completed: Success
+[2024-12-28 09:11:52] Command {
+    program: "sh",
+    args: [
+        "sh",
+        "-c",
+        "echo \"::1          localhost\" >> {:?}",
+    ],
+    create_pidfd: false,
+}
+[2024-12-28 09:11:52] Command completed: Success
+[2024-12-28 09:11:52] Command {
+    program: "sh",
+    args: [
+        "sh",
+        "-c",
+        "echo \"127.0.1.1    ks.localdomain ks\" >> \"/tmp/.tmpCkr0ue/hosts\"",
+    ],
+    create_pidfd: false,
+}
+[2024-12-28 09:11:52] Command completed: Success
+[2024-12-28 09:13:10] Command {
+    program: "sh",
+    args: [
+        "sh",
+        "-c",
+        "echo ks > /tmp/.tmpvHYiMx/hosts",
+    ],
+    create_pidfd: false,
+}
+[2024-12-28 09:13:10] Command completed: Success
+[2024-12-28 09:13:10] Command {
+    program: "sh",
+    args: [
+        "sh",
+        "-c",
+        "echo \"127.0.0.1    localhost\" > {:?}",
+    ],
+    create_pidfd: false,
+}
+[2024-12-28 09:13:10] Command completed: Success
+[2024-12-28 09:13:10] Command {
+    program: "sh",
+    args: [
+        "sh",
+        "-c",
+        "echo \"::1          localhost\" >> {:?}",
+    ],
+    create_pidfd: false,
+}
+[2024-12-28 09:13:10] Command completed: Success
+[2024-12-28 09:13:11] Command {
+    program: "sh",
+    args: [
+        "sh",
+        "-c",
+        "echo \"127.0.1.1    ks.localdomain ks\" >> \"/tmp/.tmpvHYiMx/hosts\"",
+    ],
+    create_pidfd: false,
+}
+[2024-12-28 09:13:11] Command completed: Success
+[2024-12-28 09:13:42] Command {
+    program: "sh",
+    args: [
+        "sh",
+        "-c",
+        "echo ks > /tmp/.tmp7x5lpu/hostsname",
+    ],
+    create_pidfd: false,
+}
+[2024-12-28 09:13:42] Command completed: Success
+[2024-12-28 09:13:42] Command {
+    program: "sh",
+    args: [
+        "sh",
+        "-c",
+        "echo \"127.0.0.1    localhost\" > {:?}",
+    ],
+    create_pidfd: false,
+}
+[2024-12-28 09:13:42] Command completed: Success
+[2024-12-28 09:13:42] Command {
+    program: "sh",
+    args: [
+        "sh",
+        "-c",
+        "echo \"::1          localhost\" >> {:?}",
+    ],
+    create_pidfd: false,
+}
+[2024-12-28 09:13:42] Command completed: Success
+[2024-12-28 09:13:42] Command {
+    program: "sh",
+    args: [
+        "sh",
+        "-c",
+        "echo \"127.0.1.1    ks.localdomain ks\" >> \"/tmp/.tmp7x5lpu/hosts\"",
+    ],
+    create_pidfd: false,
+}
+[2024-12-28 09:13:42] Command completed: Success
+[2024-12-28 09:14:53] Command {
+    program: "sh",
+    args: [
+        "sh",
+        "-c",
+        "echo ks > /tmp/.tmpotjrst/hostsname",
+    ],
+    create_pidfd: false,
+}
+[2024-12-28 09:14:53] Command completed: Success
+[2024-12-28 09:14:53] Command {
+    program: "sh",
+    args: [
+        "sh",
+        "-c",
+        "echo \"127.0.0.1    localhost\" > {:?}",
+    ],
+    create_pidfd: false,
+}
+[2024-12-28 09:14:53] Command completed: Success
+[2024-12-28 09:14:53] Command {
+    program: "sh",
+    args: [
+        "sh",
+        "-c",
+        "echo \"::1          localhost\" >> {:?}",
+    ],
+    create_pidfd: false,
+}
+[2024-12-28 09:14:53] Command completed: Success
+[2024-12-28 09:14:53] Command {
+    program: "sh",
+    args: [
+        "sh",
+        "-c",
+        "echo \"127.0.1.1    ks.localdomain ks\" >> \"/tmp/.tmpotjrst/hosts\"",
+    ],
+    create_pidfd: false,
+}
+[2024-12-28 09:14:53] Command completed: Success
+[2024-12-28 09:15:30] Command {
+    program: "sh",
+    args: [
+        "sh",
+        "-c",
+        "echo ks > /tmp/.tmppJf64T/hostsname",
+    ],
+    create_pidfd: false,
+}
+[2024-12-28 09:15:30] Command completed: Success
+[2024-12-28 09:15:30] Command {
+    program: "sh",
+    args: [
+        "sh",
+        "-c",
+        "echo \"127.0.0.1    localhost\" > {:?}",
+    ],
+    create_pidfd: false,
+}
+[2024-12-28 09:15:30] Command completed: Success
+[2024-12-28 09:15:30] Command {
+    program: "sh",
+    args: [
+        "sh",
+        "-c",
+        "echo \"::1          localhost\" >> {:?}",
+    ],
+    create_pidfd: false,
+}
+[2024-12-28 09:15:30] Command completed: Success
+[2024-12-28 09:15:30] Command {
+    program: "sh",
+    args: [
+        "sh",
+        "-c",
+        "echo \"127.0.1.1    ks.localdomain ks\" >> \"/tmp/.tmppJf64T/hosts\"",
+    ],
+    create_pidfd: false,
+}
+[2024-12-28 09:15:30] Command completed: Success
+[2024-12-28 09:16:58] Command {
+    program: "sh",
+    args: [
+        "sh",
+        "-c",
+        "echo ks > /tmp/.tmpuziHUl/hostsname",
+    ],
+    create_pidfd: false,
+}
+[2024-12-28 09:16:58] Command completed: Success
+[2024-12-28 09:16:58] Command {
+    program: "sh",
+    args: [
+        "sh",
+        "-c",
+        "echo \"127.0.0.1    localhost\" > \"/tmp/.tmpuziHUl/hosts\"",
+    ],
+    create_pidfd: false,
+}
+[2024-12-28 09:16:58] Command completed: Success
+[2024-12-28 09:16:58] Command {
+    program: "sh",
+    args: [
+        "sh",
+        "-c",
+        "echo \"::1          localhost\" >> \"/tmp/.tmpuziHUl/hosts\"",
+    ],
+    create_pidfd: false,
+}
+[2024-12-28 09:16:58] Command completed: Success
+[2024-12-28 09:16:58] Command {
+    program: "sh",
+    args: [
+        "sh",
+        "-c",
+        "echo \"127.0.1.1    ks.localdomain ks\" >> \"/tmp/.tmpuziHUl/hosts\"",
+    ],
+    create_pidfd: false,
+}
+[2024-12-28 09:16:58] Command completed: Success
+[2024-12-28 09:21:39] Command {
+    program: "sh",
+    args: [
+        "sh",
+        "-c",
+        "echo ks > /tmp/.tmpRCb0lh/hostsname",
+    ],
+    create_pidfd: false,
+}
+[2024-12-28 09:21:39] Command completed: Success
+[2024-12-28 09:21:39] Command {
+    program: "sh",
+    args: [
+        "sh",
+        "-c",
+        "echo \"127.0.0.1    localhost\" > \"/tmp/.tmpRCb0lh/hosts\"",
+    ],
+    create_pidfd: false,
+}
+[2024-12-28 09:21:39] Command completed: Success
+[2024-12-28 09:21:39] Command {
+    program: "sh",
+    args: [
+        "sh",
+        "-c",
+        "echo \"::1          localhost\" >> \"/tmp/.tmpRCb0lh/hosts\"",
+    ],
+    create_pidfd: false,
+}
+[2024-12-28 09:21:39] Command completed: Success
+[2024-12-28 09:21:39] Command {
+    program: "sh",
+    args: [
+        "sh",
+        "-c",
+        "echo \"127.0.1.1    ks.localdomain ks\" >> \"/tmp/.tmpRCb0lh/hosts\"",
+    ],
+    create_pidfd: false,
+}
+[2024-12-28 09:21:39] Command completed: Success
+[2024-12-28 09:22:01] Command {
+    program: "sh",
+    args: [
+        "sh",
+        "-c",
+        "echo ks > /tmp/.tmpDTcabp/hostsname",
+    ],
+    create_pidfd: false,
+}
+[2024-12-28 09:22:01] Command completed: Success
+[2024-12-28 09:22:01] Command {
+    program: "sh",
+    args: [
+        "sh",
+        "-c",
+        "echo \"127.0.0.1    localhost\" > \"/tmp/.tmpDTcabp/hosts\"",
+    ],
+    create_pidfd: false,
+}
+[2024-12-28 09:22:01] Command completed: Success
+[2024-12-28 09:22:01] Command {
+    program: "sh",
+    args: [
+        "sh",
+        "-c",
+        "echo \"::1          localhost\" >> \"/tmp/.tmpDTcabp/hosts\"",
+    ],
+    create_pidfd: false,
+}
+[2024-12-28 09:22:01] Command completed: Success
+[2024-12-28 09:22:01] Command {
+    program: "sh",
+    args: [
+        "sh",
+        "-c",
+        "echo \"127.0.1.1    ks.localdomain ks\" >> \"/tmp/.tmpDTcabp/hosts\"",
+    ],
+    create_pidfd: false,
+}
+[2024-12-28 09:22:01] Command completed: Success
+[2024-12-28 09:22:27] Command {
+    program: "sh",
+    args: [
+        "sh",
+        "-c",
+        "echo ks > /tmp/.tmpPzx7zx/hostsname",
+    ],
+    create_pidfd: false,
+}
+[2024-12-28 09:22:27] Command completed: Success
+[2024-12-28 09:22:27] Command {
+    program: "sh",
+    args: [
+        "sh",
+        "-c",
+        "echo \"127.0.0.1    localhost\" > \"/tmp/.tmpPzx7zx/hosts\"",
+    ],
+    create_pidfd: false,
+}
+[2024-12-28 09:22:27] Command completed: Success
+[2024-12-28 09:22:27] Command {
+    program: "sh",
+    args: [
+        "sh",
+        "-c",
+        "echo \"::1          localhost\" >> \"/tmp/.tmpPzx7zx/hosts\"",
+    ],
+    create_pidfd: false,
+}
+[2024-12-28 09:22:27] Command completed: Success
+[2024-12-28 09:22:27] Command {
+    program: "sh",
+    args: [
+        "sh",
+        "-c",
+        "echo \"127.0.1.1    ks.localdomain ks\" >> \"/tmp/.tmpPzx7zx/hosts\"",
+    ],
+    create_pidfd: false,
+}
+[2024-12-28 09:22:27] Command completed: Success
+[2024-12-28 09:22:59] Command {
+    program: "sh",
+    args: [
+        "sh",
+        "-c",
+        "echo ks > /tmp/.tmpTj15CB/hostsname",
+    ],
+    create_pidfd: false,
+}
+[2024-12-28 09:22:59] Command completed: Success
+[2024-12-28 09:22:59] Command {
+    program: "sh",
+    args: [
+        "sh",
+        "-c",
+        "echo \"127.0.0.1    localhost\" > \"/tmp/.tmpTj15CB/hosts\"",
+    ],
+    create_pidfd: false,
+}
+[2024-12-28 09:22:59] Command completed: Success
+[2024-12-28 09:22:59] Command {
+    program: "sh",
+    args: [
+        "sh",
+        "-c",
+        "echo \"::1          localhost\" >> \"/tmp/.tmpTj15CB/hosts\"",
+    ],
+    create_pidfd: false,
+}
+[2024-12-28 09:22:59] Command completed: Success
+[2024-12-28 09:22:59] Command {
+    program: "sh",
+    args: [
+        "sh",
+        "-c",
+        "echo \"127.0.1.1    ks.localdomain ks\" >> \"/tmp/.tmpTj15CB/hosts\"",
+    ],
+    create_pidfd: false,
+}
+[2024-12-28 09:22:59] Command completed: Success
+[2024-12-28 09:26:00] Command {
+    program: "sh",
+    args: [
+        "sh",
+        "-c",
+        "echo test > /tmp/.tmp9IcFFS/hostsname",
+    ],
+    create_pidfd: false,
+}
+[2024-12-28 09:26:00] Command completed: Success
+[2024-12-28 09:26:00] Command {
+    program: "sh",
+    args: [
+        "sh",
+        "-c",
+        "echo \"127.0.0.1    localhost\" > \"/tmp/.tmp9IcFFS/hosts\"",
+    ],
+    create_pidfd: false,
+}
+[2024-12-28 09:26:00] Command completed: Success
+[2024-12-28 09:26:00] Command {
+    program: "sh",
+    args: [
+        "sh",
+        "-c",
+        "echo \"::1          localhost\" >> \"/tmp/.tmp9IcFFS/hosts\"",
+    ],
+    create_pidfd: false,
+}
+[2024-12-28 09:26:00] Command completed: Success
+[2024-12-28 09:26:00] Command {
+    program: "sh",
+    args: [
+        "sh",
+        "-c",
+        "echo \"127.0.1.1    test.localdomain test\" >> \"/tmp/.tmp9IcFFS/hosts\"",
+    ],
+    create_pidfd: false,
+}
+[2024-12-28 09:26:00] Command completed: Success
+[2024-12-28 09:30:24] Command {
+    program: "sh",
+    args: [
+        "sh",
+        "-c",
+        "echo test > /tmp/.tmpIc3HYs/hostsname",
+    ],
+    create_pidfd: false,
+}
+[2024-12-28 09:30:24] Command completed: Success
+[2024-12-28 09:30:24] Command {
+    program: "sh",
+    args: [
+        "sh",
+        "-c",
+        "echo \"127.0.0.1    localhost\" > \"/tmp/.tmpIc3HYs/hosts\"",
+    ],
+    create_pidfd: false,
+}
+[2024-12-28 09:30:24] Command completed: Success
+[2024-12-28 09:30:24] Command {
+    program: "sh",
+    args: [
+        "sh",
+        "-c",
+        "echo \"::1          localhost\" >> \"/tmp/.tmpIc3HYs/hosts\"",
+    ],
+    create_pidfd: false,
+}
+[2024-12-28 09:30:24] Command completed: Success
+[2024-12-28 09:30:24] Command {
+    program: "sh",
+    args: [
+        "sh",
+        "-c",
+        "echo \"127.0.1.1    test.localdomain test\" >> \"/tmp/.tmpIc3HYs/hosts\"",
+    ],
+    create_pidfd: false,
+}
+[2024-12-28 09:30:24] Command completed: Success
