@@ -29,6 +29,7 @@ mod test_timezone {
 
     #[test]
     fn test_set_timezone() {
-        assert!(set_timezone("sla", "slass").is_ok());
+        assert!(set_timezone("America", "Fortaleza").is_ok());
+        assert!(set_timezone("error", "error").is_err());
     }
 }
