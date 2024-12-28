@@ -1,17 +1,10 @@
-use crate::{configure_timezone::set_timezone::set_timezone, prelude::Result};
+use std::marker::PhantomData;
+
+use crate::{
+    configure_timezone::set_timezone::set_timezone,
+    prelude::{Result, Safety, Unsafety, W},
+};
 use serde::Deserialize;
-
-#[derive(Default, Debug)]
-pub struct RegioValid(String);
-
-#[derive(Default, Debug)]
-pub struct RegionNotValid;
-
-#[derive(Default, Debug)]
-pub struct CityValid(String);
-
-#[derive(Default, Debug)]
-pub struct CityNotValid;
 
 #[derive(Deserialize, Default, Debug)]
 pub struct Timezone {
@@ -20,32 +13,44 @@ pub struct Timezone {
 }
 
 #[derive(Debug, Default)]
-pub struct TimezoneBuilder<R, C> {
-    pub region: R,
-    pub city: C,
+pub struct TimezoneBuilder<P, T> {
+    pub region: W<T>,
+    pub city: W<T>,
+    data: PhantomData<P>,
 }
 
-impl<R, C> TimezoneBuilder<R, C> {
+impl<P, T> TimezoneBuilder<P, T> {
     pub fn valid_timezone(
         self,
         region: &str,
         city: &str,
-    ) -> Result<TimezoneBuilder<RegioValid, CityValid>> {
+    ) -> Result<TimezoneBuilder<Unsafety, String>> {
         set_timezone(region, city)?;
         Ok(TimezoneBuilder {
-            region: RegioValid(region.to_owned()),
-            city: CityValid(city.to_owned()),
+            region: W(region.to_owned()),
+            city: W(city.to_owned()),
+            data: PhantomData,
         })
     }
 }
 
-impl TimezoneBuilder<RegionNotValid, CityNotValid> {
+impl TimezoneBuilder<Unsafety, Unsafety> {
     pub fn new() -> Self {
         Self::default()
     }
 }
 
-impl TimezoneBuilder<RegioValid, CityValid> {
+impl<T> TimezoneBuilder<Unsafety, T> {
+    pub fn seal(self) -> Result<TimezoneBuilder<Safety, T>> {
+        Ok(TimezoneBuilder {
+            city: self.city,
+            region: self.region,
+            data: PhantomData,
+        })
+    }
+}
+
+impl TimezoneBuilder<Safety, String> {
     pub fn build(self) -> Result<Timezone> {
         Ok(Timezone {
             region: self.region.0,

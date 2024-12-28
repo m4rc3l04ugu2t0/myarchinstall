@@ -60,25 +60,27 @@ struct ConfigBuilder {
 impl ConfigBuilder {
     fn setup_timezone(&mut self, state: &mut State) -> Result<()> {
         if state.step >= 1 {
-            return Ok(()); // Skip if already completed
+            return Ok(());
         }
 
         self.timezone = TimezoneBuilder::new()
             .valid_timezone(&self.timezone.region, &self.timezone.city)?
+            .seal()?
             .build()?;
 
-        self.save_state(state)?; // Increment state after success
+        self.save_state(state)?;
         Ok(())
     }
 
     fn setup_location(&mut self, state: &mut State) -> Result<()> {
         if state.step >= 2 {
-            return Ok(()); // Skip if already completed
+            return Ok(());
         }
 
         self.location = LocationBuilder::new()
             .valid_language(&self.location.language)?
             .valid_keymap(&self.location.keymap)?
+            .seal()?
             .build()?;
 
         self.save_state(state)?;
@@ -87,13 +89,14 @@ impl ConfigBuilder {
 
     fn setup_system(&mut self, state: &mut State) -> Result<()> {
         if state.step >= 3 {
-            return Ok(()); // Skip if already completed
+            return Ok(());
         }
 
         self.system = SystemBuilder::new()
             .setup_hostname(&self.system.hostname)?
             .setup_root(&self.system.root_password)?
             .setup_user(&self.system.username, &self.system.user_password)?
+            .seal()?
             .build()?;
 
         self.save_state(state)?;
@@ -102,11 +105,12 @@ impl ConfigBuilder {
 
     fn setup_packages(&mut self, state: &mut State) -> Result<()> {
         if state.step >= 4 {
-            return Ok(()); // Skip if already completed
+            return Ok(());
         }
 
         self.packages = PackagesBuilder::new()
             .essentials_valid(&self.packages.essentials)?
+            .seal()?
             .build()?;
 
         self.save_state(state)?;
@@ -115,7 +119,7 @@ impl ConfigBuilder {
 
     fn save_state(&self, state: &mut State) -> Result<()> {
         state.incremente_state();
-        state::save_state(state)?; // Save the updated state
+        state::save_state(state)?;
         Ok(())
     }
 }
@@ -138,8 +142,8 @@ impl ConfigBuilder {
 }
 
 pub fn configure() -> Result<()> {
-    let mut state = load_state()?; // Load saved state
-    let mut config = ConfigBuilder::new(config()?); // Create a mutable instance
+    let mut state = load_state()?;
+    let mut config = ConfigBuilder::new(config()?);
 
     info!("Configuring timezone...");
     config.setup_timezone(&mut state)?;
