@@ -1,4 +1,4 @@
-use std::fs::{self, read_to_string};
+use std::fs::read_to_string;
 use std::{env, fmt};
 
 use log::info;
@@ -7,7 +7,7 @@ use std::env::var;
 use toml::from_str;
 
 use crate::functions::state::{self, change_state, load_state};
-use crate::prelude::{Error, Result, CONFIGS_PATH};
+use crate::prelude::{Error, Result};
 use crate::structure_config::location::{Location, LocationBuilder};
 use crate::structure_config::packages::{Packages, PackagesBuilder};
 use crate::structure_config::system::{System, SystemBuilder};
@@ -193,8 +193,8 @@ pub fn configure() -> Result<()> {
 }
 
 fn config() -> Result<ConfigBuilder> {
-    fs::create_dir_all(CONFIGS_PATH)?;
     let path = var("CONFIG_PATH")?;
+    println!("{}", path);
 
     let config_content = read_to_string(&path)?;
     let config = from_str(&config_content)?;
