@@ -1,6 +1,7 @@
 use std::{
     fs::{create_dir_all, OpenOptions},
     io::BufReader,
+    path::Path,
 };
 
 use log::info;
@@ -36,19 +37,24 @@ pub fn load_state() -> Result<State> {
 }
 
 pub fn save_state(state: &State) -> Result<()> {
-    let state_dir = relative_path(&STATE_FILE)?;
+    let state_file = relative_path(&STATE_FILE)?;
 
-    if state_dir.exists() {
-        create_dir_all(state_dir)?;
+    let state_dir = Path::new(&state_file).parent();
+
+    if let Some(parent) = state_dir {
+        create_dir_all(parent)?;
     } else {
-        return Err(Error::GetPath(state_dir));
+        return Err(Error::GetPath(state_file));
     }
+    // if !state_dir.exists() {
+    //     create_dir_all(state_dir)?;
+    // }
 
     let file = OpenOptions::new()
         .write(true)
         .truncate(true)
         .create(true)
-        .open(STATE_FILE)?;
+        .open(state_file)?;
 
     to_writer(file, state)?;
 
