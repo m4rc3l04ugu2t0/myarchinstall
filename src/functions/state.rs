@@ -1,7 +1,6 @@
 use std::{
     fs::{create_dir_all, OpenOptions},
     io::BufReader,
-    path::Path,
 };
 
 use log::info;
@@ -17,7 +16,12 @@ use super::relative_path::relative_path;
 const STATE_FILE: &'static str = "/etc/lib/myarchinstall/state.json";
 
 pub fn load_state() -> Result<State> {
-    if let Ok(file) = OpenOptions::new().read(true).open(&STATE_FILE) {
+    if let Ok(file) = OpenOptions::new()
+        .write(true)
+        .create(true)
+        .read(true)
+        .open(&STATE_FILE)
+    {
         let reader = BufReader::new(&file);
 
         match from_reader(reader) {
@@ -37,24 +41,19 @@ pub fn load_state() -> Result<State> {
 }
 
 pub fn save_state(state: &State) -> Result<()> {
-    let state_file = relative_path(&STATE_FILE)?;
+    let state_dir = relative_path(&STATE_FILE)?;
 
-    let state_dir = Path::new(&state_file).parent();
-
-    if let Some(parent) = state_dir {
-        create_dir_all(parent)?;
+    if state_dir.exists() {
+        create_dir_all(state_dir)?;
     } else {
-        return Err(Error::GetPath(state_file));
+        return Err(Error::GetPath(state_dir));
     }
-    // if !state_dir.exists() {
-    //     create_dir_all(state_dir)?;
-    // }
 
     let file = OpenOptions::new()
         .write(true)
         .truncate(true)
         .create(true)
-        .open(state_file)?;
+        .open(STATE_FILE)?;
 
     to_writer(file, state)?;
 
