@@ -37,7 +37,8 @@ pub fn load_state() -> Result<State> {
 }
 
 pub fn save_state(state: &State) -> Result<()> {
-    let state_file = env::var("SETUP_CONFIG").unwrap_or("/etc/archinstall/state.json".to_string());
+    let state_file =
+        env::var("SETUP_CONFIG").unwrap_or("/etc/lib/myarchinstall/state.json".to_string());
 
     let state_dir = relative_path(&state_file)?;
 
