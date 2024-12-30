@@ -6,7 +6,6 @@ use serde::{Deserialize, Serialize};
 use std::env::var;
 use toml::from_str;
 
-use crate::functions::relative_path::relative_path;
 use crate::functions::state::{self, change_state, load_state};
 use crate::prelude::{Error, Result, CONFIGS_PATH};
 use crate::structure_config::location::{Location, LocationBuilder};
@@ -196,15 +195,9 @@ pub fn configure() -> Result<()> {
 fn config() -> Result<ConfigBuilder> {
     fs::create_dir_all(CONFIGS_PATH)?;
     let path = var("CONFIG_PATH")?;
-    let path = relative_path(&path)?;
-    println!("{:?}", path);
 
-    if path.exists() {
-        let config_content = read_to_string(&path)?;
-        let config = from_str(&config_content)?;
+    let config_content = read_to_string(&path)?;
+    let config = from_str(&config_content)?;
 
-        Ok(config)
-    } else {
-        Err(Error::GetPath(path))
-    }
+    Ok(config)
 }
