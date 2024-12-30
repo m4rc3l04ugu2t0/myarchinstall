@@ -12,7 +12,7 @@ pub fn initialize_logger() -> Result<()> {
         v
     } else {
         fs::create_dir_all("/var/log/myarchinstall_log/")?;
-        "/var/log/archinstall_log/configuration.log".to_string()
+        "/var/log/myarchinstall_log/configuration.log".to_string()
     };
 
     let log_path = Path::new(&log_path);
