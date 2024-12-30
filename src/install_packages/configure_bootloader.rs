@@ -12,6 +12,7 @@ pub fn configure_bootloader() -> Result<()> {
     let mkinitcpio_path = tmp.path().join("mkinitcpio.conf");
     fs::write(&mkinitcpio_path, "MODULES=()").unwrap();
     let file = OpenOptions::new().read(true).open(&mkinitcpio_path)?;
+
     let reader = BufReader::new(file);
     let mut lines = Vec::new();
     let mut okay = true;

@@ -10,6 +10,6 @@ fn main() {
     if let Err(err) = configure() {
         eprintln!("Failed to configure the system: {}", err);
     } else {
-        println!("System configured successfully.");
+        println!("Program successfullly executed.");
     }
 }

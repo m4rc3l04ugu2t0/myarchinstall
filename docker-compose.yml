@@ -1,0 +1,9 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - CONFIG_PATH=/var/lib/archinstall/config.toml
+      - SETUP_CONFIG=/var/lib/archinstall/state.json
+      - FILE_LOG=/var/log/archinstall_logs/configuration.log

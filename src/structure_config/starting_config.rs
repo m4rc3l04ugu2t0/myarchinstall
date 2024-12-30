@@ -1,4 +1,4 @@
-use std::fs::read_to_string;
+use std::fs::{self, read_to_string};
 use std::{env, fmt};
 
 use log::info;
@@ -7,7 +7,7 @@ use std::env::var;
 use toml::from_str;
 
 use crate::functions::relative_path::relative_path;
-use crate::functions::state::{self, load_state};
+use crate::functions::state::{self, change_state, load_state};
 use crate::prelude::{Error, Result};
 use crate::structure_config::location::{Location, LocationBuilder};
 use crate::structure_config::packages::{Packages, PackagesBuilder};
@@ -60,6 +60,7 @@ struct ConfigBuilder {
 impl ConfigBuilder {
     fn setup_timezone(&mut self, state: &mut State) -> Result<()> {
         if state.step >= 1 {
+            info!("The time zone step has already been completed. Change the file state to redo the step");
             return Ok(());
         }
 
@@ -74,6 +75,7 @@ impl ConfigBuilder {
 
     fn setup_location(&mut self, state: &mut State) -> Result<()> {
         if state.step >= 2 {
+            info!("The location step has already been completed. Change the file state to redo the step");
             return Ok(());
         }
         info!("Configuring location...");
@@ -89,6 +91,7 @@ impl ConfigBuilder {
 
     fn setup_system(&mut self, state: &mut State) -> Result<()> {
         if state.step >= 3 {
+            info!("The system step has already been completed. Change the file state to redo the step");
             return Ok(());
         }
         info!("Configuring system...");
@@ -107,6 +110,7 @@ impl ConfigBuilder {
 
     fn setup_packages(&mut self, state: &mut State) -> Result<()> {
         if state.step >= 4 {
+            info!("The packages step has already been completed. Change the file state to redo the step");
             return Ok(());
         }
         info!("Installing packages...");
@@ -167,6 +171,11 @@ pub fn configure() -> Result<()> {
                 config.setup_packages(&mut state)?;
                 return Ok(());
             }
+            "state" => {
+                let value = args[2].parse::<u8>()?;
+                change_state(&mut state, value)?;
+                return Ok(());
+            }
             _ => {
                 return Err(Error::Generic(format!("Invalid argument: {}", args[1])));
             }
@@ -185,7 +194,9 @@ pub fn configure() -> Result<()> {
 }
 
 fn config() -> Result<ConfigBuilder> {
-    let path = relative_path(&var("CONFIG_PATH").unwrap_or("src/configs/setup.toml".into()))?;
+    fs::create_dir("/etc/lib/myarchinstall")?;
+    let path = var("CONFIG_PATH").unwrap_or("/etc/lib/myarchinstall/setup.toml".to_string());
+    let path = relative_path(&path)?;
 
     if path.exists() {
         let config_content = read_to_string(&path)?;

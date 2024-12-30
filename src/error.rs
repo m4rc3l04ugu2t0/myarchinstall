@@ -1,4 +1,4 @@
-use std::path::PathBuf;
+use std::{num::ParseIntError, path::PathBuf};
 
 #[derive(thiserror::Error, Debug)]
 pub enum Error {
@@ -20,4 +20,6 @@ pub enum Error {
     CommandExecution(String),
     #[error("Language not found: {0}")]
     Generic(String),
+    #[error("Language not found: {0}")]
+    ParseNum(#[from] ParseIntError),
 }
