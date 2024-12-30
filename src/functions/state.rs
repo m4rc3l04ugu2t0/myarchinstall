@@ -17,7 +17,12 @@ use super::relative_path::relative_path;
 pub fn load_state() -> Result<State> {
     let state_file =
         env::var("SETUP_CONFIG").unwrap_or("/etc/lib/myarchinstall/state.json".to_string());
-    if let Ok(file) = OpenOptions::new().create(true).read(true).open(&state_file) {
+    if let Ok(file) = OpenOptions::new()
+        .write(true)
+        .create(true)
+        .read(true)
+        .open(&state_file)
+    {
         let reader = BufReader::new(file);
 
         match from_reader(reader) {
