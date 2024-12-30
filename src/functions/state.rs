@@ -16,13 +16,7 @@ use super::relative_path::relative_path;
 const STATE_FILE: &'static str = "/etc/lib/myarchinstall/state.json";
 
 pub fn load_state() -> Result<State> {
-    if let Ok(file) = OpenOptions::new()
-        .write(true)
-        .truncate(true)
-        .create(true)
-        .read(true)
-        .open(&STATE_FILE)
-    {
+    if let Ok(file) = OpenOptions::new().read(true).open(&STATE_FILE) {
         let reader = BufReader::new(&file);
 
         match from_reader(reader) {
