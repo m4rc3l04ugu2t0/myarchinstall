@@ -19,6 +19,7 @@ pub fn load_state() -> Result<State> {
     if let Ok(mut file) = OpenOptions::new()
         .write(true)
         .truncate(true)
+        .create(true)
         .read(true)
         .open(&STATE_FILE)
     {
