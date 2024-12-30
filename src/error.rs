@@ -1,4 +1,4 @@
-use std::{num::ParseIntError, path::PathBuf};
+use std::{env::VarError, num::ParseIntError, path::PathBuf};
 
 #[derive(thiserror::Error, Debug)]
 pub enum Error {
@@ -22,4 +22,6 @@ pub enum Error {
     Generic(String),
     #[error("Language not found: {0}")]
     ParseNum(#[from] ParseIntError),
+    #[error("Env var error: must be set {0}")]
+    EnvError(#[from] VarError),
 }

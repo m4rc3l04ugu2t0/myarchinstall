@@ -1,21 +1,11 @@
-use crate::prelude::Result;
+use std::fs::File;
+
+use crate::prelude::{Result, LOG_PATH};
 use log::info;
 use simplelog::*;
-use std::{
-    env::var,
-    fs::{self, File},
-    path::Path,
-};
 
 pub fn initialize_logger() -> Result<()> {
-    let log_path = if let Ok(v) = var("FILE_LOG") {
-        v
-    } else {
-        fs::create_dir_all("/var/log/myarchinstall_log/")?;
-        "/var/log/myarchinstall_log/configuration.log".to_string()
-    };
-
-    let log_path = Path::new(&log_path);
+    let log_path = format!("{}configuration.log", LOG_PATH);
 
     CombinedLogger::init(vec![
         TermLogger::new(
@@ -27,7 +17,7 @@ pub fn initialize_logger() -> Result<()> {
         WriteLogger::new(
             LevelFilter::Debug,
             Config::default(),
-            File::create(log_path)?,
+            File::create(&log_path)?,
         ),
     ])?;
     info!(

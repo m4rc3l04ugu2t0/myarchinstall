@@ -11,3 +11,6 @@ pub struct Unsafety;
 
 #[derive(Debug, Deserialize, Default)]
 pub struct W<T>(pub T);
+
+pub const CONFIGS_PATH: &'static str = "/etc/lib/myarchinstall/";
+pub const LOG_PATH: &'static str = "/var/log/myarchinstall_log/";

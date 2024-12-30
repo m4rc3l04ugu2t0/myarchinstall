@@ -1,7 +1,6 @@
 use std::{
-    env,
     fs::{create_dir_all, OpenOptions},
-    io::{BufReader, Write},
+    io::BufReader,
 };
 
 use log::info;
@@ -14,26 +13,25 @@ use crate::{
 
 use super::relative_path::relative_path;
 
+const STATE_FILE: &'static str = "/etc/lib/myarchinstall/state.json";
+
 pub fn load_state() -> Result<State> {
-    let state_file =
-        env::var("SETUP_CONFIG").unwrap_or("/etc/lib/myarchinstall/state.json".to_string());
-    if let Ok(mut file) = OpenOptions::new()
+    if let Ok(file) = OpenOptions::new()
         .write(true)
         .truncate(true)
         .create(true)
         .read(true)
-        .open(&state_file)
+        .open(&STATE_FILE)
     {
         let reader = BufReader::new(&file);
 
         match from_reader(reader) {
             Ok(state) => {
-                info!("State loaded successfully from {:?}", state_file);
-                file.write_all(b"{{\"step\": 0}}")?;
+                info!("State loaded successfully from {:?}", STATE_FILE);
                 Ok(state)
             }
             Err(e) => {
-                info!("Failed to load state from {:?}: {:?}", state_file, e);
+                info!("Failed to load state from {:?}: {:?}", STATE_FILE, e);
                 Err(Error::ReadFile(e.into()))
             }
         }
@@ -44,10 +42,7 @@ pub fn load_state() -> Result<State> {
 }
 
 pub fn save_state(state: &State) -> Result<()> {
-    let state_file =
-        env::var("SETUP_CONFIG").unwrap_or("/etc/lib/myarchinstall/state.json".to_string());
-
-    let state_dir = relative_path(&state_file)?;
+    let state_dir = relative_path(&STATE_FILE)?;
 
     if state_dir.exists() {
         create_dir_all(state_dir)?;
@@ -59,7 +54,7 @@ pub fn save_state(state: &State) -> Result<()> {
         .write(true)
         .truncate(true)
         .create(true)
-        .open(state_file)?;
+        .open(STATE_FILE)?;
 
     to_writer(file, state)?;
 

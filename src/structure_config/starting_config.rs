@@ -8,7 +8,7 @@ use toml::from_str;
 
 use crate::functions::relative_path::relative_path;
 use crate::functions::state::{self, change_state, load_state};
-use crate::prelude::{Error, Result};
+use crate::prelude::{Error, Result, CONFIGS_PATH};
 use crate::structure_config::location::{Location, LocationBuilder};
 use crate::structure_config::packages::{Packages, PackagesBuilder};
 use crate::structure_config::system::{System, SystemBuilder};
@@ -194,8 +194,8 @@ pub fn configure() -> Result<()> {
 }
 
 fn config() -> Result<ConfigBuilder> {
-    fs::create_dir_all("/etc/lib/myarchinstall/")?;
-    let path = var("CONFIG_PATH").unwrap_or("/etc/lib/myarchinstall/setup.toml".to_string());
+    fs::create_dir_all(CONFIGS_PATH)?;
+    let path = var("CONFIG_PATH")?;
     let path = relative_path(&path)?;
 
     if path.exists() {
