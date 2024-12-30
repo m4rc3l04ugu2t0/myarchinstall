@@ -1,5 +1,5 @@
 use std::{
-    fs::{create_dir_all, OpenOptions},
+    fs::{create_dir_all, File, OpenOptions},
     io::{BufReader, Write},
 };
 
@@ -16,13 +16,9 @@ use super::relative_path::relative_path;
 const STATE_FILE: &str = "/etc/lib/myarchinstall/state.json";
 
 pub fn load_state() -> Result<State> {
-    if let Ok(mut file) = OpenOptions::new()
-        .write(true)
-        .truncate(true)
-        .create(true)
-        .read(true)
-        .open(STATE_FILE)
-    {
+    let mut file_state = File::create(STATE_FILE)?;
+    file_state.write_all(b"{\"step\": 0}")?;
+    if let Ok(mut file) = OpenOptions::new().read(true).open(STATE_FILE) {
         file.write_all(b"{\"step\":0}")?;
         let reader = BufReader::new(&file);
 
