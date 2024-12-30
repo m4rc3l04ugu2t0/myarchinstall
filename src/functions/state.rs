@@ -15,17 +15,18 @@ use super::relative_path::relative_path;
 
 const STATE_FILE: &str = "/etc/lib/myarchinstall/state.json";
 
+/// Carrega o estado do arquivo JSON, inicializando um estado padrão se não existir.
 pub fn load_state() -> Result<State> {
     if let Ok(file) = OpenOptions::new().read(true).open(STATE_FILE) {
         let reader = BufReader::new(&file);
 
         match from_reader(reader) {
             Ok(state) => {
-                info!("State loaded successfully from {:?}", STATE_FILE);
+                info!("State loaded successfully from {}", STATE_FILE);
                 Ok(state)
             }
             Err(e) => {
-                info!("Failed to load state from {:?}: {:?}", STATE_FILE, e);
+                info!("Failed to load state from {}: {:?}", STATE_FILE, e);
                 Err(Error::ReadFile(e.into()))
             }
         }
@@ -35,34 +36,32 @@ pub fn load_state() -> Result<State> {
     }
 }
 
+/// Salva o estado no arquivo JSON, criando o diretório, se necessário.
 pub fn save_state(state: &State) -> Result<()> {
-    let state_dir = relative_path(STATE_FILE)?;
+    let state_path = relative_path(STATE_FILE)?;
+    let state_dir = state_path
+        .parent()
+        .ok_or_else(|| Error::GetPath(state_path.clone()))?;
 
-    if state_dir.exists() {
+    if !state_dir.exists() {
         create_dir_all(state_dir)?;
-    } else {
-        return Err(Error::GetPath(state_dir));
     }
 
     let file = OpenOptions::new()
         .write(true)
         .truncate(true)
         .create(true)
-        .open(STATE_FILE)?;
+        .open(&state_path)?;
 
     to_writer(file, state)?;
 
+    info!("State saved successfully to {}", STATE_FILE);
     Ok(())
 }
 
+/// Altera o estado e salva as alterações.
 pub fn change_state(state: &mut State, value: u8) -> Result<()> {
-    if value > 4 {
-        state.step = 4;
-        save_state(state)?;
-        return Ok(());
-    }
-
-    state.step = value;
+    state.step = if value > 4 { 4 } else { value };
     save_state(state)?;
     Ok(())
 }
