@@ -17,7 +17,7 @@ const STATE_FILE: &'static str = "/etc/lib/myarchinstall/state.json";
 
 pub fn load_state() -> Result<State> {
     let mut file_state = File::create(&STATE_FILE)?;
-    file_state.write_all(b"{{\"step\": 0}}")?;
+    file_state.write_all(b"{\"step\": 0}")?;
     if let Ok(file) = OpenOptions::new().read(true).open(&STATE_FILE) {
         let reader = BufReader::new(&file);
 
