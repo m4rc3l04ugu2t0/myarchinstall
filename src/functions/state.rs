@@ -1,7 +1,7 @@
 use std::{
     env,
     fs::{create_dir_all, OpenOptions},
-    io::BufReader,
+    io::{BufReader, Write},
 };
 
 use log::info;
@@ -17,17 +17,19 @@ use super::relative_path::relative_path;
 pub fn load_state() -> Result<State> {
     let state_file =
         env::var("SETUP_CONFIG").unwrap_or("/etc/lib/myarchinstall/state.json".to_string());
-    if let Ok(file) = OpenOptions::new()
+    if let Ok(mut file) = OpenOptions::new()
         .write(true)
+        .truncate(true)
         .create(true)
         .read(true)
         .open(&state_file)
     {
-        let reader = BufReader::new(file);
+        let reader = BufReader::new(&file);
 
         match from_reader(reader) {
             Ok(state) => {
                 info!("State loaded successfully from {:?}", state_file);
+                file.write_all(b"{{\"step\": 0}}")?;
                 Ok(state)
             }
             Err(e) => {

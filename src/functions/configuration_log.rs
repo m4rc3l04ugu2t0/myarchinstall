@@ -8,7 +8,7 @@ use std::{
 };
 
 pub fn initialize_logger() -> Result<()> {
-    let log_path = if let Some(v) = var("FILE_LOG").ok() {
+    let log_path = if let Ok(v) = var("FILE_LOG") {
         v
     } else {
         fs::create_dir_all("/var/log/myarchinstall_log/")?;
@@ -27,7 +27,7 @@ pub fn initialize_logger() -> Result<()> {
         WriteLogger::new(
             LevelFilter::Debug,
             Config::default(),
-            File::create(&log_path)?,
+            File::create(log_path)?,
         ),
     ])?;
     info!(
