@@ -197,6 +197,7 @@ fn config() -> Result<ConfigBuilder> {
     fs::create_dir_all(CONFIGS_PATH)?;
     let path = var("CONFIG_PATH")?;
     let path = relative_path(&path)?;
+    println!("{:?}", path);
 
     if path.exists() {
         let config_content = read_to_string(&path)?;
