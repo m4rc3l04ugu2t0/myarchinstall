@@ -13,7 +13,7 @@ use crate::{
 
 use super::relative_path::relative_path;
 
-const STATE_FILE: &'static str = "/etc/lib/myarchinstall/state.json";
+const STATE_FILE: &str = "/etc/lib/myarchinstall/state.json";
 
 pub fn load_state() -> Result<State> {
     if let Ok(mut file) = OpenOptions::new()
@@ -21,7 +21,7 @@ pub fn load_state() -> Result<State> {
         .truncate(true)
         .create(true)
         .read(true)
-        .open(&STATE_FILE)
+        .open(STATE_FILE)
     {
         file.write_all(b"{\"step\":0}")?;
         let reader = BufReader::new(&file);
@@ -43,7 +43,7 @@ pub fn load_state() -> Result<State> {
 }
 
 pub fn save_state(state: &State) -> Result<()> {
-    let state_dir = relative_path(&STATE_FILE)?;
+    let state_dir = relative_path(STATE_FILE)?;
 
     if state_dir.exists() {
         create_dir_all(state_dir)?;
