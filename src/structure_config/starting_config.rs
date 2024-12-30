@@ -194,7 +194,7 @@ pub fn configure() -> Result<()> {
 }
 
 fn config() -> Result<ConfigBuilder> {
-    fs::create_dir("/etc/lib/myarchinstall")?;
+    fs::create_dir_all("/etc/lib/myarchinstall/")?;
     let path = var("CONFIG_PATH").unwrap_or("/etc/lib/myarchinstall/setup.toml".to_string());
     let path = relative_path(&path)?;
 
