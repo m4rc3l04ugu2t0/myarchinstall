@@ -1,11 +1,11 @@
 use std::fs::File;
 
-use crate::prelude::{Result, LOG_PATH};
+use crate::{functions::create_path::create_path_file, prelude::Result};
 use log::info;
 use simplelog::*;
 
 pub fn initialize_logger() -> Result<()> {
-    let log_path = format!("{}configuration.log", LOG_PATH);
+    let log_path = create_path_file("configuration")?;
 
     CombinedLogger::init(vec![
         TermLogger::new(

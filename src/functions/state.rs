@@ -11,21 +11,20 @@ use crate::{
     structure_config::starting_config::State,
 };
 
-use super::relative_path::relative_path;
-
-const STATE_FILE: &str = "/etc/lib/myarchinstall/state.json";
+use super::create_path::create_path_file;
 
 pub fn load_state() -> Result<State> {
-    if let Ok(file) = OpenOptions::new().read(true).open(STATE_FILE) {
+    let state_file = create_path_file("state.json")?;
+    if let Ok(file) = OpenOptions::new().read(true).open(&state_file) {
         let reader = BufReader::new(&file);
 
         match from_reader(reader) {
             Ok(state) => {
-                info!("State loaded successfully from {}", STATE_FILE);
+                info!("State loaded successfully from {:?}", state_file);
                 Ok(state)
             }
             Err(e) => {
-                info!("Failed to load state from {}: {:?}", STATE_FILE, e);
+                info!("Failed to load state from {:?}: {:?}", state_file, e);
                 Err(Error::ReadFile(e.into()))
             }
         }
@@ -36,10 +35,10 @@ pub fn load_state() -> Result<State> {
 }
 
 pub fn save_state(state: &State) -> Result<()> {
-    let state_path = relative_path(STATE_FILE)?;
-    let state_dir = state_path
+    let state_file = create_path_file("state.json")?;
+    let state_dir = state_file
         .parent()
-        .ok_or_else(|| Error::GetPath(state_path.clone()))?;
+        .ok_or_else(|| Error::GetPath(state_file.clone()))?;
 
     if !state_dir.exists() {
         create_dir_all(state_dir)?;
@@ -49,11 +48,11 @@ pub fn save_state(state: &State) -> Result<()> {
         .write(true)
         .truncate(true)
         .create(true)
-        .open(&state_path)?;
+        .open(&state_file)?;
 
     to_writer(file, state)?;
 
-    info!("State saved successfully to {}", STATE_FILE);
+    info!("State saved successfully to {:?}", state_file);
     Ok(())
 }
 

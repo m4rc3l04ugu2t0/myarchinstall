@@ -6,13 +6,15 @@ use std::{
 
 use chrono::Local;
 
-use crate::prelude::{Error, Result, LOG_PATH};
+use crate::prelude::{Error, Result};
+
+use super::create_path::create_path_file;
 
 pub fn run_command(command: &mut Command) -> Result<()> {
     let mut log_file = OpenOptions::new()
         .create(true)
         .append(true)
-        .open(format!("{}commands.log", LOG_PATH))?;
+        .open(create_path_file("logs/commands.log")?)?;
 
     let command_str = format!("{:#?}", command);
     let timestamp = Local::now().format("%Y-%m-%d %H:%M:%S").to_string();
@@ -27,12 +29,12 @@ pub fn run_command(command: &mut Command) -> Result<()> {
     let mut stdout_file = OpenOptions::new()
         .create(true)
         .append(true)
-        .open(format!("{}stdout.log", LOG_PATH))?;
+        .open(create_path_file("logs/stdout.log")?)?;
 
     let mut stderr_file = OpenOptions::new()
         .create(true)
         .append(true)
-        .open(format!("{}stderr.log", LOG_PATH))?;
+        .open(create_path_file("logs/stderr.log")?)?;
 
     if let Some(stdout) = child.stdout.take() {
         let reader = BufReader::new(stdout);
