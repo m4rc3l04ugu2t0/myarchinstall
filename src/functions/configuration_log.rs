@@ -5,7 +5,7 @@ use log::info;
 use simplelog::*;
 
 pub fn initialize_logger() -> Result<()> {
-    let log_path = create_path_file("configuration")?;
+    let log_path = create_path_file("configuration.log")?;
 
     CombinedLogger::init(vec![
         TermLogger::new(
@@ -17,7 +17,7 @@ pub fn initialize_logger() -> Result<()> {
         WriteLogger::new(
             LevelFilter::Debug,
             Config::default(),
-            File::create(&log_path)?,
+            File::open(&log_path)?,
         ),
     ])?;
     info!(
