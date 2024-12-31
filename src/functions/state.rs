@@ -1,7 +1,6 @@
 use std::{
     fs::{create_dir_all, OpenOptions},
     io::BufReader,
-    path::Path,
 };
 
 use log::info;
@@ -14,18 +13,19 @@ use crate::{
 
 use super::relative_path::relative_path;
 
+const STATE_FILE: &str = "/etc/lib/myarchinstall/state.json";
+
 pub fn load_state() -> Result<State> {
-    let state_file = relative_path("src/configs/state.json")?;
-    if let Ok(file) = OpenOptions::new().read(true).open(&state_file) {
-        let reader = BufReader::new(file);
+    if let Ok(file) = OpenOptions::new().read(true).open(STATE_FILE) {
+        let reader = BufReader::new(&file);
 
         match from_reader(reader) {
             Ok(state) => {
-                info!("State loaded successfully from {:?}", state_file);
+                info!("State loaded successfully from {}", STATE_FILE);
                 Ok(state)
             }
             Err(e) => {
-                info!("Failed to load state from {:?}: {:?}", state_file, e);
+                info!("Failed to load state from {}: {:?}", STATE_FILE, e);
                 Err(Error::ReadFile(e.into()))
             }
         }
@@ -36,26 +36,29 @@ pub fn load_state() -> Result<State> {
 }
 
 pub fn save_state(state: &State) -> Result<()> {
-    let state_file = relative_path("src/configs/state.json")?;
+    let state_path = relative_path(STATE_FILE)?;
+    let state_dir = state_path
+        .parent()
+        .ok_or_else(|| Error::GetPath(state_path.clone()))?;
 
-    let state_dir = Path::new(&state_file).parent();
-
-    if let Some(parent) = state_dir {
-        create_dir_all(parent)?;
-    } else {
-        return Err(Error::GetPath(state_file));
+    if !state_dir.exists() {
+        create_dir_all(state_dir)?;
     }
-    // if !state_dir.exists() {
-    //     create_dir_all(state_dir)?;
-    // }
 
     let file = OpenOptions::new()
         .write(true)
         .truncate(true)
         .create(true)
-        .open(state_file)?;
+        .open(&state_path)?;
 
     to_writer(file, state)?;
 
+    info!("State saved successfully to {}", STATE_FILE);
+    Ok(())
+}
+
+pub fn change_state(state: &mut State, value: u8) -> Result<()> {
+    state.step = if value > 4 { 4 } else { value };
+    save_state(state)?;
     Ok(())
 }

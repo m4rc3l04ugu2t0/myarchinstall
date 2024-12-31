@@ -25,13 +25,3 @@ pub fn set_hostname(hostname: &str) -> Result<()> {
 
     Ok(())
 }
-
-#[cfg(test)]
-mod test_hostname {
-    use tempfile::tempdir;
-
-    #[test]
-    fn test_set_hostname() {
-        let tmp = tempdir().unwrap();
-    }
-}
