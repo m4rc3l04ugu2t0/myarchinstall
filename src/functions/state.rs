@@ -13,7 +13,7 @@ use crate::{
 
 use super::relative_path::relative_path;
 
-const STATE_FILE: &str = "/etc/lib/myarchinstall/state.json";
+const STATE_FILE: &str = "src/configs/state.json";
 
 pub fn load_state() -> Result<State> {
     if let Ok(file) = OpenOptions::new().read(true).open(STATE_FILE) {
@@ -57,7 +57,6 @@ pub fn save_state(state: &State) -> Result<()> {
     Ok(())
 }
 
-/// Altera o estado e salva as alterações.
 pub fn change_state(state: &mut State, value: u8) -> Result<()> {
     state.step = if value > 4 { 4 } else { value };
     save_state(state)?;
