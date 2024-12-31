@@ -274,3 +274,73 @@ Command {
     create_pidfd: false,
 }
 [2024-12-31 09:16:58] Command completed: Success
+[[2024-12-31 09:32:202024-12-31 09:32:20] ] Command {
+    program: "sh",
+    args: [
+        "sh",
+        "-c",
+        "echo KEYMAP=br-abnt2 >> \"/tmp/.tmpsQPaIh/vconsole.conf\"",
+    ],
+    create_pidfd: false,
+}Command {
+    program: "sh",
+    args: [
+        "sh",
+        "-c",
+        "echo test > /tmp/.tmpIAGLQS/hostsname",
+    ],
+    create_pidfd: false,
+}
+
+[[2024-12-31 09:32:20] 2024-12-31 09:32:20Command {
+    program: "ls",
+    args: [
+        "ls",
+        "-la",
+    ],
+    create_pidfd: false,
+}] 
+Command {
+    program: "ln",
+    args: [
+        "ln",
+        "-sf",
+        "/tmp/.tmpWbK6gO/zoneinfo",
+        "/tmp/.tmpWbK6gO/localtime",
+    ],
+    create_pidfd: false,
+}
+[2024-12-31 09:32:20] Command completed: Success
+[2024-12-31 09:32:20] Command completed: Success
+[2024-12-31 09:32:20] Command completed: Success
+[2024-12-31 09:32:20] Command {
+    program: "sh",
+    args: [
+        "sh",
+        "-c",
+        "echo \"127.0.0.1    localhost\" > \"/tmp/.tmpIAGLQS/hosts\"",
+    ],
+    create_pidfd: false,
+}
+[2024-12-31 09:32:20] Command completed: Success
+[2024-12-31 09:32:20] Command completed: Success
+[2024-12-31 09:32:20] Command {
+    program: "sh",
+    args: [
+        "sh",
+        "-c",
+        "echo \"::1          localhost\" >> \"/tmp/.tmpIAGLQS/hosts\"",
+    ],
+    create_pidfd: false,
+}
+[2024-12-31 09:32:20] Command completed: Success
+[2024-12-31 09:32:20] Command {
+    program: "sh",
+    args: [
+        "sh",
+        "-c",
+        "echo \"127.0.1.1    test.localdomain test\" >> \"/tmp/.tmpIAGLQS/hosts\"",
+    ],
+    create_pidfd: false,
+}
+[2024-12-31 09:32:20] Command completed: Success
