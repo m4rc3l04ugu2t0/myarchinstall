@@ -63,10 +63,12 @@ impl ConfigBuilder {
             return Ok(());
         }
 
+        info!("Configuring timezone...");
         self.timezone = TimezoneBuilder::new()
             .valid_timezone(&self.timezone.region, &self.timezone.city)?
             .seal()?
             .build()?;
+        info!("Timezone configured successfully");
 
         self.save_state(state)?;
         Ok(())
@@ -194,7 +196,6 @@ pub fn configure() -> Result<()> {
 
 fn config() -> Result<ConfigBuilder> {
     let path = var("CONFIG_PATH")?;
-    println!("{}", path);
 
     let config_content = read_to_string(&path)?;
     let config = from_str(&config_content)?;

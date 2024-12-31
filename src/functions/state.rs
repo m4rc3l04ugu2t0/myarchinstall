@@ -15,7 +15,6 @@ use super::relative_path::relative_path;
 
 const STATE_FILE: &str = "/etc/lib/myarchinstall/state.json";
 
-/// Carrega o estado do arquivo JSON, inicializando um estado padrão se não existir.
 pub fn load_state() -> Result<State> {
     if let Ok(file) = OpenOptions::new().read(true).open(STATE_FILE) {
         let reader = BufReader::new(&file);
@@ -36,7 +35,6 @@ pub fn load_state() -> Result<State> {
     }
 }
 
-/// Salva o estado no arquivo JSON, criando o diretório, se necessário.
 pub fn save_state(state: &State) -> Result<()> {
     let state_path = relative_path(STATE_FILE)?;
     let state_dir = state_path
