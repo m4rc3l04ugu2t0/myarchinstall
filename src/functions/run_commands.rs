@@ -30,13 +30,13 @@ pub fn run_command(command: &mut Command) -> Result<()> {
         .spawn()?;
 
     let mut stdout_file = OpenOptions::new().create(true).append(true).open(format!(
-        "{}{}",
+        "{}/{}",
         var(ROOT_PATH).unwrap(),
         LOG_STDOUT
     ))?;
 
     let mut stderr_file = OpenOptions::new().create(true).append(true).open(format!(
-        "{}{}",
+        "{}/{}",
         var(ROOT_PATH).unwrap(),
         LOG_STDERR
     ))?;
