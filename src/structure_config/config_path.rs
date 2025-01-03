@@ -16,6 +16,7 @@ pub const ROOT_PATH: &str = "ROOT_PATH";
 
 pub fn config_paths() -> Result<()> {
     let config_dir = config_dir().ok_or_else(|| Error::ConfigDirNotFound)?;
+    println!("{:?}", config_dir);
     set_var(ROOT_PATH, &config_dir);
     create_files(
         &config_dir,
