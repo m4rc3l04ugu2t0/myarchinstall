@@ -8,6 +8,7 @@ use log::info;
 use simplelog::*;
 
 pub fn initialize_logger() -> Result<()> {
+    let configuration_log = format!("{}{}", var(ROOT_PATH)?, LOG_CONFIGURATION);
     CombinedLogger::init(vec![
         TermLogger::new(
             LevelFilter::Info,
@@ -18,12 +19,12 @@ pub fn initialize_logger() -> Result<()> {
         WriteLogger::new(
             LevelFilter::Debug,
             Config::default(),
-            File::create(format!("{}{}", var(ROOT_PATH)?, LOG_CONFIGURATION))?,
+            File::create(&configuration_log)?,
         ),
     ])?;
     info!(
         "Logger initialized successfully \nSee logs in {}",
-        format!("{}{}", var(ROOT_PATH)?, LOG_CONFIGURATION)
+        configuration_log
     );
 
     Ok(())

@@ -1,3 +1,4 @@
+use std::env::var;
 use std::fs::read_to_string;
 use std::{env, fmt};
 
@@ -194,7 +195,8 @@ pub fn configure() -> Result<()> {
 }
 
 fn config() -> Result<ConfigBuilder> {
-    let config_content = read_to_string("./")?;
+    let config_path = var("CONFIG_PATH")?;
+    let config_content = read_to_string(config_path)?;
     let config = from_str(&config_content)?;
 
     Ok(config)
