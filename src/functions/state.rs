@@ -1,30 +1,28 @@
-use std::{
-    fs::{create_dir_all, OpenOptions},
-    io::BufReader,
-};
+use std::{env::var, fs::OpenOptions, io::BufReader};
 
 use log::info;
 use serde_json::{from_reader, to_writer};
 
 use crate::{
     prelude::{Error, Result},
-    structure_config::starting_config::State,
+    structure_config::{
+        config_path::{ROOT_PATH, STATE_PATH},
+        starting_config::State,
+    },
 };
 
-use super::create_path::create_path_file;
-
 pub fn load_state() -> Result<State> {
-    let state_file = create_path_file("state.json")?;
-    if let Ok(file) = OpenOptions::new().read(true).open(&state_file) {
+    let state_path = format!("{}{}", var(ROOT_PATH)?, STATE_PATH);
+    if let Ok(file) = OpenOptions::new().read(true).open(&state_path) {
         let reader = BufReader::new(&file);
 
         match from_reader(reader) {
             Ok(state) => {
-                info!("State loaded successfully from {:?}", state_file);
+                info!("State loaded successfully from {:?}", state_path);
                 Ok(state)
             }
             Err(e) => {
-                info!("Failed to load state from {:?}: {:?}", state_file, e);
+                info!("Failed to load state from {:?}: {:?}", state_path, e);
                 Err(Error::ReadFile(e.into()))
             }
         }
@@ -35,24 +33,12 @@ pub fn load_state() -> Result<State> {
 }
 
 pub fn save_state(state: &State) -> Result<()> {
-    let state_file = create_path_file("state.json")?;
-    let state_dir = state_file
-        .parent()
-        .ok_or_else(|| Error::GetPath(state_file.clone()))?;
-
-    if !state_dir.exists() {
-        create_dir_all(state_dir)?;
-    }
-
-    let file = OpenOptions::new()
-        .write(true)
-        .truncate(true)
-        .create(true)
-        .open(&state_file)?;
+    let state_path = format!("{}{}", var(ROOT_PATH)?, STATE_PATH);
+    let file = OpenOptions::new().write(true).open(&state_path)?;
 
     to_writer(file, state)?;
 
-    info!("State saved successfully to {:?}", state_file);
+    info!("State saved successfully to {:?}", state_path);
     Ok(())
 }
 

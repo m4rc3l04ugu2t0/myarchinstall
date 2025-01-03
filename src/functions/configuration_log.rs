@@ -1,12 +1,13 @@
-use std::fs::File;
+use std::{env::var, fs::File};
 
-use crate::{functions::create_path::create_path_file, prelude::Result};
+use crate::{
+    prelude::Result,
+    structure_config::config_path::{LOG_CONFIGURATION, ROOT_PATH},
+};
 use log::info;
 use simplelog::*;
 
 pub fn initialize_logger() -> Result<()> {
-    let log_path = create_path_file("configuration.log")?;
-
     CombinedLogger::init(vec![
         TermLogger::new(
             LevelFilter::Info,
@@ -17,12 +18,12 @@ pub fn initialize_logger() -> Result<()> {
         WriteLogger::new(
             LevelFilter::Debug,
             Config::default(),
-            File::open(&log_path)?,
+            File::create(format!("{}{}", var(ROOT_PATH)?, LOG_CONFIGURATION))?,
         ),
     ])?;
     info!(
         "Logger initialized successfully \nSee logs in {:?}",
-        log_path
+        LOG_CONFIGURATION
     );
 
     Ok(())

@@ -24,4 +24,6 @@ pub enum Error {
     ParseNum(#[from] ParseIntError),
     #[error("Env var error: must be set {0}")]
     EnvError(#[from] VarError),
+    #[error("Error to set config dir")]
+    ConfigDirNotFound,
 }
