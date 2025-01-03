@@ -8,7 +8,6 @@ use toml::from_str;
 
 use crate::functions::state::{self, change_state, load_state};
 use crate::prelude::{Error, Result};
-use crate::structure_config::config_path::config_paths;
 use crate::structure_config::location::{Location, LocationBuilder};
 use crate::structure_config::packages::{Packages, PackagesBuilder};
 use crate::structure_config::system::{System, SystemBuilder};
@@ -154,7 +153,6 @@ pub fn configure() -> Result<()> {
     let mut state = load_state()?;
     let mut config = ConfigBuilder::new(config()?);
     let args: Vec<String> = env::args().collect();
-    config_paths()?;
 
     if args.len() > 1 {
         match args[1].as_str() {
