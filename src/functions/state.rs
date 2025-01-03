@@ -12,7 +12,7 @@ use crate::{
 };
 
 pub fn load_state() -> Result<State> {
-    let state_path = format!("{}{}", var(ROOT_PATH)?, STATE_PATH);
+    let state_path = format!("{}{}", var(ROOT_PATH).unwrap(), STATE_PATH);
     if let Ok(file) = OpenOptions::new().read(true).open(&state_path) {
         let reader = BufReader::new(&file);
 
@@ -23,7 +23,12 @@ pub fn load_state() -> Result<State> {
             }
             Err(e) => {
                 info!("Failed to load state from {:?}: {:?}", state_path, e);
-                Err(Error::ReadFile(e.into()))
+                if e.is_eof() {
+                    info!("State file is empty, initializing default state.");
+                    Ok(State { step: 0 })
+                } else {
+                    Err(Error::ReadFile(e.into()))
+                }
             }
         }
     } else {
@@ -33,7 +38,7 @@ pub fn load_state() -> Result<State> {
 }
 
 pub fn save_state(state: &State) -> Result<()> {
-    let state_path = format!("{}{}", var(ROOT_PATH)?, STATE_PATH);
+    let state_path = format!("{}{}", var(ROOT_PATH).unwrap(), STATE_PATH);
     let file = OpenOptions::new().write(true).open(&state_path)?;
 
     to_writer(file, state)?;
