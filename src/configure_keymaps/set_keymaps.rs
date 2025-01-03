@@ -17,10 +17,13 @@ pub fn set_keymaps(keymap: &str) -> Result<()> {
 
 #[cfg(test)]
 mod test_keymaps {
-    use crate::configure_keymaps::set_keymaps::set_keymaps;
+    use crate::{
+        configure_keymaps::set_keymaps::set_keymaps, structure_config::config_path::config_paths,
+    };
 
     #[test]
     fn test_set_keymaps() {
+        config_paths().unwrap();
         assert!(set_keymaps("br-abnt2").is_ok());
     }
 }

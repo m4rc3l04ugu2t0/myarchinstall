@@ -1,9 +1,12 @@
 use myarchinstall::{
-    functions::configuration_log::initialize_logger, structure_config::starting_config::configure,
+    functions::configuration_log::initialize_logger,
+    structure_config::{config_path::config_paths, starting_config::configure},
 };
 
 fn main() {
-    dotenv::dotenv().ok();
+    if let Err(err) = config_paths() {
+        return eprintln!("Error to config root path: {}", err);
+    }
     if let Err(err) = initialize_logger() {
         return eprintln!("Failed to initialize the logger: {}", err);
     }

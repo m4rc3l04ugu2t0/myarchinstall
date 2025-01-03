@@ -1,13 +1,11 @@
 use tempfile::tempdir;
 
-use crate::prelude::Result;
+use crate::{functions::run_commands::run_command, prelude::Result};
 use std::{
     fs::{self, OpenOptions},
     io::{BufRead, BufReader, Write},
     process::Command,
 };
-
-use crate::functions::run_commands::run_command;
 
 pub fn set_language(language: &[String]) -> Result<()> {
     edit_locale_gen(language)?;

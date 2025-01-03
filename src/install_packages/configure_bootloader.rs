@@ -1,5 +1,5 @@
 use std::{
-    fs::{self, OpenOptions},
+    fs::{write, OpenOptions},
     io::{BufRead, BufReader, Write},
 };
 
@@ -10,7 +10,7 @@ use crate::prelude::Result;
 pub fn configure_bootloader() -> Result<()> {
     let tmp = tempdir().unwrap();
     let mkinitcpio_path = tmp.path().join("mkinitcpio.conf");
-    fs::write(&mkinitcpio_path, "MODULES=()").unwrap();
+    write(&mkinitcpio_path, "MODULES=()").unwrap();
     let file = OpenOptions::new().read(true).open(&mkinitcpio_path)?;
 
     let reader = BufReader::new(file);

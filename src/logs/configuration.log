@@ -1,7 +1,0 @@
-23:41:16 [INFO] Logger initialized successfully 
-See logs in src/logs/configuration.log
-23:41:16 [INFO] State loaded successfully from "/home/NextLevelCode/dev/myarchinstall/src/configs/state.json"
-23:41:16 [INFO] The time zone step has already been completed. Change the file state to redo the step
-23:41:16 [INFO] The location step has already been completed. Change the file state to redo the step
-23:41:16 [INFO] The system step has already been completed. Change the file state to redo the step
-23:41:16 [INFO] Installing packages...
