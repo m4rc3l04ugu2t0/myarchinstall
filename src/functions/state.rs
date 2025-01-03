@@ -12,7 +12,7 @@ use crate::{
 };
 
 pub fn load_state() -> Result<State> {
-    let state_path = format!("{}{}", var(ROOT_PATH)?, STATE_PATH);
+    let state_path = format!("{}/{}", var(ROOT_PATH)?, STATE_PATH);
     if let Ok(file) = OpenOptions::new().read(true).open(&state_path) {
         let reader = BufReader::new(&file);
 
@@ -38,7 +38,7 @@ pub fn load_state() -> Result<State> {
 }
 
 pub fn save_state(state: &State) -> Result<()> {
-    let state_path = format!("{}{}", var(ROOT_PATH)?, STATE_PATH);
+    let state_path = format!("{}/{}", var(ROOT_PATH)?, STATE_PATH);
     let file = OpenOptions::new().write(true).open(&state_path)?;
 
     to_writer(file, state)?;

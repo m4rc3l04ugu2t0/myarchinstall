@@ -14,7 +14,7 @@ use crate::{
 
 pub fn run_command(command: &mut Command) -> Result<()> {
     let mut log_file = OpenOptions::new().create(true).append(true).open(format!(
-        "{}{}",
+        "{}/{}",
         var(ROOT_PATH)?,
         LOG_COMMANDS
     ))?;

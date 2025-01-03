@@ -8,7 +8,7 @@ use log::info;
 use simplelog::*;
 
 pub fn initialize_logger() -> Result<()> {
-    let configuration_log = format!("{}{}", var(ROOT_PATH)?, LOG_CONFIGURATION);
+    let configuration_log = format!("{}/{}", var(ROOT_PATH)?, LOG_CONFIGURATION);
     CombinedLogger::init(vec![
         TermLogger::new(
             LevelFilter::Info,

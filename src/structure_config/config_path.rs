@@ -7,11 +7,11 @@ use std::{
 use dirs_next::config_dir;
 
 use crate::prelude::{Error, Result};
-pub const LOG_COMMANDS: &str = "/myarchinstall/log/commands.log";
-pub const LOG_STDOUT: &str = "/myarchinstall/log/stdout.log";
-pub const LOG_STDERR: &str = "/myarchinstall/log/stderr.log";
-pub const LOG_CONFIGURATION: &str = "/myarchinstall/log/configuration.log";
-pub const STATE_PATH: &str = "/myarchinstall/configs/state.json";
+pub const LOG_COMMANDS: &str = "myarchinstall/log/commands.log";
+pub const LOG_STDOUT: &str = "myarchinstall/log/stdout.log";
+pub const LOG_STDERR: &str = "myarchinstall/log/stderr.log";
+pub const LOG_CONFIGURATION: &str = "myarchinstall/log/configuration.log";
+pub const STATE_PATH: &str = "myarchinstall/configs/state.json";
 pub const ROOT_PATH: &str = "ROOT_PATH";
 
 pub fn config_paths() -> Result<()> {
