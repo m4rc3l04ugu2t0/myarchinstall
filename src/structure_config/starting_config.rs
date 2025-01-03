@@ -3,7 +3,6 @@ use std::{env, fmt};
 
 use log::info;
 use serde::{Deserialize, Serialize};
-use std::env::var;
 use toml::from_str;
 
 use crate::functions::state::{self, change_state, load_state};
@@ -195,9 +194,7 @@ pub fn configure() -> Result<()> {
 }
 
 fn config() -> Result<ConfigBuilder> {
-    let path = var("CONFIG_PATH")?;
-
-    let config_content = read_to_string(&path)?;
+    let config_content = read_to_string(".")?;
     let config = from_str(&config_content)?;
 
     Ok(config)
