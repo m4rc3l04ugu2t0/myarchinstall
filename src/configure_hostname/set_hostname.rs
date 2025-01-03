@@ -34,10 +34,13 @@ pub fn set_hostname(hostname: &str) -> Result<()> {
 
 #[cfg(test)]
 mod test_hostname {
+    use crate::structure_config::config_path::config_paths;
+
     use super::*;
 
     #[test]
     fn test_set_hostname() {
+        config_paths().unwrap();
         assert!(set_hostname("test").is_ok());
     }
 }

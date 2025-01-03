@@ -4,9 +4,9 @@ use std::{
     path::{Path, PathBuf},
 };
 
-pub fn relative_path(file_name: &str) -> Result<PathBuf> {
+pub fn relative_path(pathway: &str) -> Result<PathBuf> {
     let current_dir = current_dir()?;
-    let file_path = current_dir.join(Path::new(file_name));
+    let file_path = current_dir.join(Path::new(pathway));
 
     Ok(file_path)
 }

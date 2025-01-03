@@ -24,4 +24,8 @@ pub enum Error {
     ParseNum(#[from] ParseIntError),
     #[error("Env var error: must be set {0}")]
     EnvError(#[from] VarError),
+    #[error("Config dir not found")]
+    ConfigDirNotFound,
+    #[error("Failed to string: {0}")]
+    ToString(#[from] toml::ser::Error),
 }

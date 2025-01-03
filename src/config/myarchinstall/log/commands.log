@@ -1,0 +1,42 @@
+[2025-01-02 21:11:29] Command {
+    program: "ls",
+    args: [
+        "ls",
+        "-la",
+    ],
+    create_pidfd: false,
+}
+[2025-01-02 21:11:29] Command completed: Success
+[2025-01-02 21:11:29] Command completed: Success
+[2025-01-02 21:11:29] Command {
+    program: "sh",
+    args: [
+        "sh",
+        "-c",
+        "echo \"127.0.0.1    localhost\" > \"/tmp/.tmpxRm8pr/hosts\"",
+    ],
+    create_pidfd: false,
+}
+[2025-01-02 21:11:29] Command completed: Success
+[2025-01-02 21:11:29] Command completed: Success
+[2025-01-02 21:11:29] Command completed: Success
+[2025-01-02 21:11:29] Command {
+    program: "sh",
+    args: [
+        "sh",
+        "-c",
+        "echo \"::1          localhost\" >> \"/tmp/.tmpxRm8pr/hosts\"",
+    ],
+    create_pidfd: false,
+}
+[2025-01-02 21:11:29] Command completed: Success
+[2025-01-02 21:11:29] Command {
+    program: "sh",
+    args: [
+        "sh",
+        "-c",
+        "echo \"127.0.1.1    test.localdomain test\" >> \"/tmp/.tmpxRm8pr/hosts\"",
+    ],
+    create_pidfd: false,
+}
+[2025-01-02 21:11:29] Command completed: Success

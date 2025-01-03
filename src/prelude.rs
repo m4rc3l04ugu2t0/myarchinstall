@@ -11,5 +11,3 @@ pub struct Unsafety;
 
 #[derive(Debug, Deserialize, Default)]
 pub struct W<T>(pub T);
-
-pub const LOG_PATH: &str = "src/logs/";

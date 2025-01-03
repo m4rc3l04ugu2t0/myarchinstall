@@ -1,4 +1,5 @@
 use std::{
+    env::var,
     fs::OpenOptions,
     io::{BufRead, BufReader, Write},
     process::{Command, Stdio},
@@ -6,13 +7,17 @@ use std::{
 
 use chrono::Local;
 
-use crate::prelude::{Error, Result, LOG_PATH};
+use crate::{
+    prelude::{Error, Result},
+    structure_config::config_path::{LOG_COMMANDS, LOG_STDERR, LOG_STDOUT, ROOT_PATH},
+};
 
 pub fn run_command(command: &mut Command) -> Result<()> {
-    let mut log_file = OpenOptions::new()
-        .create(true)
-        .append(true)
-        .open(format!("{}commands.log", LOG_PATH))?;
+    let mut log_file = OpenOptions::new().create(true).append(true).open(format!(
+        "{}{}",
+        var(ROOT_PATH).unwrap(),
+        LOG_COMMANDS
+    ))?;
 
     let command_str = format!("{:#?}", command);
     let timestamp = Local::now().format("%Y-%m-%d %H:%M:%S").to_string();
@@ -24,15 +29,17 @@ pub fn run_command(command: &mut Command) -> Result<()> {
         .stderr(Stdio::piped())
         .spawn()?;
 
-    let mut stdout_file = OpenOptions::new()
-        .create(true)
-        .append(true)
-        .open(format!("{}stdout.log", LOG_PATH))?;
+    let mut stdout_file = OpenOptions::new().create(true).append(true).open(format!(
+        "{}{}",
+        var(ROOT_PATH).unwrap(),
+        LOG_STDOUT
+    ))?;
 
-    let mut stderr_file = OpenOptions::new()
-        .create(true)
-        .append(true)
-        .open(format!("{}stderr.log", LOG_PATH))?;
+    let mut stderr_file = OpenOptions::new().create(true).append(true).open(format!(
+        "{}{}",
+        var(ROOT_PATH).unwrap(),
+        LOG_STDERR
+    ))?;
 
     if let Some(stdout) = child.stdout.take() {
         let reader = BufReader::new(stdout);
@@ -74,7 +81,14 @@ pub fn run_command(command: &mut Command) -> Result<()> {
     Ok(())
 }
 
-#[test]
-fn test_run_command() {
-    assert!(run_command(Command::new("ls").arg("-la")).is_ok());
+#[cfg(test)]
+mod test_mod_run_command {
+    use super::*;
+    use crate::structure_config::config_path::config_paths;
+
+    #[test]
+    fn test_run_command() {
+        config_paths().unwrap();
+        assert!(run_command(Command::new("ls").arg("-la")).is_ok());
+    }
 }
