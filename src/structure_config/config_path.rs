@@ -1,25 +1,21 @@
 use std::{
     env::set_var,
-    fs::{create_dir, create_dir_all, File},
+    fs::{create_dir_all, File},
     path::Path,
 };
 
 use dirs_next::config_dir;
 
 use crate::prelude::{Error, Result};
-pub const LOG_COMMANDS: &str = "/log/commands.log";
-pub const LOG_STDOUT: &str = "/log/stdout.log";
-pub const LOG_STDERR: &str = "/log/stderr.log";
-pub const LOG_CONFIGURATION: &str = "/log/configuration.log";
-pub const STATE_PATH: &str = "/configs/state.json";
+pub const LOG_COMMANDS: &str = "/myarchinstall/log/commands.log";
+pub const LOG_STDOUT: &str = "/myarchinstall/log/stdout.log";
+pub const LOG_STDERR: &str = "/myarchinstall/log/stderr.log";
+pub const LOG_CONFIGURATION: &str = "/myarchinstall/log/configuration.log";
+pub const STATE_PATH: &str = "/myarchinstall/configs/state.json";
 pub const ROOT_PATH: &str = "ROOT_PATH";
 
 pub fn config_paths() -> Result<()> {
-    let config_dir = config_dir()
-        .ok_or_else(|| Error::ConfigDirNotFound)?
-        .join("myarchinstall");
-
-    create_dir(&config_dir)?;
+    let config_dir = config_dir().ok_or_else(|| Error::ConfigDirNotFound)?;
 
     set_var(ROOT_PATH, &config_dir);
     create_files(
@@ -50,7 +46,6 @@ where
         }
         File::options()
             .write(true)
-            .truncate(true)
             .create(true)
             .open(&relative_path)?;
     }
