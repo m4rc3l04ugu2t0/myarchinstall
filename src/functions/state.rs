@@ -23,7 +23,12 @@ pub fn load_state() -> Result<State> {
             }
             Err(e) => {
                 info!("Failed to load state from {:?}: {:?}", state_path, e);
-                Err(Error::ReadFile(e.into()))
+                if e.is_eof() {
+                    info!("State file is empty, initializing default state.");
+                    Ok(State { step: 0 })
+                } else {
+                    Err(Error::ReadFile(e.into()))
+                }
             }
         }
     } else {
@@ -46,4 +51,23 @@ pub fn change_state(state: &mut State, value: u8) -> Result<()> {
     state.step = if value > 4 { 4 } else { value };
     save_state(state)?;
     Ok(())
+}
+
+#[cfg(test)]
+mod test_mod_state {
+    use crate::{
+        functions::state::{load_state, save_state},
+        structure_config::{config_path::config_paths, starting_config::State},
+    };
+
+    #[test]
+    fn test_load_state() {
+        config_paths().unwrap();
+
+        // Salvar estado inicial para teste
+        let initial_state = State { step: 0 };
+        save_state(&initial_state).unwrap();
+
+        assert_eq!(initial_state, load_state().unwrap());
+    }
 }

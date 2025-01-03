@@ -22,8 +22,8 @@ pub fn initialize_logger() -> Result<()> {
         ),
     ])?;
     info!(
-        "Logger initialized successfully \nSee logs in {:?}",
-        LOG_CONFIGURATION
+        "Logger initialized successfully \nSee logs in {}",
+        format!("{}{}", var(ROOT_PATH)?, LOG_CONFIGURATION)
     );
 
     Ok(())
